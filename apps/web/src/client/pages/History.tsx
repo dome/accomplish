@@ -8,9 +8,13 @@ export default function HistoryPage() {
   const { t: tCommon } = useTranslation('common');
   const { tasks, clearHistory } = useTaskStore();
 
-  const handleClearAll = () => {
+  const handleClearAll = async () => {
     if (confirm(t('confirmClear'))) {
-      clearHistory();
+      try {
+        await clearHistory();
+      } catch (error) {
+        console.error('Failed to clear task history:', error);
+      }
     }
   };
 
