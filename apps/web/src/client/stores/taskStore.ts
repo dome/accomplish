@@ -530,6 +530,8 @@ export const useTaskStore = create<TaskState>((set, get) => ({
 
   addFavorite: async (taskId: string) => {
     const accomplish = getAccomplish();
+    // Invalidate any in-flight loadFavorites so its response won't overwrite our optimistic state
+    ++_loadFavoritesToken;
     const { tasks, currentTask, favorites } = get();
     if (favorites.some((f) => f.taskId === taskId)) {
       return;
@@ -557,6 +559,8 @@ export const useTaskStore = create<TaskState>((set, get) => ({
   },
 
   removeFavorite: async (taskId: string) => {
+    // Invalidate any in-flight loadFavorites so its response won't overwrite our optimistic state
+    ++_loadFavoritesToken;
     const { favorites } = get();
     const removed = favorites.find((f) => f.taskId === taskId);
     set({ favorites: favorites.filter((f) => f.taskId !== taskId) });

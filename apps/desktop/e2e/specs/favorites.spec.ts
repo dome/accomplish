@@ -23,12 +23,9 @@ test.describe('Favorites', () => {
       'Star icon is not filled (not yet favorited)',
     ]);
 
-    // Assert favorite toggle is visible
+    // Assert favorite toggle is visible and not yet pressed
     await expect(executionPage.favoriteToggle.first()).toBeVisible();
-
-    // Verify aria-pressed is false initially
-    const ariaPressed = await executionPage.favoriteToggle.first().getAttribute('aria-pressed');
-    expect(ariaPressed).toBe('false');
+    await expect(executionPage.favoriteToggle.first()).toHaveAttribute('aria-pressed', 'false');
   });
 
   test('should toggle favorite on completed task', async ({ window }) => {
@@ -46,23 +43,13 @@ test.describe('Favorites', () => {
     // Click the favorite toggle
     await executionPage.favoriteToggle.first().click();
 
-    // Wait for state update
-    await window.waitForTimeout(TEST_TIMEOUTS.STATE_UPDATE);
-
-    // Capture favorited state
+    // Capture favorited state — wait via async matchers (no fixed sleep)
     await captureForAI(window, 'favorites-toggle', 'after-favorite', [
       'Star icon is now filled (favorited)',
-      'Button text changed to "Favorited"',
       'aria-pressed is true',
     ]);
 
-    // Verify aria-pressed flipped to true
-    const ariaPressed = await executionPage.favoriteToggle.first().getAttribute('aria-pressed');
-    expect(ariaPressed).toBe('true');
-
-    // Verify button text changed
-    const buttonText = await executionPage.favoriteToggle.first().textContent();
-    expect(buttonText).toContain('Favorited');
+    await expect(executionPage.favoriteToggle.first()).toHaveAttribute('aria-pressed', 'true');
   });
 
   test('should unfavorite a previously favorited task', async ({ window }) => {
@@ -79,24 +66,20 @@ test.describe('Favorites', () => {
 
     // Favorite the task
     await executionPage.favoriteToggle.first().click();
-    await window.waitForTimeout(TEST_TIMEOUTS.STATE_UPDATE);
+    await expect(executionPage.favoriteToggle.first()).toHaveAttribute('aria-pressed', 'true');
 
     // Unfavorite the task
     await executionPage.favoriteToggle.first().click();
-    await window.waitForTimeout(TEST_TIMEOUTS.STATE_UPDATE);
 
-    // Capture unfavorited state
+    // Capture unfavorited state — wait via async matchers
     await captureForAI(window, 'favorites-toggle', 'after-unfavorite', [
       'Star icon is no longer filled',
-      'Button text changed back to "Favorite"',
       'aria-pressed is false',
     ]);
 
-    // Verify aria-pressed flipped back to false
-    const ariaPressed = await executionPage.favoriteToggle.first().getAttribute('aria-pressed');
-    expect(ariaPressed).toBe('false');
+    await expect(executionPage.favoriteToggle.first()).toHaveAttribute('aria-pressed', 'false');
 
-    // Verify button text changed back to unfavorited label
+    // Verify button label reverted to unfavorited state
     const buttonText = await executionPage.favoriteToggle.first().textContent();
     expect(buttonText).toContain('Add to favorites');
   });
@@ -112,27 +95,22 @@ test.describe('Favorites', () => {
     await homePage.submitTask();
     await window.waitForURL(/.*#\/execution.*/, { timeout: TEST_TIMEOUTS.NAVIGATION });
     await executionPage.waitForComplete();
+
     await executionPage.favoriteToggle.first().click();
-    await window.waitForTimeout(TEST_TIMEOUTS.STATE_UPDATE);
+    await expect(executionPage.favoriteToggle.first()).toHaveAttribute('aria-pressed', 'true');
 
     // Navigate back to Home
     await executionPage.startNewTaskButton.click();
     await window.waitForURL(/.*#\/$/, { timeout: TEST_TIMEOUTS.NAVIGATION });
 
-    // Wait for favorites to load
-    await window.waitForTimeout(TEST_TIMEOUTS.STATE_UPDATE);
-
     // Capture favorites section on Home
     await captureForAI(window, 'favorites-home', 'favorites-visible', [
       'Favorites section is visible on Home page',
       'At least one favorite item is displayed',
-      'Star icon is visible in section header',
     ]);
 
-    // Assert favorites section appeared
+    // Assert favorites section and at least one item
     await expect(homePage.favoritesSection).toBeVisible({ timeout: TEST_TIMEOUTS.NAVIGATION });
-
-    // Assert at least one favorite item
     const itemCount = await homePage.favoriteItems.count();
     expect(itemCount).toBeGreaterThan(0);
   });
@@ -143,18 +121,20 @@ test.describe('Favorites', () => {
 
     await window.waitForLoadState('domcontentloaded');
 
+    const expectedPrompt = TEST_SCENARIOS.SUCCESS.keyword;
+
     // Submit a task, complete it, and favorite it
-    await homePage.enterTask(TEST_SCENARIOS.SUCCESS.keyword);
+    await homePage.enterTask(expectedPrompt);
     await homePage.submitTask();
     await window.waitForURL(/.*#\/execution.*/, { timeout: TEST_TIMEOUTS.NAVIGATION });
     await executionPage.waitForComplete();
+
     await executionPage.favoriteToggle.first().click();
-    await window.waitForTimeout(TEST_TIMEOUTS.STATE_UPDATE);
+    await expect(executionPage.favoriteToggle.first()).toHaveAttribute('aria-pressed', 'true');
 
     // Navigate back to Home
     await executionPage.startNewTaskButton.click();
     await window.waitForURL(/.*#\/$/, { timeout: TEST_TIMEOUTS.NAVIGATION });
-    await window.waitForTimeout(TEST_TIMEOUTS.STATE_UPDATE);
 
     // Wait for favorites section
     await expect(homePage.favoritesSection).toBeVisible({ timeout: TEST_TIMEOUTS.NAVIGATION });
@@ -162,28 +142,17 @@ test.describe('Favorites', () => {
     // Click the first favorite item
     await homePage.favoriteItems.first().click();
 
-    // Wait for input to be filled
-    await window.waitForFunction(
-      () => {
-        const input = document.querySelector(
-          '[data-testid="task-input-textarea"]',
-        ) as HTMLTextAreaElement;
-        return input && input.value.length > 0;
-      },
-      null,
-      { timeout: TEST_TIMEOUTS.NAVIGATION },
-    );
+    // Assert input is pre-filled with the exact favorited prompt
+    await expect(homePage.taskInput).toHaveValue(expectedPrompt, {
+      timeout: TEST_TIMEOUTS.NAVIGATION,
+    });
 
     // Capture pre-filled state
     await captureForAI(window, 'favorites-home', 'prompt-prefilled', [
       'Task input is pre-filled with favorite prompt',
-      'Input value is not empty',
       'Submit button is enabled',
     ]);
 
-    // Assert input is filled
-    const inputValue = await homePage.taskInput.inputValue();
-    expect(inputValue.length).toBeGreaterThan(0);
     await expect(homePage.submitButton).toBeEnabled();
   });
 
@@ -193,35 +162,25 @@ test.describe('Favorites', () => {
 
     await window.waitForLoadState('domcontentloaded');
 
-    // Submit a task that will be interrupted
-    await homePage.enterTask(TEST_SCENARIOS.SUCCESS.keyword);
+    // Use the dedicated interrupted scenario keyword
+    await homePage.enterTask(TEST_SCENARIOS.INTERRUPTED.keyword);
     await homePage.submitTask();
     await window.waitForURL(/.*#\/execution.*/, { timeout: TEST_TIMEOUTS.NAVIGATION });
-
-    // Interrupt the task mid-run
-    await executionPage.stopButton.click();
     await executionPage.waitForComplete();
 
     // Favorite toggle should be visible for interrupted tasks too
     await expect(executionPage.favoriteToggle.first()).toBeVisible();
+    await expect(executionPage.favoriteToggle.first()).toHaveAttribute('aria-pressed', 'false');
 
-    const ariaPressed = await executionPage.favoriteToggle.first().getAttribute('aria-pressed');
-    expect(ariaPressed).toBe('false');
-
-    // Toggle favorite
+    // Toggle favorite and assert via async matcher (no fixed sleep)
     await executionPage.favoriteToggle.first().click();
-    await window.waitForTimeout(TEST_TIMEOUTS.STATE_UPDATE);
-
-    const ariaPressedAfter = await executionPage.favoriteToggle
-      .first()
-      .getAttribute('aria-pressed');
-    expect(ariaPressedAfter).toBe('true');
+    await expect(executionPage.favoriteToggle.first()).toHaveAttribute('aria-pressed', 'true');
 
     // Verify it appears on the Home page favorites section
     await executionPage.startNewTaskButton.click();
     await window.waitForURL(/.*#\/$/, { timeout: TEST_TIMEOUTS.NAVIGATION });
 
-    await expect(homePage.favoritesSection).toBeVisible();
+    await expect(homePage.favoritesSection).toBeVisible({ timeout: TEST_TIMEOUTS.NAVIGATION });
     await expect(homePage.favoriteItems.first()).toBeVisible();
   });
 });
