@@ -1,99 +1,103 @@
 import { useState, useEffect } from 'react';
+import { getAccomplish } from '@/lib/accomplish';
+import { applyTheme as applyLibTheme } from '@/lib/theme';
 
-type Theme = 'light' | 'dark';
+type ThemePreference = 'system' | 'light' | 'dark';
 
-const STORAGE_KEY = 'accomplish-theme';
+const THEME_KEY = 'theme';
 
-function readSavedTheme(): Theme | null {
+function getStoredPreference(): ThemePreference {
   try {
-    const saved = localStorage.getItem(STORAGE_KEY);
-    if (saved === 'light' || saved === 'dark') {
-      return saved;
+    const stored = localStorage.getItem(THEME_KEY);
+    if (stored === 'light' || stored === 'dark' || stored === 'system') {
+      return stored;
     }
   } catch {
-    // localStorage blocked in privacy/incognito mode
+    // localStorage unavailable (privacy mode, SSR)
   }
-  return null;
+  return 'system';
 }
 
-function getSystemTheme(): Theme {
+function resolveIsDark(preference: ThemePreference): boolean {
+  if (preference === 'dark') {
+    return true;
+  }
+  if (preference === 'light') {
+    return false;
+  }
   try {
-    if (typeof window !== 'undefined' && window.matchMedia('(prefers-color-scheme: dark)').matches) {
-      return 'dark';
-    }
+    return (
+      typeof window !== 'undefined' && window.matchMedia('(prefers-color-scheme: dark)').matches
+    );
   } catch {
-    // matchMedia unavailable in some environments
+    return false;
   }
-  return 'light';
-}
-
-function applyTheme(theme: Theme): void {
-  if (typeof document === 'undefined') {
-    return;
-  }
-  const root = document.documentElement;
-  if (theme === 'dark') {
-    root.classList.add('dark');
-  } else {
-    root.classList.remove('dark');
-  }
-}
-
-function getInitialTheme(): Theme {
-  const saved = readSavedTheme();
-  return saved ?? getSystemTheme();
 }
 
 export function useTheme() {
-  const [theme, setTheme] = useState<Theme>(getInitialTheme);
-  // Track whether the user has made an explicit choice so we only persist
-  // after a real toggle and not just because of the initial system read.
-  const [hasExplicitChoice, setHasExplicitChoice] = useState<boolean>(
-    () => readSavedTheme() !== null,
-  );
+  const [preference, setPreference] = useState<ThemePreference>(getStoredPreference);
+  const [isDark, setIsDark] = useState(() => resolveIsDark(getStoredPreference()));
 
-  // Apply the theme class to <html> whenever it changes.
+  // Sync from Electron backend on mount and subscribe to host-driven changes
   useEffect(() => {
-    applyTheme(theme);
-    if (!hasExplicitChoice) {
-      return;
+    const accomplish = getAccomplish();
+    accomplish
+      .getTheme()
+      .then((theme) => {
+        if (theme === 'light' || theme === 'dark' || theme === 'system') {
+          setPreference(theme);
+          setIsDark(resolveIsDark(theme));
+        }
+      })
+      .catch(() => {
+        // fall back to locally stored preference
+      });
+
+    if (accomplish.onThemeChange) {
+      const cleanup = accomplish.onThemeChange(({ theme, resolved }) => {
+        if (theme === 'light' || theme === 'dark' || theme === 'system') {
+          setPreference(theme);
+        }
+        setIsDark(resolved === 'dark');
+      });
+      return cleanup;
+    }
+    return undefined;
+  }, []);
+
+  // Follow OS theme changes when preference is 'system'
+  useEffect(() => {
+    if (preference !== 'system') {
+      return undefined;
     }
     try {
-      localStorage.setItem(STORAGE_KEY, theme);
+      const mq = window.matchMedia('(prefers-color-scheme: dark)');
+      const handler = (e: MediaQueryListEvent) => {
+        setIsDark(e.matches);
+      };
+      mq.addEventListener('change', handler);
+      return () => {
+        mq.removeEventListener('change', handler);
+      };
     } catch {
-      // Silently ignore if storage is unavailable
+      return undefined;
     }
-  }, [theme, hasExplicitChoice]);
+  }, [preference]);
 
-  // Keep in sync with OS theme changes, but only if the user has not
-  // overridden with an explicit choice.
-  useEffect(() => {
-    if (typeof window === 'undefined') {
-      return;
-    }
-    let mq: MediaQueryList | undefined;
-    try {
-      mq = window.matchMedia('(prefers-color-scheme: dark)');
-    } catch {
-      return;
-    }
-
-    const handleChange = (e: MediaQueryListEvent) => {
-      if (!hasExplicitChoice) {
-        setTheme(e.matches ? 'dark' : 'light');
-      }
-    };
-
-    mq.addEventListener('change', handleChange);
-    return () => {
-      mq?.removeEventListener('change', handleChange);
-    };
-  }, [hasExplicitChoice]);
-
-  const toggleTheme = () => {
-    setHasExplicitChoice(true);
-    setTheme((prev) => (prev === 'light' ? 'dark' : 'light'));
+  const setTheme = (newPreference: ThemePreference) => {
+    setPreference(newPreference);
+    setIsDark(resolveIsDark(newPreference));
+    applyLibTheme(newPreference);
+    getAccomplish()
+      .setTheme(newPreference)
+      .catch(() => {
+        // ignore
+      });
   };
 
-  return { theme, toggleTheme };
+  const toggleTheme = () => {
+    setTheme(isDark ? 'light' : 'dark');
+  };
+
+  return { theme: preference, isDark, toggleTheme, setTheme };
 }

@@ -1,12 +1,12 @@
 import { Moon, Sun } from '@phosphor-icons/react';
+import { useTranslation } from 'react-i18next';
 import { useTheme } from '../../hooks/useTheme';
 import { Tooltip, TooltipContent, TooltipTrigger } from '@/components/ui/tooltip';
 import { cn } from '@/lib/utils';
 
 export function ThemeToggle() {
-  const { theme, toggleTheme } = useTheme();
-
-  const isDark = theme === 'dark';
+  const { t } = useTranslation('common');
+  const { isDark, toggleTheme } = useTheme();
 
   return (
     <Tooltip>
@@ -14,7 +14,7 @@ export function ThemeToggle() {
         <button
           type="button"
           onClick={toggleTheme}
-          aria-label={isDark ? 'Switch to light mode' : 'Switch to dark mode'}
+          aria-label={isDark ? t('theme.switchToLight') : t('theme.switchToDark')}
           className={cn(
             'no-drag flex h-8 w-8 items-center justify-center rounded-lg transition-colors',
             'text-muted-foreground hover:bg-accent hover:text-foreground',
@@ -28,7 +28,7 @@ export function ThemeToggle() {
         </button>
       </TooltipTrigger>
       <TooltipContent side="bottom">
-        {isDark ? 'Light mode' : 'Dark mode'}
+        {isDark ? t('theme.lightMode') : t('theme.darkMode')}
       </TooltipContent>
     </Tooltip>
   );
