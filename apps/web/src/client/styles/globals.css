@@ -1,3 +1,8 @@
+@import 'tailwindcss';
+@config "../../../tailwind.config.ts";
+@plugin "tailwindcss-animate";
+@plugin "@tailwindcss/typography";
+
 /* Geist Font Faces */
 @font-face {
   font-family: 'Geist';
@@ -63,10 +68,6 @@
   font-style: normal;
   font-display: swap;
 }
-
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
 
 /* Shadcn-inspired theme variables */
 :root {
