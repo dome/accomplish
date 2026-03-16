@@ -1448,7 +1448,19 @@ export function registerIPCHandlers(): void {
   });
 
   // Debug Bug Report Handlers
+  const assertDebugModeEnabled = () => {
+    if (!storage.getDebugMode()) {
+      throw new Error('Debug mode is disabled');
+    }
+  };
+
   handle('debug:capture-screenshot', async (event: IpcMainInvokeEvent) => {
+    try {
+      assertDebugModeEnabled();
+    } catch (error) {
+      const message = error instanceof Error ? error.message : 'Debug mode disabled';
+      return { success: false, error: message };
+    }
     const window = BrowserWindow.fromWebContents(event.sender);
     if (!window) {
       return { success: false, error: 'No window found' };
@@ -1467,6 +1479,12 @@ export function registerIPCHandlers(): void {
   });
 
   handle('debug:capture-axtree', async (event: IpcMainInvokeEvent) => {
+    try {
+      assertDebugModeEnabled();
+    } catch (error) {
+      const message = error instanceof Error ? error.message : 'Debug mode disabled';
+      return { success: false, error: message };
+    }
     const window = BrowserWindow.fromWebContents(event.sender);
     if (!window) {
       return { success: false, error: 'No window found' };
@@ -1532,6 +1550,12 @@ export function registerIPCHandlers(): void {
         platform?: string;
       },
     ) => {
+      try {
+        assertDebugModeEnabled();
+      } catch (error) {
+        const message = error instanceof Error ? error.message : 'Debug mode disabled';
+        return { success: false, error: message };
+      }
       const window = BrowserWindow.fromWebContents(event.sender);
       if (!window) {
         return { success: false, error: 'No window found' };
@@ -1572,12 +1596,12 @@ export function registerIPCHandlers(): void {
           hasScreenshot: Boolean(reportData.screenshot),
         };
 
-        fs.writeFileSync(result.filePath, JSON.stringify(report, null, 2));
+        await fs.promises.writeFile(result.filePath, JSON.stringify(report, null, 2), 'utf-8');
 
         if (reportData.screenshot) {
           const parsed = path.parse(result.filePath);
           const screenshotPath = path.join(parsed.dir, `${parsed.name}.png`);
-          fs.writeFileSync(screenshotPath, Buffer.from(reportData.screenshot, 'base64'));
+          await fs.promises.writeFile(screenshotPath, Buffer.from(reportData.screenshot, 'base64'));
         }
 
         return { success: true, path: result.filePath };
