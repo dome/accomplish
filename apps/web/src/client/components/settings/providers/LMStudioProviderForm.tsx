@@ -27,6 +27,7 @@ interface LMStudioModel {
 interface LMStudioProviderFormProps {
   connectedProvider?: ConnectedProvider;
   onConnect: (provider: ConnectedProvider) => void;
+  onUpdateProvider?: (provider: ConnectedProvider) => void;
   onDisconnect: () => void;
   onModelChange: (modelId: string) => void;
   showModelError: boolean;
@@ -177,6 +178,7 @@ function LMStudioModelSelector({
 export function LMStudioProviderForm({
   connectedProvider,
   onConnect,
+  onUpdateProvider,
   onDisconnect,
   onModelChange,
   showModelError,
@@ -269,7 +271,7 @@ export function LMStudioProviderForm({
         })),
       };
 
-      onConnect(updatedProvider);
+      (onUpdateProvider || onConnect)(updatedProvider);
     } catch (err) {
       setError(err instanceof Error ? err.message : t('status.connectionFailed'));
     } finally {
@@ -368,6 +370,7 @@ export function LMStudioProviderForm({
                   data-testid="lmstudio-refresh-models"
                   className="mt-6 flex-shrink-0 rounded-md border border-input bg-background px-2.5 py-2.5 text-muted-foreground hover:bg-muted hover:text-foreground transition-colors disabled:opacity-50"
                   title={t('lmstudio.refreshModels')}
+                  aria-label={t('lmstudio.refreshModels')}
                 >
                   <svg
                     className={`h-4 w-4 ${refreshing ? 'animate-spin' : ''}`}

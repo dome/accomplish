@@ -27,6 +27,7 @@ interface OllamaModel {
 interface OllamaProviderFormProps {
   connectedProvider?: ConnectedProvider;
   onConnect: (provider: ConnectedProvider) => void;
+  onUpdateProvider?: (provider: ConnectedProvider) => void;
   onDisconnect: () => void;
   onModelChange: (modelId: string) => void;
   showModelError: boolean;
@@ -172,6 +173,7 @@ function OllamaModelSelector({
 export function OllamaProviderForm({
   connectedProvider,
   onConnect,
+  onUpdateProvider,
   onDisconnect,
   onModelChange,
   showModelError,
@@ -271,7 +273,7 @@ export function OllamaProviderForm({
         })),
       };
 
-      onConnect(updatedProvider);
+      (onUpdateProvider || onConnect)(updatedProvider);
     } catch (err) {
       setError(err instanceof Error ? err.message : t('status.connectionFailed'));
     } finally {
@@ -366,6 +368,7 @@ export function OllamaProviderForm({
                   data-testid="ollama-refresh-models"
                   className="mt-6 flex-shrink-0 rounded-md border border-input bg-background px-2.5 py-2.5 text-muted-foreground hover:bg-muted hover:text-foreground transition-colors disabled:opacity-50"
                   title={t('ollama.refreshModels')}
+                  aria-label={t('ollama.refreshModels')}
                 >
                   <svg
                     className={`h-4 w-4 ${refreshing ? 'animate-spin' : ''}`}
