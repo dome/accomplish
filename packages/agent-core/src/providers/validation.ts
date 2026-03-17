@@ -1,5 +1,5 @@
 import type { ProviderType } from '../common/types/provider.js';
-import { ZAI_ENDPOINTS } from '../common/types/provider.js';
+import { MINIMAX_DEFAULT_BASE_URL, ZAI_ENDPOINTS } from '../common/types/provider.js';
 import type { ZaiRegion } from '../common/types/providerSettings.js';
 
 import { fetchWithTimeout } from '../utils/fetch.js';
@@ -148,20 +148,14 @@ export async function validateApiKey(
       }
 
       case 'minimax': {
-        const minimaxBase = (options?.baseUrl || 'https://api.minimax.io/v1').replace(/\/+$/, '');
+        const minimaxBase = (options?.baseUrl || MINIMAX_DEFAULT_BASE_URL).replace(/\/+$/, '');
         response = await fetchWithTimeout(
-          `${minimaxBase}/chat/completions`,
+          `${minimaxBase}/models`,
           {
-            method: 'POST',
+            method: 'GET',
             headers: {
-              'Content-Type': 'application/json',
               Authorization: `Bearer ${apiKey}`,
             },
-            body: JSON.stringify({
-              model: 'MiniMax-M2.5',
-              max_tokens: 1,
-              messages: [{ role: 'user', content: 'test' }],
-            }),
           },
           timeout,
         );
