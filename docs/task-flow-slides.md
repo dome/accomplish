@@ -52,7 +52,7 @@ graph LR
 
 Example: **"What are the meetings on my Google Calendar for tomorrow?"**
 
-User prompt travels through IPC to Electron Main, which persists to SQLite and spawns a PTY with the remote MCP connector config.
+User prompt travels through IPC to Electron Main, which persists to SQLite and spawns a PTY with MCP tool configs (including dev-browser-mcp for browser automation).
 
 ```mermaid
 sequenceDiagram
@@ -65,7 +65,7 @@ sequenceDiagram
   User->>UI: "What are the meetings on<br/>my Google Calendar for tomorrow?"
   UI->>Main: IPC: task:start
   Main->>Main: Save to SQLite · Create TaskManager
-  Main->>OC: Spawn PTY with config + prompt<br/>(includes Google Calendar MCP connector)
+  Main->>OC: Spawn PTY with config + prompt<br/>(includes dev-browser-mcp for browser automation)
   OC->>AI: Send prompt + system instructions
 ```
 
@@ -73,13 +73,14 @@ sequenceDiagram
 
 ## 2b. Phase 2 — Execution
 
-The AI plans the task, then calls the remote Google Calendar MCP connector (HTTP+SSE) to fetch calendar data. If it needs clarification, it uses the `ask_user` MCP tool (stdio → HTTP :9227).
+The AI plans the task, then uses the dev-browser-mcp tool (stdio) to automate a Chromium browser — navigating to Google Calendar and reading the page via ARIA accessibility snapshots. If it needs clarification, it uses the `ask_user` MCP tool (stdio → HTTP :9227).
 
 ```mermaid
 sequenceDiagram
   participant AI as AI Provider
   participant OC as OpenCode CLI
-  participant MCP as MCP: Google Calendar<br/>(remote HTTP+SSE)
+  participant MCP as MCP: dev-browser-mcp<br/>(stdio → Playwright)
+  participant Browser as Chromium<br/>(user session)
   participant Main as Electron Main
   participant UI as React UI
   participant User
@@ -87,11 +88,18 @@ sequenceDiagram
   AI->>OC: start_task (plan + todos)
   OC-->>Main: Todos → UI sidebar
 
-  AI->>OC: Call Google Calendar connector
-  OC->>MCP: HTTP+SSE: list events (tomorrow)
-  MCP-->>OC: Calendar events JSON
+  AI->>OC: browser_navigate("https://calendar.google.com")
+  OC->>MCP: MCP stdio: navigate
+  MCP->>Browser: Playwright: goto URL
+  Browser-->>MCP: Page loaded (user already logged in)
 
-  Note over AI,OC: AI formats the results
+  AI->>OC: browser_snapshot()
+  OC->>MCP: MCP stdio: snapshot
+  MCP->>Browser: Extract ARIA accessibility tree
+  Browser-->>MCP: DOM snapshot with element refs
+  MCP-->>OC: Structured text: meetings, times, refs
+
+  Note over AI,OC: AI parses meeting info from snapshot
 
   Note over OC,Main: Need clarification?
   OC->>Main: MCP stdio → HTTP :9227 (ask_user)
@@ -199,7 +207,7 @@ sequenceDiagram
 
   Note over AI: Has complete context<br/>from original task
 
-  AI->>OC: Call Google Calendar connector (Thursday)
+  AI->>OC: browser_navigate + browser_snapshot<br/>(Google Calendar → Thursday view)
   OC-->>Main: Stream results → UI
 
   AI->>OC: complete_task(success)
