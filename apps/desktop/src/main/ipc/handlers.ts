@@ -21,6 +21,7 @@ import {
   fetchProviderModels,
   testLiteLLMConnection,
   fetchLiteLLMModels,
+  testCustomConnection,
   validateHttpUrl,
   sanitizeString,
   generateTaskSummary,
@@ -42,8 +43,9 @@ import {
   validateLMStudioConfig,
 } from '@accomplish_ai/agent-core';
 import { getStorage } from '../store/storage';
-import { getOpenAiOauthStatus } from '@accomplish_ai/agent-core';
+import { getOpenAiOauthStatus, getSlackMcpOauthStatus } from '@accomplish_ai/agent-core';
 import { loginOpenAiWithChatGpt } from '../opencode/auth-browser';
+import { loginSlackMcp, logoutSlackMcp } from '../opencode/slack-auth';
 import type {
   ProviderId,
   ConnectedProvider,
@@ -100,6 +102,8 @@ import {
 } from '../test-utils/mock-task-flow';
 import { skillsManager } from '../skills';
 import { registerVertexHandlers } from '../providers';
+import * as workspaceManager from '../store/workspaceManager';
+import type { WorkspaceCreateInput, WorkspaceUpdateInput } from '@accomplish_ai/agent-core';
 
 const API_KEY_VALIDATION_TIMEOUT_MS = 15000;
 const MAX_ATTACHMENT_FILE_SIZE = 10 * 1024 * 1024; // 10MB
@@ -169,7 +173,7 @@ export function registerIPCHandlers(): void {
       const mockTask = createMockTask(taskId, validatedConfig.prompt);
       const scenario = detectScenarioFromPrompt(validatedConfig.prompt);
 
-      storage.saveTask(mockTask);
+      storage.saveTask(mockTask, workspaceManager.getActiveWorkspace());
 
       void executeMockTaskFlow(window, {
         taskId,
@@ -203,7 +207,7 @@ export function registerIPCHandlers(): void {
     };
     task.messages = [initialUserMessage];
 
-    storage.saveTask(task);
+    storage.saveTask(task, workspaceManager.getActiveWorkspace());
 
     generateTaskSummary(validatedConfig.prompt, getApiKey)
       .then((summary) => {
@@ -247,7 +251,7 @@ export function registerIPCHandlers(): void {
   });
 
   handle('task:list', async (_event: IpcMainInvokeEvent) => {
-    return storage.getTasks();
+    return storage.getTasks(workspaceManager.getActiveWorkspace());
   });
 
   handle('task:delete', async (_event: IpcMainInvokeEvent, taskId: string) => {
@@ -848,6 +852,22 @@ export function registerIPCHandlers(): void {
     storage.setLiteLLMConfig(config);
   });
 
+  handle(
+    'custom:test-connection',
+    async (_event: IpcMainInvokeEvent, baseUrl: string, apiKey?: string) => {
+      try {
+        const sanitizedUrl = sanitizeString(baseUrl, 'baseUrl', 256);
+        const sanitizedApiKey = apiKey ? sanitizeString(apiKey, 'apiKey', 512) : undefined;
+        return testCustomConnection(sanitizedUrl, sanitizedApiKey);
+      } catch (error) {
+        return {
+          success: false,
+          error: error instanceof Error ? error.message : 'Connection test failed',
+        };
+      }
+    },
+  );
+
   handle('lmstudio:test-connection', async (_event: IpcMainInvokeEvent, url: string) => {
     return testLMStudioConnection({ url });
   });
@@ -893,8 +913,12 @@ export function registerIPCHandlers(): void {
       }
 
       let urlOverride: string | undefined;
+      let endpointConfig = providerConfig.modelsEndpoint;
       if (providerId === 'openai' && options?.baseUrl) {
         urlOverride = `${options.baseUrl.replace(/\/+$/, '')}/models`;
+        // Remove modelFilter for custom base URLs since non-OpenAI servers
+        // (e.g. vLLM, LiteLLM) return model IDs that don't match OpenAI naming
+        endpointConfig = { ...endpointConfig, modelFilter: undefined };
       }
       if (providerId === 'zai' && options?.zaiRegion) {
         const region = options.zaiRegion as import('@accomplish_ai/agent-core').ZaiRegion;
@@ -902,7 +926,7 @@ export function registerIPCHandlers(): void {
       }
 
       return fetchProviderModels({
-        endpointConfig: providerConfig.modelsEndpoint,
+        endpointConfig,
         apiKey,
         urlOverride,
         timeout: API_KEY_VALIDATION_TIMEOUT_MS,
@@ -1049,6 +1073,19 @@ export function registerIPCHandlers(): void {
   handle('opencode:auth:openai:login', async (_event: IpcMainInvokeEvent) => {
     const result = await loginOpenAiWithChatGpt();
     return { ok: true, ...result };
+  });
+
+  handle('opencode:auth:slack:status', async (_event: IpcMainInvokeEvent) => {
+    return getSlackMcpOauthStatus();
+  });
+
+  handle('opencode:auth:slack:login', async (_event: IpcMainInvokeEvent) => {
+    await loginSlackMcp();
+    return { ok: true };
+  });
+
+  handle('opencode:auth:slack:logout', async (_event: IpcMainInvokeEvent) => {
+    await logoutSlackMcp();
   });
 
   handle('onboarding:complete', async (_event: IpcMainInvokeEvent) => {
@@ -1753,6 +1790,60 @@ export function registerIPCHandlers(): void {
   handle('connectors:disconnect', async (_event, connectorId: string) => {
     storage.deleteConnectorTokens(connectorId);
     storage.setConnectorStatus(connectorId, 'disconnected');
+  });
+
+  // Workspace management
+  handle('workspace:list', async () => {
+    return workspaceManager.listWorkspaces();
+  });
+
+  handle('workspace:get-active', async () => {
+    return workspaceManager.getActiveWorkspace();
+  });
+
+  handle('workspace:switch', async (event: IpcMainInvokeEvent, workspaceId: string) => {
+    const window = BrowserWindow.fromWebContents(event.sender);
+
+    let switched: boolean;
+    try {
+      switched = workspaceManager.switchWorkspace(workspaceId);
+    } catch (err) {
+      const reason = err instanceof Error ? err.message : String(err);
+      return { success: false, reason };
+    }
+
+    if (!switched) {
+      return { success: false, reason: 'Switch did not complete (task running or same workspace)' };
+    }
+
+    // Broadcast workspace change to renderer so it reloads tasks
+    if (window && !window.isDestroyed()) {
+      window.webContents.send('workspace:changed', { workspaceId });
+    }
+
+    return { success: true };
+  });
+
+  handle('workspace:create', async (_event: IpcMainInvokeEvent, input: WorkspaceCreateInput) => {
+    return workspaceManager.createWorkspace(input);
+  });
+
+  handle(
+    'workspace:update',
+    async (_event: IpcMainInvokeEvent, id: string, input: WorkspaceUpdateInput) => {
+      return workspaceManager.updateWorkspace(id, input);
+    },
+  );
+
+  handle('workspace:delete', async (event: IpcMainInvokeEvent, id: string) => {
+    const window = BrowserWindow.fromWebContents(event.sender);
+    const deleted = workspaceManager.deleteWorkspace(id);
+
+    if (deleted && window && !window.isDestroyed()) {
+      window.webContents.send('workspace:deleted', { workspaceId: id });
+    }
+
+    return deleted;
   });
 }
 
