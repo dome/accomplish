@@ -352,10 +352,27 @@ export function ExecutionPage() {
   useEffect(() => {
     setTaskActionError(null);
     setIsTaskActionRunning(false);
+
+    // Clear any stale Slack pending auth state when a new connector auth pause appears,
+    // so Settings > Connectors doesn't show "connection started" prematurely.
+    const action = currentTask?.result?.pauseAction;
+    if (
+      currentTask?.status === 'completed' &&
+      currentTask?.result?.pauseReason === 'auth' &&
+      action?.type === 'oauth-connect'
+    ) {
+      void accomplish.getSlackMcpOauthStatus().then((status) => {
+        if (status.pendingAuthorization) {
+          void accomplish.logoutSlackMcp();
+        }
+      });
+    }
   }, [
+    accomplish,
     currentTask?.id,
     currentTask?.status,
     currentTask?.result?.pauseReason,
+    currentTask?.result?.pauseAction,
     currentTask?.result?.pauseAction?.type,
     currentTask?.result?.pauseAction?.providerId,
   ]);
@@ -1164,11 +1181,10 @@ export function ExecutionPage() {
           </div>
         )}
 
-        {['completed', 'interrupted', 'failed', 'cancelled'].includes(
-          currentTask?.status ?? '',
-        ) && (
-          <ExecutionCompleteFooter taskId={currentTask.id} onStartNewTask={() => navigate('/')} />
-        )}
+        {['completed', 'interrupted', 'failed', 'cancelled'].includes(currentTask?.status ?? '') &&
+          !isConnectorAuthPause && (
+            <ExecutionCompleteFooter taskId={currentTask.id} onStartNewTask={() => navigate('/')} />
+          )}
 
         {/* Debug Panel */}
         {debugModeEnabled && (
