@@ -67,6 +67,7 @@ export type {
   LMStudioCredentials,
   AzureFoundryCredentials,
   OAuthCredentials,
+  CustomCredentials,
   ProviderCredentials,
   ToolSupportStatus,
   ConnectedProvider,
@@ -93,7 +94,6 @@ export type {
   VertexServiceAccountCredentials,
   VertexAdcCredentials,
 } from './types/auth.js';
-
 // OpenCode message types
 export type {
   OpenCodeMessage,
@@ -117,6 +117,9 @@ export {
   isOAuthProviderId,
 } from './types/connector.js';
 export type { ConnectorStatus, OAuthTokens, McpConnector } from './types/connector.js';
+
+// Workspace types
+export type { Workspace, WorkspaceCreateInput, WorkspaceUpdateInput } from './types/workspace.js';
 
 // Other types
 export type { TodoItem } from './types/todo.js';

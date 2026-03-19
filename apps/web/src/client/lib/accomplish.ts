@@ -25,8 +25,11 @@ import type {
   Skill,
   McpConnector,
   FileAttachmentInfo,
-} from '@accomplish_ai/agent-core/common';
-import type { StoredFavorite } from '@accomplish_ai/agent-core';
+  Workspace,
+  WorkspaceCreateInput,
+  WorkspaceUpdateInput,
+  StoredFavorite,
+} from '@accomplish_ai/agent-core';
 
 // Define the API interface
 interface AccomplishAPI {
@@ -277,6 +280,15 @@ interface AccomplishAPI {
     } | null,
   ): Promise<void>;
 
+  // Custom OpenAI-compatible endpoint configuration
+  testCustomConnection(
+    baseUrl: string,
+    apiKey?: string,
+  ): Promise<{
+    success: boolean;
+    error?: string;
+  }>;
+
   // Bedrock configuration
   validateBedrockCredentials(credentials: string): Promise<{ valid: boolean; error?: string }>;
   saveBedrockCredentials(credentials: string): Promise<ApiKeyConfig>;
@@ -391,6 +403,18 @@ interface AccomplishAPI {
     appVersion?: string;
     platform?: string;
   }): Promise<{ success: boolean; path?: string; error?: string; reason?: string }>;
+
+  // Workspace management
+  listWorkspaces(): Promise<Workspace[]>;
+  getActiveWorkspaceId(): Promise<string | null>;
+  switchWorkspace(workspaceId: string): Promise<{ success: boolean; reason?: string }>;
+  createWorkspace(input: WorkspaceCreateInput): Promise<Workspace>;
+  updateWorkspace(id: string, input: WorkspaceUpdateInput): Promise<Workspace | null>;
+  deleteWorkspace(id: string): Promise<boolean>;
+
+  // Workspace event subscriptions
+  onWorkspaceChanged?(callback: (data: { workspaceId: string }) => void): () => void;
+  onWorkspaceDeleted?(callback: (data: { workspaceId: string }) => void): () => void;
 
   // Skills management
   getSkills(): Promise<Skill[]>;

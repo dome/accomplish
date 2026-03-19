@@ -6,7 +6,15 @@
  */
 
 import { contextBridge, ipcRenderer, webUtils } from 'electron';
-import type { ProviderType, Skill, TodoItem, McpConnector } from '@accomplish_ai/agent-core';
+import type {
+  ProviderType,
+  Skill,
+  TodoItem,
+  McpConnector,
+  Workspace,
+  WorkspaceCreateInput,
+  WorkspaceUpdateInput,
+} from '@accomplish_ai/agent-core';
 
 // Expose the accomplish API to the renderer
 const accomplishAPI = {
@@ -291,6 +299,15 @@ const accomplishAPI = {
     } | null,
   ): Promise<void> => ipcRenderer.invoke('lmstudio:set-config', config),
 
+  // Custom OpenAI-compatible endpoint configuration
+  testCustomConnection: (
+    baseUrl: string,
+    apiKey?: string,
+  ): Promise<{
+    success: boolean;
+    error?: string;
+  }> => ipcRenderer.invoke('custom:test-connection', baseUrl, apiKey),
+
   // Bedrock
   validateBedrockCredentials: (credentials: string) =>
     ipcRenderer.invoke('bedrock:validate', credentials),
@@ -465,6 +482,7 @@ const accomplishAPI = {
   removeFavorite: (taskId: string): Promise<void> => ipcRenderer.invoke('favorites:remove', taskId),
   listFavorites: (): Promise<unknown[]> => ipcRenderer.invoke('favorites:list'),
   isFavorite: (taskId: string): Promise<boolean> => ipcRenderer.invoke('favorites:has', taskId),
+
   // File attachments
   pickFiles: (): Promise<import('@accomplish_ai/agent-core/common').FileAttachmentInfo[]> =>
     ipcRenderer.invoke('files:pick'),
@@ -538,6 +556,29 @@ const accomplishAPI = {
     platform?: string;
   }): Promise<{ success: boolean; path?: string; error?: string; reason?: string }> =>
     ipcRenderer.invoke('debug:generate-bug-report', data),
+
+  // Workspace management
+  listWorkspaces: (): Promise<Workspace[]> => ipcRenderer.invoke('workspace:list'),
+  getActiveWorkspaceId: (): Promise<string | null> => ipcRenderer.invoke('workspace:get-active'),
+  switchWorkspace: (workspaceId: string): Promise<{ success: boolean; reason?: string }> =>
+    ipcRenderer.invoke('workspace:switch', workspaceId),
+  createWorkspace: (input: WorkspaceCreateInput): Promise<Workspace> =>
+    ipcRenderer.invoke('workspace:create', input),
+  updateWorkspace: (id: string, input: WorkspaceUpdateInput): Promise<Workspace | null> =>
+    ipcRenderer.invoke('workspace:update', id, input),
+  deleteWorkspace: (id: string): Promise<boolean> => ipcRenderer.invoke('workspace:delete', id),
+
+  // Workspace event subscriptions
+  onWorkspaceChanged: (callback: (data: { workspaceId: string }) => void) => {
+    const listener = (_: unknown, data: { workspaceId: string }) => callback(data);
+    ipcRenderer.on('workspace:changed', listener);
+    return () => ipcRenderer.removeListener('workspace:changed', listener);
+  },
+  onWorkspaceDeleted: (callback: (data: { workspaceId: string }) => void) => {
+    const listener = (_: unknown, data: { workspaceId: string }) => callback(data);
+    ipcRenderer.on('workspace:deleted', listener);
+    return () => ipcRenderer.removeListener('workspace:deleted', listener);
+  },
 };
 
 // Expose the API to the renderer
