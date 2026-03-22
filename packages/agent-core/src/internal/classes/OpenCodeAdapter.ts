@@ -763,7 +763,9 @@ export class OpenCodeAdapter extends EventEmitter<OpenCodeAdapterEvents> {
     }
 
     if (isNormalExit(code, this.options.platform) && !this.hasCompleted) {
-      this.completionEnforcer.handleProcessExit(code ?? 0).catch((error) => {
+      // Normalize Windows Ctrl+C exit code to 0 so the completion enforcer treats it as a clean exit
+      const normalizedCode = code === WINDOWS_CTRL_C_EXIT_CODE ? 0 : (code ?? 0);
+      this.completionEnforcer.handleProcessExit(normalizedCode).catch((error) => {
         console.error('[OpenCode Adapter] Completion enforcer error:', error);
         this.hasCompleted = true;
         this.emit('complete', {
