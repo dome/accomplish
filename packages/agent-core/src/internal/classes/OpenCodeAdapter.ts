@@ -29,8 +29,8 @@ const LOG_TRUNCATION_LIMIT = 500;
  *  treat it the same as a clean exit (code === 0). */
 const WINDOWS_CTRL_C_EXIT_CODE = -1073741510;
 
-const isNormalExit = (code: number | null): boolean =>
-  code === 0 || (process.platform === 'win32' && code === WINDOWS_CTRL_C_EXIT_CODE);
+export const isNormalExit = (code: number | null, platform?: string): boolean =>
+  code === 0 || (platform === 'win32' && code === WINDOWS_CTRL_C_EXIT_CODE);
 
 interface ConnectorAuthPauseInput {
   providerId?: string;
@@ -751,7 +751,7 @@ export class OpenCodeAdapter extends EventEmitter<OpenCodeAdapterEvents> {
   private handleProcessExit(code: number | null): void {
     this.ptyProcess = null;
 
-    if (this.wasInterrupted && isNormalExit(code) && !this.hasCompleted) {
+    if (this.wasInterrupted && isNormalExit(code, this.options.platform) && !this.hasCompleted) {
       console.log('[OpenCode CLI] Task was interrupted by user');
       this.hasCompleted = true;
       this.emit('complete', {
@@ -762,7 +762,7 @@ export class OpenCodeAdapter extends EventEmitter<OpenCodeAdapterEvents> {
       return;
     }
 
-    if (isNormalExit(code) && !this.hasCompleted) {
+    if (isNormalExit(code, this.options.platform) && !this.hasCompleted) {
       this.completionEnforcer.handleProcessExit(code ?? 0).catch((error) => {
         console.error('[OpenCode Adapter] Completion enforcer error:', error);
         this.hasCompleted = true;
@@ -776,7 +776,7 @@ export class OpenCodeAdapter extends EventEmitter<OpenCodeAdapterEvents> {
     }
 
     if (!this.hasCompleted) {
-      if (code !== null && !isNormalExit(code)) {
+      if (code !== null && !isNormalExit(code, this.options.platform)) {
         this.emit('error', new Error(`OpenCode CLI exited with code ${code}`));
       }
     }

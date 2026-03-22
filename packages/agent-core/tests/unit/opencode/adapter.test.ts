@@ -3,6 +3,7 @@ import os from 'os';
 import {
   OpenCodeAdapter,
   OpenCodeCliNotFoundError,
+  isNormalExit,
   type AdapterOptions,
 } from '../../../src/internal/classes/OpenCodeAdapter.js';
 import {
@@ -516,5 +517,30 @@ describe('serializeError', () => {
 
   it('should handle null error', () => {
     expect(serializeError(null)).toBe('null');
+  });
+});
+
+describe('isNormalExit', () => {
+  it('returns true for exit code 0 on any platform', () => {
+    expect(isNormalExit(0, 'linux')).toBe(true);
+    expect(isNormalExit(0, 'darwin')).toBe(true);
+    expect(isNormalExit(0, 'win32')).toBe(true);
+    expect(isNormalExit(0, undefined)).toBe(true);
+  });
+
+  it('returns true for Windows STATUS_CONTROL_C_EXIT (-1073741510) on win32', () => {
+    expect(isNormalExit(-1073741510, 'win32')).toBe(true);
+  });
+
+  it('returns false for Windows STATUS_CONTROL_C_EXIT on non-Windows platforms', () => {
+    expect(isNormalExit(-1073741510, 'linux')).toBe(false);
+    expect(isNormalExit(-1073741510, 'darwin')).toBe(false);
+    expect(isNormalExit(-1073741510, undefined)).toBe(false);
+  });
+
+  it('returns false for non-zero exit codes', () => {
+    expect(isNormalExit(1, 'win32')).toBe(false);
+    expect(isNormalExit(-1, 'linux')).toBe(false);
+    expect(isNormalExit(null, 'win32')).toBe(false);
   });
 });
