@@ -4,6 +4,7 @@ import {
   OpenCodeAdapter,
   OpenCodeCliNotFoundError,
   isNormalExit,
+  WINDOWS_CTRL_C_EXIT_CODE,
   type AdapterOptions,
 } from '../../../src/internal/classes/OpenCodeAdapter.js';
 import {
@@ -528,14 +529,14 @@ describe('isNormalExit', () => {
     expect(isNormalExit(0, undefined)).toBe(true);
   });
 
-  it('returns true for Windows STATUS_CONTROL_C_EXIT (-1073741510) on win32', () => {
-    expect(isNormalExit(-1073741510, 'win32')).toBe(true);
+  it('returns true for Windows STATUS_CONTROL_C_EXIT (WINDOWS_CTRL_C_EXIT_CODE) on win32', () => {
+    expect(isNormalExit(WINDOWS_CTRL_C_EXIT_CODE, 'win32')).toBe(true);
   });
 
   it('returns false for Windows STATUS_CONTROL_C_EXIT on non-Windows platforms', () => {
-    expect(isNormalExit(-1073741510, 'linux')).toBe(false);
-    expect(isNormalExit(-1073741510, 'darwin')).toBe(false);
-    expect(isNormalExit(-1073741510, undefined)).toBe(false);
+    expect(isNormalExit(WINDOWS_CTRL_C_EXIT_CODE, 'linux')).toBe(false);
+    expect(isNormalExit(WINDOWS_CTRL_C_EXIT_CODE, 'darwin')).toBe(false);
+    expect(isNormalExit(WINDOWS_CTRL_C_EXIT_CODE, undefined)).toBe(false);
   });
 
   it('returns false for non-zero exit codes', () => {

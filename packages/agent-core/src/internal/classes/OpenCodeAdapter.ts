@@ -27,7 +27,7 @@ const LOG_TRUNCATION_LIMIT = 500;
 /** Windows STATUS_CONTROL_C_EXIT — exit code produced when a process is
  *  terminated via Ctrl+C (0xC000013A). On Windows this is not an error;
  *  treat it the same as a clean exit (code === 0). */
-const WINDOWS_CTRL_C_EXIT_CODE = -1073741510;
+export const WINDOWS_CTRL_C_EXIT_CODE = -1073741510;
 
 export const isNormalExit = (code: number | null, platform?: string): boolean =>
   code === 0 || (platform === 'win32' && code === WINDOWS_CTRL_C_EXIT_CODE);
@@ -764,7 +764,7 @@ export class OpenCodeAdapter extends EventEmitter<OpenCodeAdapterEvents> {
 
     if (isNormalExit(code, this.options.platform) && !this.hasCompleted) {
       // Normalize Windows Ctrl+C exit code to 0 so the completion enforcer treats it as a clean exit
-      const normalizedCode = code === WINDOWS_CTRL_C_EXIT_CODE ? 0 : (code ?? 0);
+      const normalizedCode = code === WINDOWS_CTRL_C_EXIT_CODE ? 0 : code;
       this.completionEnforcer.handleProcessExit(normalizedCode).catch((error) => {
         console.error('[OpenCode Adapter] Completion enforcer error:', error);
         this.hasCompleted = true;
