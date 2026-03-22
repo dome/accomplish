@@ -78,18 +78,17 @@ function ExecutionCompleteFooter({
   const canFavorite = FAVORITABLE_STATUSES.includes(rawStatus);
 
   const failedErrorMessage =
-    currentTask?.status === 'failed'
-      ? (currentTask.result?.errorMessage ??
-        currentTask.result?.error ??
-        tExecution('status.failed'))
-      : null;
+    currentTask?.status === 'failed' ? (currentTask.result?.error ?? null) : null;
+
+  const showFailedAlert =
+    failedErrorMessage !== null && failedErrorMessage !== tExecution('status.failed');
 
   return (
     <div className="flex-shrink-0 border-t border-border bg-card/50 px-6 py-4 flex flex-col items-center gap-3">
       <p className="text-sm text-muted-foreground">
         {tExecution('taskStatus', { status: statusLabel })}
       </p>
-      {failedErrorMessage && (
+      {showFailedAlert && (
         <Alert
           variant="destructive"
           className="py-2 px-3 flex items-center gap-2 [&>svg]:static [&>svg~*]:pl-0 max-w-md w-full"

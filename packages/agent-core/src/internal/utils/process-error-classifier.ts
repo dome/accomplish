@@ -13,14 +13,14 @@ export function classifyProcessError(exitCode: number | undefined, outputBuffer:
     output.includes('insufficient_quota') ||
     output.includes('exceeded your current quota') ||
     output.includes('billing_hard_limit_reached') ||
-    output.includes('insufficient credits')
+    output.includes('insufficient credits') ||
+    output.includes('resource_exhausted')
   ) {
     return 'API quota exceeded. Check your billing and usage limits, then try again.';
   }
 
   // Rate limit errors
   if (
-    output.includes('resource_exhausted') ||
     output.includes('rate limit') ||
     output.includes('ratelimit') ||
     output.includes('too many requests') ||
