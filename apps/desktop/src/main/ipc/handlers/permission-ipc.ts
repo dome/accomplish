@@ -32,7 +32,15 @@ function createPermissionApiInitializer(): (
     }
     // Set flag synchronously to prevent concurrent initialization on overlapping calls.
     initialized = true;
-    initPermissionApi(window, getActiveTaskId);
+    // Pass a getter so the current (non-destroyed) window is resolved at request time,
+    // rather than capturing a potentially stale reference from initialization.
+    initPermissionApi(
+      () =>
+        BrowserWindow.getFocusedWindow() ??
+        BrowserWindow.getAllWindows().find((w) => !w.isDestroyed()) ??
+        null,
+      getActiveTaskId,
+    );
     const permServer = startPermissionApiServer();
     const questionServer = startQuestionApiServer();
     // Await actual server readiness. Listen for both 'listening' and 'error' so that an

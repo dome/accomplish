@@ -19,21 +19,27 @@ import {
   type PermissionQuestionRequestData as QuestionRequestData,
   type PermissionQuestionResponseData as QuestionResponseData,
 } from '@accomplish_ai/agent-core';
+import { getLogCollector } from './logging';
 
 export { PERMISSION_API_PORT, QUESTION_API_PORT, isFilePermissionRequest, isQuestionRequest };
 
 // Singleton permission request handler
 const permissionHandler: PermissionHandlerAPI = createPermissionHandler();
 
-// Store reference to main window and task manager
-let mainWindow: BrowserWindow | null = null;
+// Store getter functions instead of direct references to avoid stale window captures
+let getMainWindow: (() => BrowserWindow | null) | null = null;
 let getActiveTaskId: (() => string | null) | null = null;
 
 /**
- * Initialize the permission API with dependencies
+ * Initialize the permission API with dependencies.
+ * Accepts a getter for the main window so that the current (non-destroyed)
+ * window is always resolved at request time, even after reloads/recreations.
  */
-export function initPermissionApi(window: BrowserWindow, taskIdGetter: () => string | null): void {
-  mainWindow = window;
+export function initPermissionApi(
+  getWindow: () => BrowserWindow | null,
+  taskIdGetter: () => string | null,
+): void {
+  getMainWindow = getWindow;
   getActiveTaskId = taskIdGetter;
 }
 
@@ -101,8 +107,11 @@ export function startPermissionApiServer(): http.Server {
       return;
     }
 
+    // Resolve the current window at request time to avoid stale references
+    const currentWindow = getMainWindow ? getMainWindow() : null;
+
     // Check if we have the necessary dependencies
-    if (!mainWindow || mainWindow.isDestroyed() || !getActiveTaskId) {
+    if (!currentWindow || currentWindow.isDestroyed() || !getActiveTaskId) {
       res.writeHead(503, { 'Content-Type': 'application/json' });
       res.end(JSON.stringify({ error: 'Permission API not initialized' }));
       return;
@@ -122,7 +131,7 @@ export function startPermissionApiServer(): http.Server {
     const permissionRequest = permissionHandler.buildFilePermissionRequest(requestId, taskId, data);
 
     // Send to renderer (Electron-specific)
-    mainWindow.webContents.send('permission:request', permissionRequest);
+    currentWindow.webContents.send('permission:request', permissionRequest);
 
     // Wait for user response
     try {
@@ -200,8 +209,11 @@ export function startQuestionApiServer(): http.Server {
       return;
     }
 
+    // Resolve the current window at request time to avoid stale references
+    const currentWindow = getMainWindow ? getMainWindow() : null;
+
     // Check if we have the necessary dependencies
-    if (!mainWindow || mainWindow.isDestroyed() || !getActiveTaskId) {
+    if (!currentWindow || currentWindow.isDestroyed() || !getActiveTaskId) {
       res.writeHead(503, { 'Content-Type': 'application/json' });
       res.end(JSON.stringify({ error: 'Question API not initialized' }));
       return;
@@ -221,7 +233,7 @@ export function startQuestionApiServer(): http.Server {
     const questionRequest = permissionHandler.buildQuestionRequest(requestId, taskId, data);
 
     // Send to renderer (Electron-specific)
-    mainWindow.webContents.send('permission:request', questionRequest);
+    currentWindow.webContents.send('permission:request', questionRequest);
 
     // Wait for user response
     try {
@@ -235,7 +247,10 @@ export function startQuestionApiServer(): http.Server {
   });
 
   server.listen(QUESTION_API_PORT, '127.0.0.1', () => {
-    console.log(`[Question API] Server listening on port ${QUESTION_API_PORT}`);
+    getLogCollector().logEnv(
+      'INFO',
+      `[Question API] Server listening on port ${QUESTION_API_PORT}`,
+    );
   });
 
   server.on('error', (error: NodeJS.ErrnoException) => {
