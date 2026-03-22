@@ -82,11 +82,13 @@ export class WhatsAppService extends EventEmitter implements ChannelAdapter {
       throw new Error('WhatsApp service has been disposed');
     }
 
-    if (this.status === 'connecting' && !this.reconnectScheduled) {
+    this.clearReconnectTimer();
+    this.reconnectScheduled = false;
+
+    if (this.status === 'connecting') {
       return;
     }
 
-    this.reconnectScheduled = false;
     this.setStatus('connecting');
 
     try {
@@ -296,6 +298,10 @@ export class WhatsAppService extends EventEmitter implements ChannelAdapter {
   }
 
   private attemptReconnect(): void {
+    if (this.reconnectScheduled) {
+      return;
+    }
+
     if (this.reconnectAttempts >= MAX_RECONNECT_ATTEMPTS) {
       console.warn('[WhatsApp] Max reconnect attempts reached');
       this.setStatus('disconnected');
@@ -306,11 +312,13 @@ export class WhatsAppService extends EventEmitter implements ChannelAdapter {
     this.reconnectScheduled = true;
 
     const delay = INITIAL_RECONNECT_DELAY_MS * Math.pow(2, this.reconnectAttempts - 1);
-    console.log(
+    console.warn(
       `[WhatsApp] Reconnecting in ${delay}ms (attempt ${this.reconnectAttempts}/${MAX_RECONNECT_ATTEMPTS})`,
     );
 
+    this.clearReconnectTimer();
     this.reconnectTimer = setTimeout(() => {
+      this.reconnectScheduled = false;
       this.connect().catch((err) => console.error('[WhatsApp] Reconnect failed:', err));
     }, delay);
   }

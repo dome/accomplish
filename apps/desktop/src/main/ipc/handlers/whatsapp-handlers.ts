@@ -18,6 +18,12 @@ import {
 import { wireTaskBridge, wireStatusListeners } from '../../services/whatsapp/wireTaskBridge';
 import type { MessagingConnectionStatus } from '@accomplish_ai/agent-core/common';
 
+// Per-renderer named handler maps — keyed by webContents id — so we can remove
+// only the specific callbacks for a given renderer without touching other listeners.
+const _qrHandlers = new Map<number, (qr: string) => void>();
+const _statusHandlers = new Map<number, (status: MessagingConnectionStatus) => void>();
+const _phoneNumberHandlers = new Map<number, (phoneNumber: string) => void>();
+
 export function registerWhatsAppHandlers(handle: IpcHandler): void {
   const storage = getStorage();
 
@@ -41,19 +47,35 @@ export function registerWhatsAppHandlers(handle: IpcHandler): void {
   handle('integrations:whatsapp:connect', async (event: IpcMainInvokeEvent) => {
     const service = getOrCreateWhatsAppService();
 
-    // Remove stale listeners from any previous connect call to avoid duplicates
-    service.removeAllListeners('qr');
-    service.removeAllListeners('status');
-
     const sender = event.sender;
+    const senderId = sender.id;
 
-    service.on('qr', (qr: string) => {
+    // Remove stale per-renderer listeners from any previous connect call to avoid duplicates
+    const prevQr = _qrHandlers.get(senderId);
+    if (prevQr) {
+      service.off('qr', prevQr);
+      _qrHandlers.delete(senderId);
+    }
+    const prevStatus = _statusHandlers.get(senderId);
+    if (prevStatus) {
+      service.off('status', prevStatus);
+      _statusHandlers.delete(senderId);
+    }
+    const prevPhone = _phoneNumberHandlers.get(senderId);
+    if (prevPhone) {
+      service.off('phoneNumber', prevPhone);
+      _phoneNumberHandlers.delete(senderId);
+    }
+
+    const qrHandler = (qr: string): void => {
       if (!sender.isDestroyed()) {
         sender.send('integrations:whatsapp:qr', qr);
       }
-    });
+    };
+    _qrHandlers.set(senderId, qrHandler);
+    service.on('qr', qrHandler);
 
-    service.on('status', (status: MessagingConnectionStatus) => {
+    const statusHandler = (status: MessagingConnectionStatus): void => {
       if (!sender.isDestroyed()) {
         sender.send('integrations:whatsapp:status', status);
       }
@@ -71,9 +93,11 @@ export function registerWhatsAppHandlers(handle: IpcHandler): void {
           },
         },
       });
-    });
+    };
+    _statusHandlers.set(senderId, statusHandler);
+    service.on('status', statusHandler);
 
-    service.on('phoneNumber', (phoneNumber: string) => {
+    const phoneNumberHandler = (phoneNumber: string): void => {
       const current = storage.getMessagingConfig();
       storage.setMessagingConfig({
         integrations: {
@@ -89,7 +113,9 @@ export function registerWhatsAppHandlers(handle: IpcHandler): void {
           },
         },
       });
-    });
+    };
+    _phoneNumberHandlers.set(senderId, phoneNumberHandler);
+    service.on('phoneNumber', phoneNumberHandler);
 
     // Wire the task bridge (from PR #595 — aryan877)
     const existingBridge = getActiveWhatsAppBridge();
