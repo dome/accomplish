@@ -2,6 +2,10 @@ import type { IpcMainInvokeEvent } from 'electron';
 import { validateHttpUrl } from '@accomplish_ai/agent-core';
 import { getOpenAiOauthStatus, getSlackMcpOauthStatus } from '@accomplish_ai/agent-core';
 import { loginOpenAiWithChatGpt } from '../../../opencode/auth-browser';
+import {
+  isOpenCodeCliInstallError,
+  INSTALL_ERROR_MESSAGE,
+} from '../../../opencode/cli-error-utils';
 import { loginSlackMcp, logoutSlackMcp } from '../../../opencode/slack-auth';
 import type { IpcHandler } from '../../types';
 import { getStorage } from '../../../store/storage';
@@ -38,17 +42,8 @@ export function registerAuthHandlers(handle: IpcHandler): void {
       return { ok: true, ...result };
     } catch (err) {
       const message = err instanceof Error ? err.message : String(err);
-      if (
-        message.includes('package manager failed') ||
-        message.includes('failed to install') ||
-        message.includes('opencode-darwin') ||
-        message.includes('opencode-linux') ||
-        message.includes('opencode-win32') ||
-        message.includes('manually installing')
-      ) {
-        throw new Error(
-          'OpenCode CLI installation issue detected. Please try restarting the app or reinstalling from accomplish.ai',
-        );
+      if (isOpenCodeCliInstallError(message)) {
+        throw new Error(INSTALL_ERROR_MESSAGE, { cause: err });
       }
       if (err instanceof Error) {
         throw err;

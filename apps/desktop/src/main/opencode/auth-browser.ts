@@ -2,6 +2,8 @@ import * as pty from 'node-pty';
 import { app, shell } from 'electron';
 import { getOpenCodeCliPath } from './electron-options';
 import { generateOpenCodeConfig } from './config-generator';
+import { isOpenCodeCliInstallError, INSTALL_ERROR_MESSAGE } from './cli-error-utils';
+import { getLogCollector } from '../logging';
 import {
   stripAnsi,
   quoteForShell,
@@ -113,25 +115,11 @@ export class OAuthBrowserFlow {
         }
 
         // Detect known CLI installation error patterns and surface a friendly message
-        const normalizedBuffer = buffer.toLowerCase();
-        const installErrorPatterns = [
-          'package manager failed',
-          'failed to install',
-          'opencode-darwin',
-          'opencode-linux',
-          'opencode-win32',
-          'manually installing',
-        ];
-        const isInstallError = installErrorPatterns.some((pattern) =>
-          normalizedBuffer.includes(pattern),
-        );
-
-        if (isInstallError) {
-          reject(
-            new Error(
-              'OpenCode CLI installation issue detected. Please try restarting the app or reinstalling from accomplish.ai',
-            ),
-          );
+        if (isOpenCodeCliInstallError(buffer)) {
+          getLogCollector().logEnv('WARN', '[Auth] CLI install error detected', {
+            tail: buffer.slice(-200),
+          });
+          reject(new Error(INSTALL_ERROR_MESSAGE));
           return;
         }
 

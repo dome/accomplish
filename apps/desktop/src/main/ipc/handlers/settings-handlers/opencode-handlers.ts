@@ -2,6 +2,7 @@ import type { IpcMainInvokeEvent } from 'electron';
 import type { IpcHandler } from '../../types';
 import { isOpenCodeCliInstalled, getOpenCodeCliVersion } from '../../../opencode';
 import { isE2ESkipAuthEnabled } from '../utils';
+import { getLogCollector } from '../../../logging';
 
 export function registerOpenCodeHandlers(handle: IpcHandler): void {
   handle('opencode:check', async (_event: IpcMainInvokeEvent) => {
@@ -20,7 +21,10 @@ export function registerOpenCodeHandlers(handle: IpcHandler): void {
       version = installed ? await getOpenCodeCliVersion() : null;
     } catch (err) {
       const message = err instanceof Error ? err.message : String(err);
-      console.warn('[opencode:check] CLI check failed:', message);
+      getLogCollector().logEnv('WARN', '[opencode:check] CLI check failed', {
+        message,
+        error: err,
+      });
       installed = false;
       version = null;
     }
