@@ -6,6 +6,7 @@ import path from 'path';
 
 import { StreamParser } from './StreamParser.js';
 import { OpenCodeLogWatcher, createLogWatcher, OpenCodeLogError } from './OpenCodeLogWatcher.js';
+import { classifyProcessError } from '../utils/process-error-classifier.js';
 import {
   CompletionEnforcer,
   CompletionEnforcerCallbacks,
@@ -120,6 +121,16 @@ export class OpenCodeAdapter extends EventEmitter<OpenCodeAdapterEvents> {
   private waitingTransitionTimer: ReturnType<typeof setTimeout> | null = null;
   private hasReceivedFirstTool: boolean = false;
   private startTaskCalled: boolean = false;
+  private outputBuffer: string = '';
+  private static readonly OUTPUT_BUFFER_MAX = 4096;
+
+  private appendToOutputBuffer(data: string): void {
+    if (data.length >= OpenCodeAdapter.OUTPUT_BUFFER_MAX) {
+      this.outputBuffer = data.slice(-OpenCodeAdapter.OUTPUT_BUFFER_MAX);
+    } else {
+      this.outputBuffer = (this.outputBuffer + data).slice(-OpenCodeAdapter.OUTPUT_BUFFER_MAX);
+    }
+  }
   private options: AdapterOptions;
   private sandboxProvider: SandboxProvider;
   private sandboxConfig: SandboxConfig;
@@ -239,6 +250,7 @@ export class OpenCodeAdapter extends EventEmitter<OpenCodeAdapterEvents> {
     this.lastWorkingDirectory = config.workingDirectory;
     this.hasReceivedFirstTool = false;
     this.startTaskCalled = false;
+    this.outputBuffer = '';
     if (this.waitingTransitionTimer) {
       clearTimeout(this.waitingTransitionTimer);
       this.waitingTransitionTimer = null;
@@ -333,6 +345,8 @@ export class OpenCodeAdapter extends EventEmitter<OpenCodeAdapterEvents> {
             (cleanData.length > LOG_TRUNCATION_LIMIT ? '...' : '');
           console.log('[OpenCode CLI stdout]:', truncated);
           this.emit('debug', { type: 'stdout', message: cleanData });
+
+          this.appendToOutputBuffer(cleanData);
 
           this.streamParser.feed(cleanData);
         }
@@ -624,10 +638,11 @@ export class OpenCodeAdapter extends EventEmitter<OpenCodeAdapterEvents> {
         if (message.part.reason === 'error') {
           if (!this.hasCompleted) {
             this.hasCompleted = true;
+            const errorMessage = classifyProcessError(undefined, this.outputBuffer);
             this.emit('complete', {
               status: 'error',
               sessionId: this.currentSessionId || undefined,
-              error: 'Task failed',
+              error: errorMessage,
             });
           }
           break;
@@ -764,7 +779,7 @@ export class OpenCodeAdapter extends EventEmitter<OpenCodeAdapterEvents> {
 
     if (isNormalExit(code, this.options.platform) && !this.hasCompleted) {
       // Normalize Windows Ctrl+C exit code to 0 so the completion enforcer treats it as a clean exit
-      const normalizedCode = code === WINDOWS_CTRL_C_EXIT_CODE ? 0 : code;
+      const normalizedCode = code === WINDOWS_CTRL_C_EXIT_CODE ? 0 : (code ?? 0);
       this.completionEnforcer.handleProcessExit(normalizedCode).catch((error) => {
         console.error('[OpenCode Adapter] Completion enforcer error:', error);
         this.hasCompleted = true;
@@ -777,10 +792,10 @@ export class OpenCodeAdapter extends EventEmitter<OpenCodeAdapterEvents> {
       return;
     }
 
-    if (!this.hasCompleted) {
-      if (code !== null && !isNormalExit(code, this.options.platform)) {
-        this.emit('error', new Error(`OpenCode CLI exited with code ${code}`));
-      }
+    if (!this.hasCompleted && !isNormalExit(code, this.options.platform)) {
+      // Treat null (abnormal PTY termination) and non-zero non-normal codes as errors
+      const errorMessage = classifyProcessError(code ?? undefined, this.outputBuffer);
+      this.emit('error', new Error(errorMessage));
     }
 
     this.currentTaskId = null;
@@ -795,6 +810,7 @@ export class OpenCodeAdapter extends EventEmitter<OpenCodeAdapterEvents> {
     console.log(`[OpenCode Adapter] Starting session resumption with session ${sessionId}`);
 
     this.streamParser.reset();
+    this.outputBuffer = '';
 
     const config: TaskConfig = {
       prompt,
@@ -849,6 +865,8 @@ export class OpenCodeAdapter extends EventEmitter<OpenCodeAdapterEvents> {
           (cleanData.length > LOG_TRUNCATION_LIMIT ? '...' : '');
         console.log('[OpenCode CLI stdout]:', truncated);
         this.emit('debug', { type: 'stdout', message: cleanData });
+
+        this.appendToOutputBuffer(cleanData);
 
         this.streamParser.feed(cleanData);
       }
