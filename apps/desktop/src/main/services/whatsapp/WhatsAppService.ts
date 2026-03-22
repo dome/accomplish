@@ -61,6 +61,7 @@ export class WhatsAppService extends EventEmitter implements ChannelAdapter {
   private reconnectTimer: ReturnType<typeof setTimeout> | null = null;
   private authStatePath: string;
   private disposed = false;
+  private manualDisconnect = false;
   private qrCode: string | null = null;
 
   constructor() {
@@ -84,6 +85,7 @@ export class WhatsAppService extends EventEmitter implements ChannelAdapter {
 
     this.clearReconnectTimer();
     this.reconnectScheduled = false;
+    this.manualDisconnect = false;
 
     if (this.status === 'connecting') {
       return;
@@ -144,6 +146,12 @@ export class WhatsAppService extends EventEmitter implements ChannelAdapter {
 
           if (connection === 'close') {
             this.qrCode = null;
+
+            if (this.manualDisconnect) {
+              this.setStatus('disconnected');
+              return;
+            }
+
             const boomError = lastDisconnect?.error as
               | { output?: { statusCode?: number } }
               | undefined;
@@ -274,8 +282,14 @@ export class WhatsAppService extends EventEmitter implements ChannelAdapter {
   }
 
   async disconnect(): Promise<void> {
+    this.manualDisconnect = true;
+    this.reconnectScheduled = false;
+    this.reconnectAttempts = 0;
     this.clearReconnectTimer();
     if (this.socket) {
+      this.socket.ev.removeAllListeners('creds.update');
+      this.socket.ev.removeAllListeners('connection.update');
+      this.socket.ev.removeAllListeners('messages.upsert');
       await this.socket.logout().catch(() => {});
       this.socket.end(new Error('User requested disconnect'));
       this.socket = null;
