@@ -154,10 +154,10 @@ export function registerWhatsAppHandlers(handle: IpcHandler): void {
         integrations: {
           ...(current?.integrations ?? {}),
           whatsapp: {
+            ...(current?.integrations?.whatsapp ?? {}),
             platform: 'whatsapp',
             enabled,
             tunnelEnabled: false,
-            ...(current?.integrations?.whatsapp ?? {}),
           },
         },
       });
