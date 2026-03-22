@@ -13,8 +13,17 @@ export function registerOpenCodeHandlers(handle: IpcHandler): void {
       };
     }
 
-    const installed = await isOpenCodeCliInstalled();
-    const version = installed ? await getOpenCodeCliVersion() : null;
+    let installed = false;
+    let version: string | null = null;
+    try {
+      installed = await isOpenCodeCliInstalled();
+      version = installed ? await getOpenCodeCliVersion() : null;
+    } catch (err) {
+      const message = err instanceof Error ? err.message : String(err);
+      console.warn('[opencode:check] CLI check failed:', message);
+      installed = false;
+      version = null;
+    }
     return {
       installed,
       version,

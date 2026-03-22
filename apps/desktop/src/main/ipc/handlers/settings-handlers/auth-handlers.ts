@@ -33,8 +33,25 @@ export function registerAuthHandlers(handle: IpcHandler): void {
   });
 
   handle('opencode:auth:openai:login', async (_event: IpcMainInvokeEvent) => {
-    const result = await loginOpenAiWithChatGpt();
-    return { ok: true, ...result };
+    try {
+      const result = await loginOpenAiWithChatGpt();
+      return { ok: true, ...result };
+    } catch (err) {
+      const message = err instanceof Error ? err.message : String(err);
+      if (
+        message.includes('package manager failed') ||
+        message.includes('failed to install') ||
+        message.includes('opencode-darwin') ||
+        message.includes('opencode-linux') ||
+        message.includes('opencode-win32') ||
+        message.includes('manually installing')
+      ) {
+        throw new Error(
+          'OpenCode CLI installation issue detected. Please try restarting the app or reinstalling from accomplish.ai',
+        );
+      }
+      throw err;
+    }
   });
 
   handle('opencode:auth:slack:status', async (_event: IpcMainInvokeEvent) => {

@@ -112,6 +112,24 @@ export class OAuthBrowserFlow {
           return;
         }
 
+        // Detect known CLI installation error patterns and surface a friendly message
+        const isInstallError =
+          buffer.includes('package manager failed') ||
+          buffer.includes('failed to install') ||
+          buffer.includes('opencode-darwin') ||
+          buffer.includes('opencode-linux') ||
+          buffer.includes('opencode-win32') ||
+          buffer.includes('manually installing');
+
+        if (isInstallError) {
+          reject(
+            new Error(
+              'OpenCode CLI installation issue detected. Please try restarting the app or reinstalling from accomplish.ai',
+            ),
+          );
+          return;
+        }
+
         const tail = buffer.trim().split('\n').slice(-15).join('\n');
         const redacted = tail
           .replace(/https?:\/\/\S+/g, '[url]')
