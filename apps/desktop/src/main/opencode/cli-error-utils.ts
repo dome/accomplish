@@ -5,6 +5,9 @@ const INSTALL_ERROR_PATTERNS = [
   'opencode-linux',
   'opencode-win32',
   'manually installing',
+  // Windows-specific: CLI binary must be an .exe path
+  'windows cli command',
+  'resolve to an .exe path',
 ];
 
 export function isOpenCodeCliInstallError(message: string): boolean {

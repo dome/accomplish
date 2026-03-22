@@ -23,7 +23,7 @@ export function registerOpenCodeHandlers(handle: IpcHandler): void {
       const message = err instanceof Error ? err.message : String(err);
       getLogCollector().logEnv('WARN', '[opencode:check] CLI check failed', {
         message,
-        error: err,
+        stack: err instanceof Error ? err.stack : undefined,
       });
       installed = false;
       version = null;

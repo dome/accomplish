@@ -117,7 +117,11 @@ export class OAuthBrowserFlow {
         // Detect known CLI installation error patterns and surface a friendly message
         if (isOpenCodeCliInstallError(buffer)) {
           getLogCollector().logEnv('WARN', '[Auth] CLI install error detected', {
-            tail: buffer.slice(-200),
+            // Redact URLs and potential tokens before logging
+            tail: buffer
+              .slice(-200)
+              .replace(/https?:\/\/\S+/gi, '[URL]')
+              .replace(/[A-Za-z0-9_-]{30,}/g, '[REDACTED]'),
           });
           reject(new Error(INSTALL_ERROR_MESSAGE));
           return;
