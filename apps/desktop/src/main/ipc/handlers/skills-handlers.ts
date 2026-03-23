@@ -38,7 +38,7 @@ export function registerSkillsHandlers(): void {
   });
 
   handle('skills:add-from-folder', async (_event: IpcMainInvokeEvent, folderPath: string) => {
-    return skillsManager.addSkill(folderPath);
+    return skillsManager.addFromFolder(folderPath);
   });
 
   handle('skills:add-from-github', async (_event: IpcMainInvokeEvent, rawUrl: string) => {

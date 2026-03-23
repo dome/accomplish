@@ -254,27 +254,14 @@ export class SkillsManager {
     const destSkillMdPath = this.prepareSkillDir(frontmatter);
     const destDir = path.dirname(destSkillMdPath);
 
-    // Remove existing top-level files so re-imports don't leave stale companions
+    // Remove existing contents so re-imports don't leave stale files
     if (fs.existsSync(destDir)) {
-      const existing = fs.readdirSync(destDir, { withFileTypes: true });
-      for (const entry of existing) {
-        if (!entry.isFile()) {
-          continue;
-        }
-        fs.unlinkSync(path.join(destDir, entry.name));
-      }
+      fs.rmSync(destDir, { recursive: true });
+      fs.mkdirSync(destDir, { recursive: true });
     }
 
-    // Copy all top-level files from the source folder into the destination
-    const entries = fs.readdirSync(folderPath, { withFileTypes: true });
-    for (const entry of entries) {
-      if (!entry.isFile()) {
-        continue;
-      }
-      const srcFile = path.join(folderPath, entry.name);
-      const destFile = path.join(destDir, entry.name);
-      fs.copyFileSync(srcFile, destFile);
-    }
+    // Copy all contents from the source folder into the destination recursively
+    fs.cpSync(folderPath, destDir, { recursive: true });
 
     return this.persistSkill(frontmatter, destSkillMdPath, 'custom');
   }
