@@ -293,7 +293,9 @@ export function OllamaProviderForm({
     } catch (err) {
       setError(err instanceof Error ? err.message : t('status.connectionFailed'));
     } finally {
-      setRefreshing(false);
+      if (requestId === refreshRequestIdRef.current) {
+        setRefreshing(false);
+      }
     }
   };
 
