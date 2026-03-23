@@ -25,7 +25,13 @@ import {
 } from '../storage/repositories/index.js';
 
 /** Providers that use the @ai-sdk/openai-compatible adapter */
-const OPENAI_COMPATIBLE_PROVIDER_IDS = ['nebius', 'together', 'fireworks', 'groq'] as const;
+const OPENAI_COMPATIBLE_PROVIDER_IDS = [
+  'nebius',
+  'together',
+  'fireworks',
+  'groq',
+  'venice',
+] as const;
 
 /**
  * Paths required for config generation (Electron-specific resolution stays in desktop)
@@ -530,6 +536,41 @@ export async function buildProviderConfigs(
       });
       console.log('[OpenCode Config Builder] LM Studio (legacy) configured:', Object.keys(models));
     }
+  }
+
+  // Custom OpenAI-compatible provider
+  const customProvider = providerSettings.connectedProviders.custom;
+  if (
+    customProvider?.connectionStatus === 'connected' &&
+    customProvider.credentials.type === 'custom' &&
+    customProvider.selectedModelId
+  ) {
+    const customApiKey = getApiKey('custom');
+    const creds = customProvider.credentials;
+    // Normalize base URL - remove trailing slash, use as-is (user should provide correct base URL)
+    const baseURL = creds.baseUrl.replace(/\/+$/, '');
+    const modelId = customProvider.selectedModelId.replace(/^custom\//, '');
+    providerConfigs.push({
+      id: 'custom',
+      npm: '@ai-sdk/openai-compatible',
+      name: 'Custom Endpoint',
+      options: {
+        baseURL,
+        ...(customApiKey ? { apiKey: customApiKey } : {}),
+      },
+      models: {
+        [modelId]: { name: modelId, tools: true },
+      },
+    });
+    if (!enabledProviders.includes('custom')) {
+      enabledProviders.push('custom');
+    }
+    console.log(
+      '[OpenCode Config Builder] Custom endpoint configured:',
+      modelId,
+      'baseURL:',
+      baseURL,
+    );
   }
 
   // Azure Foundry provider
