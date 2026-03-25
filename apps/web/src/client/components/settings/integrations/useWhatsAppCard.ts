@@ -118,19 +118,34 @@ export function useWhatsAppCard(): WhatsAppCardState & WhatsAppCardActions {
         setQrCode(null);
         setConnecting(false);
         setError(null);
-        if (qrTimerRef.current) { clearInterval(qrTimerRef.current); qrTimerRef.current = null; }
-        if (connectTimeoutRef.current) { clearTimeout(connectTimeoutRef.current); connectTimeoutRef.current = null; }
+        if (qrTimerRef.current) {
+          clearInterval(qrTimerRef.current);
+          qrTimerRef.current = null;
+        }
+        if (connectTimeoutRef.current) {
+          clearTimeout(connectTimeoutRef.current);
+          connectTimeoutRef.current = null;
+        }
         fetchConfig();
       }
       if (status === 'disconnected' || status === 'logged_out') {
         setQrCode(null);
         setConnecting(false);
-        if (qrTimerRef.current) { clearInterval(qrTimerRef.current); qrTimerRef.current = null; }
-        if (connectTimeoutRef.current) { clearTimeout(connectTimeoutRef.current); connectTimeoutRef.current = null; }
+        if (qrTimerRef.current) {
+          clearInterval(qrTimerRef.current);
+          qrTimerRef.current = null;
+        }
+        if (connectTimeoutRef.current) {
+          clearTimeout(connectTimeoutRef.current);
+          connectTimeoutRef.current = null;
+        }
       }
     });
 
-    return () => { unsubQR(); unsubStatus(); };
+    return () => {
+      unsubQR();
+      unsubStatus();
+    };
   }, [accomplish, fetchConfig]);
 
   const handleConnect = useCallback(async () => {
@@ -142,14 +157,19 @@ export function useWhatsAppCard(): WhatsAppCardState & WhatsAppCardActions {
     }
     connectTimeoutRef.current = setTimeout(() => {
       setConnecting((prev) => {
-        if (prev) { setError('Connection timed out. Please try again.'); }
+        if (prev) {
+          setError('Connection timed out. Please try again.');
+        }
         return false;
       });
     }, 30_000);
     try {
       await accomplish.connectWhatsApp();
     } catch (err) {
-      if (connectTimeoutRef.current) { clearTimeout(connectTimeoutRef.current); connectTimeoutRef.current = null; }
+      if (connectTimeoutRef.current) {
+        clearTimeout(connectTimeoutRef.current);
+        connectTimeoutRef.current = null;
+      }
       setError(err instanceof Error ? err.message : 'Failed to connect');
       setConnecting(false);
     }
@@ -164,7 +184,9 @@ export function useWhatsAppCard(): WhatsAppCardState & WhatsAppCardActions {
     setConfirmDisconnect(false);
     try {
       await accomplish.disconnectWhatsApp();
-      setConfig(null); setQrCode(null); setError(null);
+      setConfig(null);
+      setQrCode(null);
+      setError(null);
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Failed to disconnect');
     } finally {
@@ -173,8 +195,16 @@ export function useWhatsAppCard(): WhatsAppCardState & WhatsAppCardActions {
   }, [confirmDisconnect, accomplish]);
 
   return {
-    config, loading, connecting, disconnecting, confirmDisconnect,
-    error, qrCode, qrExpiresAt,
-    handleConnect, handleDisconnect, setQrCode,
+    config,
+    loading,
+    connecting,
+    disconnecting,
+    confirmDisconnect,
+    error,
+    qrCode,
+    qrExpiresAt,
+    handleConnect,
+    handleDisconnect,
+    setQrCode,
   };
 }

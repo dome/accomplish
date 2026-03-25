@@ -9,9 +9,17 @@ import { useWhatsAppCard } from './useWhatsAppCard';
 
 export function WhatsAppCard() {
   const {
-    config, loading, connecting, disconnecting, confirmDisconnect,
-    error, qrCode, qrExpiresAt,
-    handleConnect, handleDisconnect, setQrCode,
+    config,
+    loading,
+    connecting,
+    disconnecting,
+    confirmDisconnect,
+    error,
+    qrCode,
+    qrExpiresAt,
+    handleConnect,
+    handleDisconnect,
+    setQrCode,
   } = useWhatsAppCard();
 
   if (loading) {
@@ -35,8 +43,12 @@ export function WhatsAppCard() {
   const isConnecting = connecting || config?.status === 'connecting';
 
   function getDisconnectLabel(): string {
-    if (disconnecting) { return 'Disconnecting…'; }
-    if (confirmDisconnect) { return 'Confirm Disconnect?'; }
+    if (disconnecting) {
+      return 'Disconnecting…';
+    }
+    if (confirmDisconnect) {
+      return 'Confirm Disconnect?';
+    }
     return 'Disconnect';
   }
 
@@ -57,7 +69,10 @@ export function WhatsAppCard() {
 
       {/* Error */}
       {error && (
-        <div role="alert" className="mb-3 rounded-lg bg-destructive/10 p-3 text-sm text-destructive">
+        <div
+          role="alert"
+          className="mb-3 rounded-lg bg-destructive/10 p-3 text-sm text-destructive"
+        >
           {error}
         </div>
       )}
@@ -66,7 +81,8 @@ export function WhatsAppCard() {
       {isConnected && (
         <div className="space-y-3">
           <div
-            role="status" aria-live="polite"
+            role="status"
+            aria-live="polite"
             className="flex items-center gap-2 rounded-full bg-green-500/20 px-2 py-0.5 w-fit text-green-600 dark:text-green-400"
             data-testid="whatsapp-connection-status"
           >
@@ -76,11 +92,17 @@ export function WhatsAppCard() {
             </span>
           </div>
           <button
-            type="button" onClick={handleDisconnect} disabled={disconnecting}
-            aria-label={confirmDisconnect ? 'Confirm disconnect from WhatsApp' : 'Disconnect from WhatsApp'}
+            type="button"
+            onClick={handleDisconnect}
+            disabled={disconnecting}
+            aria-label={
+              confirmDisconnect ? 'Confirm disconnect from WhatsApp' : 'Disconnect from WhatsApp'
+            }
             data-testid="whatsapp-disconnect-button"
             className={`w-full rounded-md border px-4 py-2 text-sm font-medium transition-colors disabled:opacity-50 ${
-              confirmDisconnect ? 'border-destructive text-destructive hover:bg-destructive/10' : 'border-border hover:bg-muted'
+              confirmDisconnect
+                ? 'border-destructive text-destructive hover:bg-destructive/10'
+                : 'border-border hover:bg-muted'
             }`}
           >
             {getDisconnectLabel()}
@@ -97,7 +119,9 @@ export function WhatsAppCard() {
             </p>
           </div>
           <button
-            type="button" onClick={handleConnect} disabled={isConnecting}
+            type="button"
+            onClick={handleConnect}
+            disabled={isConnecting}
             className="w-full rounded-md bg-primary px-4 py-2 text-sm font-medium text-primary-foreground hover:bg-primary/90 disabled:opacity-50"
           >
             {isConnecting ? 'Connecting…' : 'Reconnect WhatsApp'}
@@ -109,11 +133,14 @@ export function WhatsAppCard() {
       {isQrReady && qrCode && (
         <div className="flex flex-col items-center gap-3 py-2 space-y-3">
           <QRCodeDisplay
-            qrString={qrCode} expiresAt={qrExpiresAt}
-            onExpired={() => setQrCode(null)} size={200}
+            qrString={qrCode}
+            expiresAt={qrExpiresAt}
+            onExpired={() => setQrCode(null)}
+            size={200}
           />
           <p className="text-sm text-center text-muted-foreground">
-            Open WhatsApp on your phone, go to <strong>Settings &gt; Linked Devices</strong>, and scan this code.
+            Open WhatsApp on your phone, go to <strong>Settings &gt; Linked Devices</strong>, and
+            scan this code.
           </p>
         </div>
       )}
@@ -127,7 +154,9 @@ export function WhatsAppCard() {
             </p>
           </div>
           <button
-            type="button" onClick={handleConnect} disabled={isConnecting}
+            type="button"
+            onClick={handleConnect}
+            disabled={isConnecting}
             data-testid="whatsapp-connect-button"
             className="w-full rounded-md bg-primary px-4 py-2 text-sm font-medium text-primary-foreground hover:bg-primary/90 disabled:opacity-50"
           >

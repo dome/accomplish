@@ -57,9 +57,9 @@ export function makeConnectionUpdateHandler(
         cleanupAuthState(deps.authStatePath);
       } else if (statusCode === DisconnectReason.restartRequired) {
         if (!deps.disposed) {
-          deps.connectFn().catch((err) =>
-            console.error('[WhatsApp] Restart reconnect failed:', err),
-          );
+          deps
+            .connectFn()
+            .catch((err) => console.error('[WhatsApp] Restart reconnect failed:', err));
         }
       } else if (statusCode === DisconnectReason.connectionReplaced) {
         console.warn('[WhatsApp] Connection replaced by another session');
@@ -72,14 +72,12 @@ export function makeConnectionUpdateHandler(
         console.error('[WhatsApp] Bad session — cleaning up auth state');
         cleanupAuthState(deps.authStatePath);
         if (!deps.disposed) {
-          deps.connectFn().catch((err) =>
-            console.error('[WhatsApp] Reconnect after bad session:', err),
-          );
+          deps
+            .connectFn()
+            .catch((err) => console.error('[WhatsApp] Reconnect after bad session:', err));
         }
       } else if (!deps.disposed) {
-        scheduleReconnect(deps.reconnect, deps.connectFn, () =>
-          deps.setStatus('disconnected'),
-        );
+        scheduleReconnect(deps.reconnect, deps.connectFn, () => deps.setStatus('disconnected'));
       }
     }
 
