@@ -24,20 +24,31 @@ const INITIAL_STATE: SlashCommandState = {
   selectedIndex: 0,
 };
 
+/** Options accepted by the {@link useSlashCommand} hook. */
 export interface UseSlashCommandOptions {
+  /** Current text value of the input/textarea. */
   value: string;
+  /** Ref to the textarea element where the slash command is being typed. */
   textareaRef: React.RefObject<HTMLTextAreaElement | null>;
+  /** Called with the new text value after a skill command is inserted. */
   onChange: (value: string) => void;
 }
 
+/** Values returned by the {@link useSlashCommand} hook. */
 export interface UseSlashCommandReturn {
+  /** Current popover state (open, filtered skills, selected index, etc.). */
   state: SlashCommandState;
+  /** Close the popover and reset state. */
   dismiss: () => void;
+  /** Insert the given skill's command into the text and close the popover. */
   selectSkill: (skill: Skill) => void;
+  /** Keyboard event handler — returns `true` when the event was consumed. */
   handleKeyDown: (e: React.KeyboardEvent) => boolean;
+  /** Call on every input change to detect slash triggers and update filtering. */
   handleChange: (newValue: string, selectionStart: number | null) => void;
 }
 
+/** Filter skills by matching `query` against command, name, and description (case-insensitive). */
 function filterSkills(skills: Skill[], query: string): Skill[] {
   if (!query) {
     return skills;
@@ -87,6 +98,13 @@ function findSlashContext(
   return null;
 }
 
+/**
+ * Hook that manages slash-command autocomplete for skills in a textarea.
+ *
+ * Detects when the user types `/` at the beginning of a word, fetches and
+ * filters enabled skills, handles keyboard navigation (Arrow keys, Enter,
+ * Tab, Escape), and inserts the selected skill command at the cursor position.
+ */
 export function useSlashCommand({
   value,
   textareaRef,

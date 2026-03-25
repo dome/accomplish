@@ -5,17 +5,20 @@ import { Lightning } from '@phosphor-icons/react';
 import type { Skill } from '@accomplish_ai/agent-core';
 import { cn } from '@/lib/utils';
 
+/** Props for the {@link SlashCommandPopover} component. */
 interface SlashCommandPopoverProps {
   isOpen: boolean;
   skills: Skill[];
   selectedIndex: number;
   query: string;
   textareaRef: React.RefObject<HTMLTextAreaElement | null>;
+  /** Character index of the `/` trigger inside the textarea value. */
   triggerStart: number;
   onSelect: (skill: Skill) => void;
   onDismiss: () => void;
 }
 
+/** Calculate the visual position of a character in a textarea via an off-screen mirror. */
 function getCaretPosition(textarea: HTMLTextAreaElement, charIndex: number) {
   const mirror = document.createElement('div');
   const style = window.getComputedStyle(textarea);
@@ -71,6 +74,11 @@ function getCaretPosition(textarea: HTMLTextAreaElement, charIndex: number) {
   return { top, left };
 }
 
+/**
+ * Floating popover that renders a filtered list of available skills.
+ * Positioned near the textarea caret using a mirror-element measurement.
+ * Supports mouse selection, outside-click dismissal, and keyboard hints.
+ */
 export function SlashCommandPopover({
   isOpen,
   skills,

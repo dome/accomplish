@@ -2,9 +2,9 @@
  * @vitest-environment jsdom
  */
 
-import { describe, it, expect, beforeEach, vi } from 'vitest';
-import { render, screen, fireEvent } from '@testing-library/react';
-import type { Skill } from '@accomplish_ai/agent-core/common';
+import { describe, it, expect, beforeEach, afterEach, vi } from 'vitest';
+import { render, screen } from '@testing-library/react';
+import { mockSkills, createDomTextareaRef } from '../__helpers__/slashCommandTestUtils';
 
 vi.mock('framer-motion', () => ({
   motion: {
@@ -21,51 +21,16 @@ vi.mock('@/lib/accomplish', () => ({
 
 import { SlashCommandPopover } from '@/components/landing/SlashCommandPopover';
 
-const mockSkills: Skill[] = [
-  {
-    id: 'skill-1',
-    name: 'Code Review',
-    command: '/code-review',
-    description: 'Review code for quality and bugs',
-    source: 'official',
-    isEnabled: true,
-    isVerified: true,
-    isHidden: false,
-    filePath: '/skills/code-review',
-    updatedAt: '2024-01-01',
-  },
-  {
-    id: 'skill-2',
-    name: 'Git Helper',
-    command: '/git-helper',
-    description: 'Helps with git operations',
-    source: 'community',
-    isEnabled: true,
-    isVerified: false,
-    isHidden: false,
-    filePath: '/skills/git-helper',
-    updatedAt: '2024-01-01',
-  },
-];
-
-function createTextareaRef() {
-  const textarea = document.createElement('textarea');
-  document.body.appendChild(textarea);
-  return { current: textarea };
-}
-
-describe('SlashCommandPopover', () => {
+describe('SlashCommandPopover – rendering', () => {
   let textareaRef: { current: HTMLTextAreaElement };
 
   beforeEach(() => {
     vi.clearAllMocks();
-    textareaRef = createTextareaRef();
+    textareaRef = createDomTextareaRef();
   });
 
   afterEach(() => {
-    if (textareaRef.current?.parentNode) {
-      textareaRef.current.parentNode.removeChild(textareaRef.current);
-    }
+    textareaRef.current?.parentNode?.removeChild(textareaRef.current);
   });
 
   const defaultProps = {
@@ -85,7 +50,6 @@ describe('SlashCommandPopover', () => {
         textareaRef={textareaRef}
       />,
     );
-
     expect(container.innerHTML).toBe('');
   });
 
@@ -99,7 +63,6 @@ describe('SlashCommandPopover', () => {
         textareaRef={textareaRef}
       />,
     );
-
     expect(container.innerHTML).toBe('');
   });
 
@@ -113,7 +76,6 @@ describe('SlashCommandPopover', () => {
         textareaRef={textareaRef}
       />,
     );
-
     expect(screen.getByText('/code-review')).toBeInTheDocument();
     expect(screen.getByText('/git-helper')).toBeInTheDocument();
   });
@@ -128,7 +90,6 @@ describe('SlashCommandPopover', () => {
         textareaRef={textareaRef}
       />,
     );
-
     expect(screen.getByText('Review code for quality and bugs')).toBeInTheDocument();
     expect(screen.getByText('Helps with git operations')).toBeInTheDocument();
   });
@@ -143,7 +104,6 @@ describe('SlashCommandPopover', () => {
         textareaRef={textareaRef}
       />,
     );
-
     const buttons = container.querySelectorAll('button');
     expect(buttons[0].className).toContain('bg-accent');
     expect([...buttons[1].classList]).not.toContain('bg-accent');
@@ -159,45 +119,8 @@ describe('SlashCommandPopover', () => {
         textareaRef={textareaRef}
       />,
     );
-
     const buttons = container.querySelectorAll('button');
     expect(buttons[1].className).toContain('bg-accent');
-  });
-
-  it('should call onSelect when a skill is clicked', () => {
-    const onSelect = vi.fn();
-
-    render(
-      <SlashCommandPopover
-        {...defaultProps}
-        isOpen={true}
-        skills={mockSkills}
-        selectedIndex={0}
-        textareaRef={textareaRef}
-        onSelect={onSelect}
-      />,
-    );
-
-    fireEvent.mouseDown(screen.getByText('/code-review'));
-    expect(onSelect).toHaveBeenCalledWith(mockSkills[0]);
-  });
-
-  it('should call onDismiss when clicking outside', () => {
-    const onDismiss = vi.fn();
-
-    render(
-      <SlashCommandPopover
-        {...defaultProps}
-        isOpen={true}
-        skills={mockSkills}
-        selectedIndex={0}
-        textareaRef={textareaRef}
-        onDismiss={onDismiss}
-      />,
-    );
-
-    fireEvent.mouseDown(document.body);
-    expect(onDismiss).toHaveBeenCalledOnce();
   });
 
   it('should display keyboard hint text', () => {
@@ -210,7 +133,6 @@ describe('SlashCommandPopover', () => {
         textareaRef={textareaRef}
       />,
     );
-
     expect(screen.getByText(/navigate/i)).toBeInTheDocument();
     expect(screen.getByText(/select/i)).toBeInTheDocument();
     expect(screen.getByText(/dismiss/i)).toBeInTheDocument();
@@ -227,8 +149,6 @@ describe('SlashCommandPopover', () => {
         query=""
       />,
     );
-
-    // The i18n key falls back to `home:slashCommand.title` in test env
     expect(screen.getByText('home:slashCommand.title')).toBeInTheDocument();
   });
 
@@ -243,8 +163,6 @@ describe('SlashCommandPopover', () => {
         query="code"
       />,
     );
-
-    // The i18n key falls back to `home:slashCommand.filtering` in test env
     expect(screen.getByText('home:slashCommand.filtering')).toBeInTheDocument();
   });
 });
