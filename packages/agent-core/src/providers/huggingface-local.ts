@@ -93,8 +93,21 @@ export async function searchHuggingFaceHubModels(
     if (!response.ok) {
       throw new Error(`HuggingFace Hub API error: ${response.status}`);
     }
-    const data = (await response.json()) as HuggingFaceHubModel[];
-    return data;
+    const raw = (await response.json()) as Array<{
+      id?: string;
+      modelId?: string;
+      description?: string;
+      cardData?: { summary?: string };
+      tags?: string[];
+      downloads?: number;
+    }>;
+    return raw.map((item) => ({
+      id: item.id ?? item.modelId ?? '',
+      modelId: item.modelId ?? item.id ?? '',
+      description: item.cardData?.summary ?? item.description,
+      tags: Array.isArray(item.tags) ? item.tags : undefined,
+      downloads: typeof item.downloads === 'number' ? item.downloads : undefined,
+    }));
   } finally {
     clearTimeout(timeout);
   }

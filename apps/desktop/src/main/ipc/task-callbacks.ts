@@ -7,7 +7,7 @@ import type {
   BrowserFramePayload,
 } from '@accomplish_ai/agent-core';
 import { mapResultToStatus } from '@accomplish_ai/agent-core';
-import { getTaskManager } from '../opencode';
+import { getTaskManager, recoverDevBrowserServer } from '../opencode';
 import type { TaskCallbacks } from '../opencode';
 import { getStorage } from '../store/storage';
 import { updateTray } from '../tray';

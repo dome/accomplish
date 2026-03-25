@@ -90,9 +90,8 @@ export function isOpenCodeCliAvailable(): boolean {
 }
 
 export function getBundledOpenCodeVersion(): string | null {
-  let command: string;
   try {
-    ({ command } = getOpenCodeCliPath());
+    getOpenCodeCliPath();
   } catch {
     return null;
   }
@@ -142,39 +141,28 @@ export async function buildEnvironment(taskId: string): Promise<NodeJS.ProcessEn
   // Handle Electron-specific environment setup for packaged app
   if (app.isPackaged) {
     env.ELECTRON_RUN_AS_NODE = '1';
-
     logBundledNodeInfo();
 
-    const bundledNode = getBundledNodePaths();
-    if (bundledNode) {
-      const delimiter = process.platform === 'win32' ? ';' : ':';
-      const existingPath = env.PATH ?? env.Path ?? '';
-      const combinedPath = existingPath
-        ? `${bundledNode.binDir}${delimiter}${existingPath}`
-        : bundledNode.binDir;
-      env.PATH = combinedPath;
-      if (process.platform === 'win32') {
-        env.Path = combinedPath;
-      }
-      console.log('[OpenCode CLI] Added bundled Node.js to PATH:', bundledNode.binDir);
+    const bundledNodePaths = getBundledNodePaths();
+    if (!bundledNodePaths) {
+      throw new Error(
+        'Bundled Node.js not found in packaged build. Cannot spawn opencode without it.',
+      );
     }
+    const delimiter = process.platform === 'win32' ? ';' : ':';
+    const existingPath = env.PATH ?? env.Path ?? '';
+    const combinedPath = existingPath
+      ? `${bundledNodePaths.binDir}${delimiter}${existingPath}`
+      : bundledNodePaths.binDir;
+    env.PATH = combinedPath;
+    if (process.platform === 'win32') {
+      env.Path = combinedPath;
+    }
+    logOC('INFO', `[OpenCode CLI] Added bundled Node.js to PATH: ${bundledNodePaths.binDir}`);
 
-  env.ELECTRON_RUN_AS_NODE = '1';
-  logBundledNodeInfo();
-
-  const delimiter = process.platform === 'win32' ? ';' : ':';
-  const existingPath = env.PATH ?? env.Path ?? '';
-  const combinedPath = existingPath
-    ? `${bundledNode.binDir}${delimiter}${existingPath}`
-    : bundledNode.binDir;
-  env.PATH = combinedPath;
-  if (process.platform === 'win32') {
-    env.Path = combinedPath;
-  }
-  logOC('INFO', `[OpenCode CLI] Added bundled Node.js to PATH: ${bundledNode.binDir}`);
-
-  if (process.platform === 'darwin') {
-    env.PATH = getExtendedNodePath(env.PATH);
+    if (process.platform === 'darwin') {
+      env.PATH = getExtendedNodePath(env.PATH);
+    }
   }
 
   // Gather configuration for the reusable environment builder
@@ -235,7 +223,12 @@ export async function buildEnvironment(taskId: string): Promise<NodeJS.ProcessEn
     bundledNodeBinPath: bundledNode?.binDir,
     taskId: taskId || undefined,
     openAiBaseUrl: hfProvider
-      ? hfBaseUrl ?? (() => { throw new Error('HuggingFace Local server is not running. Please start the server before sending requests.'); })()
+      ? (hfBaseUrl ??
+        (() => {
+          throw new Error(
+            'HuggingFace Local server is not running. Please start the server before sending requests.',
+          );
+        })())
       : configuredOpenAiBaseUrl || undefined,
     ollamaHost,
   };
@@ -303,6 +296,10 @@ export async function onBeforeStart(): Promise<void> {
 
   await generateOpenCodeConfig(azureFoundryToken);
 }
+
+const BROWSER_RECOVERY_COOLDOWN_MS = 30_000;
+let browserEnsurePromise: Promise<void> | null = null;
+let lastBrowserRecoveryAt = 0;
 
 function getBrowserServerConfig(): BrowserServerConfig {
   const bundledPaths = getBundledNodePaths();
