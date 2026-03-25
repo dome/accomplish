@@ -79,8 +79,7 @@ describe('useSlashCommand – skill selection & insertion', () => {
     act(() => {
       hook.result.current.selectSkill(hook.result.current.state.filteredSkills[0]);
     });
-    const calledWith = onChange.mock.calls[0][0];
-    expect(calledWith).toContain('/code-review');
+    expect(onChange).toHaveBeenCalledWith('/code-review more text');
   });
 
   it('should close popover after selection', async () => {

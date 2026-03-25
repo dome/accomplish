@@ -112,7 +112,7 @@ export function SlashCommandPopover({
       const offsetTop = textareaRect.top - containerRect.top;
       setPopoverStyle({
         bottom: containerRect.height - offsetTop - caretPos.top + 4,
-        left: Math.min(caretPos.left, containerRect.width - 280),
+        left: Math.max(0, Math.min(caretPos.left, containerRect.width - 280)),
       });
     }
   }, [isOpen, triggerStart, textareaRef]);
