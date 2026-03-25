@@ -20,8 +20,10 @@ import { PROMPT_DEFAULT_MAX_LENGTH } from '@accomplish_ai/agent-core/common';
 import type { FileAttachmentInfo } from '@accomplish_ai/agent-core/common';
 import { useSpeechInput } from '@/hooks/useSpeechInput';
 import { useTypingPlaceholder } from '@/hooks/useTypingPlaceholder';
+import { useSlashCommand } from '@/hooks/useSlashCommand';
 import { SpeechInputButton } from '@/components/ui/SpeechInputButton';
 import { ModelIndicator } from '@/components/ui/ModelIndicator';
+import { SlashCommandPopover } from '@/components/landing/SlashCommandPopover';
 import { Tooltip, TooltipContent, TooltipTrigger } from '@/components/ui/tooltip';
 import { Alert, AlertDescription } from '@/components/ui/alert';
 import { cn } from '@/lib/utils';
@@ -173,6 +175,12 @@ export function TaskInputBar({
     [isInputDisabled, addFiles],
   );
 
+  const slashCommand = useSlashCommand({
+    value,
+    textareaRef: textareaRef as React.RefObject<HTMLTextAreaElement | null>,
+    onChange,
+  });
+
   const speechInput = useSpeechInput({
     onTranscriptionComplete: (text) => {
       const newValue = value.trim() ? `${value} ${text}` : text;
@@ -217,6 +225,7 @@ export function TaskInputBar({
 
   const handleKeyDown = (e: React.KeyboardEvent) => {
     if (e.nativeEvent.isComposing || e.keyCode === 229) return;
+    if (slashCommand.handleKeyDown(e)) return;
     if (e.key === 'Enter' && !e.shiftKey) {
       e.preventDefault();
       if (canSubmit && !speechInput.isRecording && !isLoading) {
@@ -271,17 +280,30 @@ export function TaskInputBar({
         )}
 
         {!isDragOver && (
-          <div className="px-4 pt-3 pb-1">
+          <div className="px-4 pt-3 pb-1 relative">
             <textarea
               data-testid="task-input-textarea"
               ref={textareaRef}
               value={value}
-              onChange={(e) => onChange(e.target.value)}
+              onChange={(e) => {
+                onChange(e.target.value);
+                slashCommand.handleChange(e.target.value, e.target.selectionStart);
+              }}
               onKeyDown={handleKeyDown}
               placeholder={effectivePlaceholder}
               disabled={isInputDisabled || speechInput.isRecording}
               rows={3}
               className="w-full min-h-[60px] max-h-[200px] resize-none overflow-y-auto bg-transparent text-[16px] leading-relaxed tracking-[-0.015em] text-foreground placeholder:text-muted-foreground/60 focus:outline-none disabled:cursor-not-allowed disabled:opacity-50"
+            />
+            <SlashCommandPopover
+              isOpen={slashCommand.state.isOpen}
+              skills={slashCommand.state.filteredSkills}
+              selectedIndex={slashCommand.state.selectedIndex}
+              query={slashCommand.state.query}
+              textareaRef={textareaRef as React.RefObject<HTMLTextAreaElement | null>}
+              triggerStart={slashCommand.state.triggerStart}
+              onSelect={slashCommand.selectSkill}
+              onDismiss={slashCommand.dismiss}
             />
           </div>
         )}
