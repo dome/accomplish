@@ -20,6 +20,7 @@ export {
   getOpenCodeCliPath,
   getBundledOpenCodeVersion,
   cleanupVertexServiceAccountKey,
+  recoverDevBrowserServer,
 } from './electron-options';
 
 export {

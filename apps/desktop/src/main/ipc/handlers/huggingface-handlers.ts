@@ -13,10 +13,10 @@ import {
   stopHuggingFaceServer,
   getHuggingFaceServerStatus,
   testHuggingFaceConnection,
-  fetchHuggingFaceLocalModels as hfListCachedModels,
   HF_RECOMMENDED_MODELS as HF_SUGGESTED_MODELS,
   deleteHuggingFaceModel,
 } from '../../providers/huggingface-local';
+import { listCachedModels as hfListCachedModels } from '../../providers/huggingface-local/model-manager';
 
 export function registerHuggingFaceHandlers(): void {
   const storage = getStorage();
@@ -41,39 +41,33 @@ export function registerHuggingFaceHandlers(): void {
     return testHuggingFaceConnection();
   });
 
-  handle(
-    'huggingface-local:download-model',
-    async (event: IpcMainInvokeEvent, modelId: string) => {
-      if (typeof modelId !== 'string' || !modelId.trim()) {
-        return { success: false, error: 'Invalid model ID' };
+  handle('huggingface-local:download-model', async (event: IpcMainInvokeEvent, modelId: string) => {
+    if (typeof modelId !== 'string' || !modelId.trim()) {
+      return { success: false, error: 'Invalid model ID' };
+    }
+    // Inline download with progress — re-uses startHuggingFaceServer which streams progress
+    return startHuggingFaceServer(modelId.trim(), (progress: unknown) => {
+      try {
+        event.sender.send('huggingface-local:download-progress', progress);
+      } catch {
+        // Window may have been closed
       }
-      // Inline download with progress — re-uses startHuggingFaceServer which streams progress
-      return startHuggingFaceServer(modelId.trim(), (progress: unknown) => {
-        try {
-          event.sender.send('huggingface-local:download-progress', progress);
-        } catch {
-          // Window may have been closed
-        }
-      });
-    },
-  );
+    });
+  });
 
   handle('huggingface-local:list-models', async () => {
     const cached = await hfListCachedModels();
     return { cached, suggested: HF_SUGGESTED_MODELS };
   });
 
-  handle(
-    'huggingface-local:delete-model',
-    async (_event: IpcMainInvokeEvent, modelId: string) => {
-      if (typeof modelId !== 'string' || !modelId.trim()) {
-        return { success: false, error: 'Invalid model ID' };
-      }
-      // Stop server before deleting to avoid file-lock issues
-      await stopHuggingFaceServer().catch(() => {});
-      return deleteHuggingFaceModel(modelId.trim());
-    },
-  );
+  handle('huggingface-local:delete-model', async (_event: IpcMainInvokeEvent, modelId: string) => {
+    if (typeof modelId !== 'string' || !modelId.trim()) {
+      return { success: false, error: 'Invalid model ID' };
+    }
+    // Stop server before deleting to avoid file-lock issues
+    await stopHuggingFaceServer().catch(() => {});
+    return deleteHuggingFaceModel(modelId.trim());
+  });
 
   handle('huggingface-local:get-config', async () => {
     return storage.getHuggingFaceLocalConfig();
