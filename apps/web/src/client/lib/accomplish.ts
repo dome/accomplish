@@ -114,6 +114,9 @@ interface AccomplishAPI {
   getSlackMcpOauthStatus(): Promise<{ connected: boolean; pendingAuthorization: boolean }>;
   loginSlackMcp(): Promise<{ ok: boolean }>;
   logoutSlackMcp(): Promise<void>;
+  getCopilotOAuthStatus(): Promise<{ connected: boolean; username?: string; expiresAt?: number }>;
+  loginGithubCopilot(): Promise<{ ok: boolean; userCode?: string; verificationUri?: string }>;
+  logoutGithubCopilot(): Promise<void>;
 
   // API Key management
   hasApiKey(): Promise<boolean>;
