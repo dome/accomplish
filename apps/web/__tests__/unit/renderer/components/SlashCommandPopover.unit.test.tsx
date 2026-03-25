@@ -62,6 +62,12 @@ describe('SlashCommandPopover', () => {
     textareaRef = createTextareaRef();
   });
 
+  afterEach(() => {
+    if (textareaRef.current?.parentNode) {
+      textareaRef.current.parentNode.removeChild(textareaRef.current);
+    }
+  });
+
   const defaultProps = {
     query: '',
     triggerStart: 0,
@@ -140,7 +146,7 @@ describe('SlashCommandPopover', () => {
 
     const buttons = container.querySelectorAll('button');
     expect(buttons[0].className).toContain('bg-accent');
-    expect(buttons[1].className).not.toContain('bg-accent ');
+    expect([...buttons[1].classList]).not.toContain('bg-accent');
   });
 
   it('should highlight second skill when selectedIndex is 1', () => {

@@ -1,5 +1,5 @@
 import { useState, useEffect, useCallback, useRef } from 'react';
-import type { Skill } from '@accomplish_ai/agent-core/common';
+import type { Skill } from '@accomplish_ai/agent-core';
 import { getAccomplish } from '@/lib/accomplish';
 import { createLogger } from '@/lib/logger';
 
