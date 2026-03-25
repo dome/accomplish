@@ -1,15 +1,11 @@
-import { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { AnimatePresence, motion } from 'framer-motion';
-import { getAccomplish } from '@/lib/accomplish';
 import { settingsVariants, settingsTransitions } from '@/lib/animations';
-import type { ConnectedProvider, CopilotOAuthCredentials } from '@accomplish_ai/agent-core/common';
+import type { ConnectedProvider } from '@accomplish_ai/agent-core/common';
 import { COPILOT_MODELS } from '@accomplish_ai/agent-core/common';
 import { ModelSelector, ConnectedControls, ProviderFormHeader, FormError } from '../shared';
 import { PROVIDER_LOGOS } from '@/lib/provider-logos';
-import { createLogger } from '@/lib/logger';
-
-const logger = createLogger('CopilotProviderForm');
+import { useCopilotConnection } from './useCopilotConnection';
 
 interface CopilotProviderFormProps {
   connectedProvider?: ConnectedProvider;
@@ -27,11 +23,6 @@ export function CopilotProviderForm({
   showModelError,
 }: CopilotProviderFormProps) {
   const { t } = useTranslation('settings');
-  const [connecting, setConnecting] = useState(false);
-  const [error, setError] = useState<string | null>(null);
-  const [userCode, setUserCode] = useState<string | null>(null);
-  const [verificationUri, setVerificationUri] = useState<string | null>(null);
-
   const isConnected = connectedProvider?.connectionStatus === 'connected';
   const logoSrc = PROVIDER_LOGOS['copilot'] ?? PROVIDER_LOGOS['github-copilot'];
 
@@ -39,83 +30,8 @@ export function CopilotProviderForm({
     ? connectedProvider.availableModels.map((m) => ({ id: m.id, name: m.name }))
     : COPILOT_MODELS.map((m) => ({ id: m.id, name: m.displayName }));
 
-  // Check if already connected on mount
-  useEffect(() => {
-    if (isConnected) return;
-
-    const accomplish = getAccomplish();
-    accomplish
-      .getCopilotOAuthStatus()
-      .then((status) => {
-        if (status.connected) {
-          const provider: ConnectedProvider = {
-            providerId: 'copilot',
-            connectionStatus: 'connected',
-            selectedModelId: 'copilot/gpt-4o',
-            credentials: { type: 'copilot-oauth' } as CopilotOAuthCredentials,
-            lastConnectedAt: new Date().toISOString(),
-            availableModels: COPILOT_MODELS.map((m) => ({ id: m.id, name: m.displayName })),
-          };
-          onConnect(provider);
-        }
-      })
-      .catch((err) => logger.error('Failed to check Copilot status:', err));
-  }, []); // eslint-disable-line react-hooks/exhaustive-deps
-
-  const handleConnect = async () => {
-    setConnecting(true);
-    setError(null);
-    setUserCode(null);
-    setVerificationUri(null);
-
-    try {
-      const accomplish = getAccomplish();
-      const result = await accomplish.loginGithubCopilot();
-
-      if (result.ok) {
-        if (result.userCode) setUserCode(result.userCode);
-        if (result.verificationUri) setVerificationUri(result.verificationUri);
-
-        // Verify connection
-        const status = await accomplish.getCopilotOAuthStatus();
-        if (status.connected) {
-          const provider: ConnectedProvider = {
-            providerId: 'copilot',
-            connectionStatus: 'connected',
-            selectedModelId: 'copilot/gpt-4o',
-            credentials: { type: 'copilot-oauth' } as CopilotOAuthCredentials,
-            lastConnectedAt: new Date().toISOString(),
-            availableModels: COPILOT_MODELS.map((m) => ({ id: m.id, name: m.displayName })),
-          };
-          onConnect(provider);
-          setUserCode(null);
-          setVerificationUri(null);
-        } else {
-          setError(
-            t('copilot.connectionFailed', {
-              defaultValue: 'Failed to connect to GitHub Copilot. Please try again.',
-            }),
-          );
-        }
-      }
-    } catch (err) {
-      setError(err instanceof Error ? err.message : t('status.connectionFailed'));
-    } finally {
-      setConnecting(false);
-    }
-  };
-
-  const handleDisconnect = async () => {
-    try {
-      const accomplish = getAccomplish();
-      await accomplish.logoutGithubCopilot();
-    } catch (err) {
-      logger.error('Failed to logout from Copilot:', err);
-    }
-    setUserCode(null);
-    setVerificationUri(null);
-    onDisconnect();
-  };
+  const { connecting, error, userCode, verificationUri, handleConnect, handleDisconnect } =
+    useCopilotConnection({ isConnected, onConnect, onDisconnect });
 
   return (
     <div
