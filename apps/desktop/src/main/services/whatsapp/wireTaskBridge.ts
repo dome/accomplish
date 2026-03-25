@@ -28,7 +28,6 @@ export function wireTaskBridge(service: WhatsAppService): { bridge: TaskBridge }
       '---END MESSAGE---',
     ].join('\n');
 
-    bridge.setActiveTask(senderId, taskId);
     service
       .sendMessage(
         senderId,
@@ -45,6 +44,7 @@ export function wireTaskBridge(service: WhatsAppService): { bridge: TaskBridge }
     let lastProgressSentAt = 0;
 
     try {
+      bridge.setActiveTask(senderId, taskId);
       storage.saveTask({
         id: taskId,
         prompt,

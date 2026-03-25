@@ -31,8 +31,13 @@ export interface WhatsAppServiceEvents {
   qr: (qrString: string) => void;
   status: (status: MessagingConnectionStatus) => void;
   message: (msg: {
-    messageId: string; senderId: string; senderName?: string;
-    text: string; timestamp: number; isGroup: boolean; isFromMe: boolean;
+    messageId: string;
+    senderId: string;
+    senderName?: string;
+    text: string;
+    timestamp: number;
+    isGroup: boolean;
+    isFromMe: boolean;
   }) => void;
   phoneNumber: (phoneNumber: string) => void;
   ownerLid: (lid: string) => void;
@@ -54,45 +59,83 @@ export class WhatsAppService extends EventEmitter implements ChannelAdapter {
     this.authStatePath = path.join(app.getPath('userData'), 'whatsapp-auth');
   }
 
-  getStatus(): MessagingConnectionStatus { return this.status; }
+  getStatus(): MessagingConnectionStatus {
+    return this.status;
+  }
 
-  private setStatus(s: MessagingConnectionStatus): void { this.status = s; this.emit('status', s); }
+  private setStatus(s: MessagingConnectionStatus): void {
+    this.status = s;
+    this.emit('status', s);
+  }
 
   async connect(): Promise<void> {
-    if (this.disposed) { throw new Error('WhatsApp service has been disposed'); }
+    if (this.disposed) {
+      throw new Error('WhatsApp service has been disposed');
+    }
     clearReconnectTimer(this.reconnect);
     this.reconnect.scheduled = false;
     this.reconnect.attempts = 0;
     this.manualDisconnect = false;
-    if (this.status === 'connecting') { return; }
+    if (this.status === 'connecting') {
+      return;
+    }
     this.setStatus('connecting');
 
     try {
       const baileys = await import('@whiskeysockets/baileys');
-      const { default: makeWASocket, useMultiFileAuthState, DisconnectReason,
-        fetchLatestBaileysVersion, jidNormalizedUser } = baileys;
+      if (this.disposed) {
+        this.setStatus('disconnected');
+        return;
+      }
+      const {
+        default: makeWASocket,
+        useMultiFileAuthState,
+        DisconnectReason,
+        fetchLatestBaileysVersion,
+        jidNormalizedUser,
+      } = baileys;
       const pino = (await import('pino')).default;
 
       let version: [number, number, number] | undefined;
-      try { version = (await fetchLatestBaileysVersion()).version; }
-      catch (err) { console.warn('[WhatsApp] Failed to fetch latest version, using default:', err); }
+      try {
+        version = (await fetchLatestBaileysVersion()).version;
+      } catch (err) {
+        console.warn('[WhatsApp] Failed to fetch latest version, using default:', err);
+      }
 
       const { state, saveCreds } = await useMultiFileAuthState(this.authStatePath);
+      if (this.disposed) {
+        this.setStatus('disconnected');
+        return;
+      }
       this.disposeSocket();
 
       this.socket = makeWASocket({
-        version, auth: state, logger: pino({ level: 'silent' }),
-        printQRInTerminal: false, browser: ['Accomplish', 'Desktop', '1.0.0'],
+        version,
+        auth: state,
+        logger: pino({ level: 'silent' }),
+        printQRInTerminal: false,
+        browser: ['Accomplish', 'Desktop', '1.0.0'],
       });
       this.socket.ev.on('creds.update', saveCreds);
-      this.socket.ev.on('connection.update', (update: {
-        connection?: string; lastDisconnect?: { error?: unknown }; qr?: string;
-      }) => this.onConnectionUpdate(update, DisconnectReason as unknown as Record<string, number>, jidNormalizedUser));
+      this.socket.ev.on(
+        'connection.update',
+        (update: { connection?: string; lastDisconnect?: { error?: unknown }; qr?: string }) =>
+          this.onConnectionUpdate(
+            update,
+            DisconnectReason as unknown as Record<string, number>,
+            jidNormalizedUser,
+          ),
+      );
       this.socket.ev.on('messages.upsert', (upsert: { type: string; messages: unknown[] }) => {
-        if (upsert.type !== 'notify') { return; }
+        if (upsert.type !== 'notify') {
+          return;
+        }
         for (const raw of upsert.messages as Array<Record<string, unknown>>) {
           const msg = normalizeMessage(raw);
-          if (msg) { this.emit('message', msg); }
+          if (msg) {
+            this.emit('message', msg);
+          }
         }
       });
     } catch (err) {
@@ -107,41 +150,73 @@ export class WhatsAppService extends EventEmitter implements ChannelAdapter {
     jidNormalizedUser: (jid: string) => string,
   ): void {
     const { connection, lastDisconnect, qr } = update;
-    if (qr) { this.qrCode = qr; this.setStatus('qr_ready'); this.emit('qr', qr); }
+    if (qr) {
+      this.qrCode = qr;
+      this.setStatus('qr_ready');
+      this.emit('qr', qr);
+    }
     if (connection === 'close') {
       this.qrCode = null;
-      if (this.manualDisconnect) { this.setStatus('disconnected'); return; }
-      const code = (lastDisconnect?.error as { output?: { statusCode?: number } } | undefined)?.output?.statusCode;
+      if (this.manualDisconnect) {
+        this.setStatus('disconnected');
+        return;
+      }
+      const code = (lastDisconnect?.error as { output?: { statusCode?: number } } | undefined)
+        ?.output?.statusCode;
       if (code === DisconnectReason.loggedOut || code === DisconnectReason.forbidden) {
-        this.setStatus('logged_out'); cleanupAuthState(this.authStatePath);
-      } else if (code === DisconnectReason.restartRequired || code === DisconnectReason.badSession) {
-        if (code === DisconnectReason.badSession) { cleanupAuthState(this.authStatePath); }
-        if (!this.disposed) { this.connect().catch((e) => console.error('[WhatsApp] Reconnect failed:', e)); }
+        this.setStatus('logged_out');
+        cleanupAuthState(this.authStatePath);
+      } else if (
+        code === DisconnectReason.restartRequired ||
+        code === DisconnectReason.badSession
+      ) {
+        if (code === DisconnectReason.badSession) {
+          cleanupAuthState(this.authStatePath);
+        }
+        if (!this.disposed) {
+          this.connect().catch((e) => console.error('[WhatsApp] Reconnect failed:', e));
+        }
       } else if (code === DisconnectReason.connectionReplaced) {
-        console.warn('[WhatsApp] Connection replaced'); this.setStatus('disconnected');
+        console.warn('[WhatsApp] Connection replaced');
+        this.setStatus('disconnected');
       } else if (!this.disposed) {
-        scheduleReconnect(this.reconnect, () => this.connect(), () => this.setStatus('disconnected'));
+        scheduleReconnect(
+          this.reconnect,
+          () => this.connect(),
+          () => this.setStatus('disconnected'),
+        );
       }
     }
     if (connection === 'open') {
-      this.qrCode = null; this.reconnect.attempts = 0; this.reconnect.scheduled = false;
+      this.qrCode = null;
+      this.reconnect.attempts = 0;
+      this.reconnect.scheduled = false;
       this.setStatus('connected');
       const user = this.socket?.user;
-      if (user?.id) { this.emit('phoneNumber', user.id.split(':')[0].split('@')[0]); }
-      if (user?.lid) { this.emit('ownerLid', jidNormalizedUser(user.lid)); }
+      if (user?.id) {
+        this.emit('phoneNumber', user.id.split(':')[0].split('@')[0]);
+      }
+      if (user?.lid) {
+        this.emit('ownerLid', jidNormalizedUser(user.lid));
+      }
     }
   }
 
   async sendMessage(recipientId: string, text: string): Promise<void> {
-    if (!this.socket) { throw new Error('WhatsApp is not connected'); }
+    if (!this.socket) {
+      throw new Error('WhatsApp is not connected');
+    }
     await this.socket.sendMessage(recipientId, { text });
   }
 
-  getQrCode(): string | null { return this.qrCode; }
+  getQrCode(): string | null {
+    return this.qrCode;
+  }
 
   async disconnect(): Promise<void> {
     this.manualDisconnect = true;
-    this.reconnect.scheduled = false; this.reconnect.attempts = 0;
+    this.reconnect.scheduled = false;
+    this.reconnect.attempts = 0;
     clearReconnectTimer(this.reconnect);
     if (this.socket) {
       this.socket.ev.removeAllListeners('creds.update');
@@ -151,17 +226,22 @@ export class WhatsAppService extends EventEmitter implements ChannelAdapter {
       this.socket.end(new Error('User requested disconnect'));
       this.socket = null;
     }
+    this.qrCode = null;
     cleanupAuthState(this.authStatePath);
     this.setStatus('disconnected');
   }
 
   dispose(): void {
-    this.disposed = true; clearReconnectTimer(this.reconnect);
-    this.disposeSocket(); this.removeAllListeners();
+    this.disposed = true;
+    clearReconnectTimer(this.reconnect);
+    this.disposeSocket();
+    this.removeAllListeners();
   }
 
   private disposeSocket(): void {
-    if (!this.socket) { return; }
+    if (!this.socket) {
+      return;
+    }
     this.socket.ev.removeAllListeners('creds.update');
     this.socket.ev.removeAllListeners('connection.update');
     this.socket.ev.removeAllListeners('messages.upsert');
