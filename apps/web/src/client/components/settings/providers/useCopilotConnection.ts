@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { getAccomplish } from '@/lib/accomplish';
-import type { ConnectedProvider, CopilotOAuthCredentials } from '@accomplish_ai/agent-core/common';
-import { COPILOT_MODELS } from '@accomplish_ai/agent-core/common';
+import type { ConnectedProvider, CopilotOAuthCredentials } from '@accomplish_ai/agent-core';
+import { COPILOT_MODELS } from '@accomplish_ai/agent-core';
 import { createLogger } from '@/lib/logger';
 
 const logger = createLogger('useCopilotConnection');
@@ -65,6 +65,8 @@ export function useCopilotConnection({
     setUserCode(null);
     setVerificationUri(null);
 
+    let pollStarted = false;
+
     try {
       const accomplish = getAccomplish();
 
@@ -79,12 +81,15 @@ export function useCopilotConnection({
         if (result.verificationUri) {
           setVerificationUri(result.verificationUri);
         }
-        setConnecting(false);
+        // Keep connecting=true while the background poll is in flight to prevent re-clicks.
+        pollStarted = true;
 
-        // Poll getCopilotOAuthStatus until the background token arrives (max ~5 min)
+        // Drive timeout from the real expires_in returned by the main process (default 900s).
+        const POLL_INTERVAL_MS = 5000;
+        const expiresInMs = (result.expiresIn ?? 900) * 1000;
+        const MAX_ATTEMPTS = Math.max(1, Math.ceil(expiresInMs / POLL_INTERVAL_MS));
+
         const poll = async () => {
-          const MAX_ATTEMPTS = 60;
-          const POLL_INTERVAL_MS = 5000;
           for (let i = 0; i < MAX_ATTEMPTS; i++) {
             await new Promise((resolve) => setTimeout(resolve, POLL_INTERVAL_MS));
             const status = await accomplish.getCopilotOAuthStatus();
@@ -92,17 +97,20 @@ export function useCopilotConnection({
               onConnect(buildCopilotProvider());
               setUserCode(null);
               setVerificationUri(null);
+              setConnecting(false);
               return;
             }
           }
           setError('Timed out waiting for GitHub authorization. Please try again.');
           setUserCode(null);
           setVerificationUri(null);
+          setConnecting(false);
         };
 
         void poll().catch((err) => {
           logger.error('Error polling Copilot status:', err);
           setError(err instanceof Error ? err.message : 'Connection failed');
+          setConnecting(false);
         });
 
         return;
@@ -110,7 +118,10 @@ export function useCopilotConnection({
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Connection failed');
     } finally {
-      setConnecting(false);
+      // Only clear connecting if we didn't hand off to the background poll.
+      if (!pollStarted) {
+        setConnecting(false);
+      }
     }
   };
 

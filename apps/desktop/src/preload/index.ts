@@ -94,8 +94,12 @@ const accomplishAPI = {
     username?: string;
     expiresAt?: number;
   }> => ipcRenderer.invoke('opencode:auth:copilot:status'),
-  loginGithubCopilot: (): Promise<{ ok: boolean; userCode?: string; verificationUri?: string }> =>
-    ipcRenderer.invoke('opencode:auth:copilot:login'),
+  loginGithubCopilot: (): Promise<{
+    ok: boolean;
+    userCode?: string;
+    verificationUri?: string;
+    expiresIn?: number;
+  }> => ipcRenderer.invoke('opencode:auth:copilot:login'),
   logoutGithubCopilot: (): Promise<void> => ipcRenderer.invoke('opencode:auth:copilot:logout'),
 
   // API Key management (new simplified handlers)
