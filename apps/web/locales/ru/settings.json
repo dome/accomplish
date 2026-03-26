@@ -1,6 +1,6 @@
 {
   "title": "Настройки",
-  "setupTitle": "Настройка Accomplish",
+  "setupTitle": "Настройка DomeWork",
   "model": {
     "title": "Модель",
     "cloudProviders": "Облачные провайдеры",
@@ -264,13 +264,13 @@
   },
   "appearance": {
     "title": "Тема",
-    "description": "Выберите внешний вид Accomplish. Выберите «Система» для соответствия настройкам ОС.",
+    "description": "Выберите внешний вид DomeWork. Выберите «Система» для соответствия настройкам ОС.",
     "ariaLabel": "Настройка темы",
     "system": "Система",
     "light": "Светлая",
     "dark": "Тёмная",
     "themeTitle": "Тема",
-    "themeDescription": "Выберите внешний вид Accomplish. Выберите «Система» для соответствия настройкам ОС.",
+    "themeDescription": "Выберите внешний вид DomeWork. Выберите «Система» для соответствия настройкам ОС.",
     "themeSystem": "Системная",
     "themeLight": "Светлая",
     "themeDark": "Тёмная"
@@ -308,7 +308,7 @@
       "restartAuth": "Перезапустить авторизацию",
       "disconnect": "Отключить Slack",
       "disconnecting": "Отключение...",
-      "authHint": "Accomplish откроет браузер для подтверждения доступа к Slack.",
+      "authHint": "DomeWork откроет браузер для подтверждения доступа к Slack.",
       "pendingHint": "Авторизация Slack была начата, но не завершена. Перезапустите её.",
       "connectedHint": "Slack подключён и готов к использованию агентом.",
       "authFailed": "Не удалось подключить Slack",
@@ -347,7 +347,7 @@
     "filterAll": "Все",
     "filterActive": "Активные",
     "filterInactive": "Неактивные",
-    "byAccomplish": "От Accomplish",
+    "byAccomplish": "От DomeWork",
     "github": "GitHub",
     "builtByYou": "Созданные вами",
     "loading": "Загрузка навыков...",
@@ -362,7 +362,7 @@
     "showInFolder": "Показать в папке",
     "delete": "Удалить",
     "add": "Добавить",
-    "buildWithAccomplish": "Создать с Accomplish",
+    "buildWithAccomplish": "Создать с DomeWork",
     "buildDescription": "Создавайте навыки через диалог",
     "uploadSkill": "Загрузить навык",
     "uploadDescription": "Выберите папку с навыком для импорта",
@@ -392,7 +392,7 @@
     "exported": "Экспортировано",
     "exportFailed": "Ошибка экспорта",
     "exportDialogTitle": "Экспорт логов приложения",
-    "exportHeader": "Логи приложения Accomplish\nЭкспортировано: {{timestamp}}\nКаталог логов: {{logDir}}\n\nЗаписи пока отсутствуют.\n"
+    "exportHeader": "Логи приложения DomeWork\nЭкспортировано: {{timestamp}}\nКаталог логов: {{logDir}}\n\nЗаписи пока отсутствуют.\n"
   },
   "language": {
     "title": "Язык",
@@ -407,13 +407,13 @@
   "about": {
     "title": "О программе",
     "version": "Версия {{version}}",
-    "description": "Accomplish — это локальный ИИ-агент для вашего Mac, который читает файлы, создаёт документы и автоматизирует рутинную работу — всё с открытым исходным кодом и вашими моделями ИИ.",
+    "description": "DomeWork — это локальный ИИ-агент для вашего Mac, который читает файлы, создаёт документы и автоматизирует рутинную работу — всё с открытым исходным кодом и вашими моделями ИИ.",
     "contact": "Есть вопросы или предложения? Нажмите здесь, чтобы связаться с нами",
     "visitUs": "Наш сайт",
     "haveQuestion": "Есть вопрос?",
     "versionLabel": "Версия",
     "loading": "Загрузка...",
-    "allRightsReserved": "Accomplish™ Все права защищены."
+    "allRightsReserved": "DomeWork™ Все права защищены."
   },
   "warnings": {
     "noProviderReady": "Провайдер не готов",

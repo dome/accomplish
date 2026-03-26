@@ -76,7 +76,7 @@ export function disableAutoStart(): void {
 // Linux: systemd user service
 // =============================================================================
 
-const SYSTEMD_SERVICE_NAME = 'accomplish-daemon.service';
+const SYSTEMD_SERVICE_NAME = 'domework-daemon.service';
 
 function getSystemdServiceDir(): string {
   const configDir = process.env.XDG_CONFIG_HOME || path.join(process.env.HOME || '~', '.config');

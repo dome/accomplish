@@ -20,6 +20,7 @@ export type ProviderId =
   | 'groq'
   | 'venice'
   | 'nim'
+  | 'qwen'
   | 'custom';
 
 export type ProviderCategory = 'classic' | 'aws' | 'gcp' | 'azure' | 'local' | 'proxy' | 'hybrid';
@@ -185,6 +186,14 @@ export const PROVIDER_META: Record<ProviderId, ProviderMeta> = {
     logoKey: 'nim',
     helpUrl: 'https://org.ngc.nvidia.com/setup/api-key',
   },
+  qwen: {
+    id: 'qwen',
+    name: 'Qwen Code Plan',
+    category: 'classic',
+    label: 'Service',
+    logoKey: 'qwen',
+    helpUrl: 'https://coding-intl.dashscope.aliyuncs.com',
+  },
   custom: {
     id: 'custom',
     name: 'Custom Endpoint',
@@ -346,6 +355,7 @@ export const DEFAULT_MODELS: Partial<Record<ProviderId, string>> = {
   groq: 'groq/llama3-70b-8192',
   venice: 'venice/llama-3.3-70b',
   nim: 'nim/meta/llama-3.1-70b-instruct',
+  qwen: 'qwen/qwen3.5-plus',
 };
 
 export function getDefaultModelForProvider(providerId: ProviderId): string | null {
@@ -378,5 +388,6 @@ export const PROVIDER_ID_TO_OPENCODE: Record<ProviderId, string> = {
   groq: 'groq',
   venice: 'venice',
   nim: 'nim',
+  qwen: 'qwen',
   custom: 'custom',
 };

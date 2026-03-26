@@ -16,6 +16,7 @@ const PROVIDER_ORDER: ProviderId[] = [
   'azure-foundry',
   'deepseek',
   'zai',
+  'qwen',
   'ollama',
   'lmstudio',
   'xai',

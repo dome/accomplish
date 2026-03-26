@@ -344,7 +344,7 @@ export function SettingsDialog({
           <div className="px-3 py-2 mb-1">
             <img
               src={logoImage}
-              alt="Accomplish"
+              alt="DomeWork"
               className="dark:invert"
               style={{ height: '20px', paddingLeft: '6px' }}
             />

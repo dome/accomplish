@@ -264,13 +264,13 @@
   },
   "appearance": {
     "title": "Thème",
-    "description": "Choisissez l'apparence d'Accomplish. Sélectionnez Système pour correspondre aux paramètres de votre système d'exploitation.",
+    "description": "Choisissez l'apparence de DomeWork. Sélectionnez Système pour correspondre aux paramètres de votre système d'exploitation.",
     "ariaLabel": "Préférence de thème",
     "system": "Système",
     "light": "Clair",
     "dark": "Sombre",
     "themeTitle": "Thème",
-    "themeDescription": "Choisissez l'apparence d'Accomplish. Sélectionnez Système pour correspondre aux paramètres de votre système d'exploitation.",
+    "themeDescription": "Choisissez l'apparence de DomeWork. Sélectionnez Système pour correspondre aux paramètres de votre système d'exploitation.",
     "themeSystem": "Système",
     "themeLight": "Clair",
     "themeDark": "Sombre"
@@ -308,7 +308,7 @@
       "restartAuth": "Relancer l'authentification",
       "disconnect": "Déconnecter Slack",
       "disconnecting": "Déconnexion...",
-      "authHint": "Accomplish ouvrira votre navigateur pour que vous puissiez approuver l'accès Slack.",
+      "authHint": "DomeWork ouvrira votre navigateur pour que vous puissiez approuver l'accès Slack.",
       "pendingHint": "Une connexion Slack a été initiée mais non terminée. Relancez-la pour réessayer.",
       "connectedHint": "Slack est authentifié et prêt à être utilisé par l'agent.",
       "authFailed": "Échec de l'authentification Slack",
@@ -392,7 +392,7 @@
     "exported": "Exporté",
     "exportFailed": "Échec de l'exportation",
     "exportDialogTitle": "Exporter les journaux de l'application",
-    "exportHeader": "Journaux de l'application Accomplish\nExporté : {{timestamp}}\nRépertoire des journaux : {{logDir}}\n\nAucun journal enregistré.\n"
+    "exportHeader": "Journaux de l'application DomeWork\nExporté : {{timestamp}}\nRépertoire des journaux : {{logDir}}\n\nAucun journal enregistré.\n"
   },
   "language": {
     "title": "Langue",
@@ -407,13 +407,13 @@
   "about": {
     "title": "À propos",
     "version": "Version {{version}}",
-    "description": "Accomplish est un agent IA local pour votre Mac qui lit vos fichiers, crée des documents et automatise les tâches répétitives - le tout en open source avec les modèles d'IA de votre choix.",
+    "description": "DomeWork est un agent IA local pour votre Mac qui lit vos fichiers, crée des documents et automatise les tâches répétitives - le tout en open source avec les modèles d'IA de votre choix.",
     "contact": "Des questions ou des commentaires ? Cliquez ici pour nous contacter",
     "visitUs": "Visitez-nous",
     "haveQuestion": "Une question ?",
     "versionLabel": "Version",
     "loading": "Chargement...",
-    "allRightsReserved": "Accomplish™ Tous droits réservés."
+    "allRightsReserved": "DomeWork™ Tous droits réservés."
   },
   "warnings": {
     "noProviderReady": "Aucun fournisseur prêt",

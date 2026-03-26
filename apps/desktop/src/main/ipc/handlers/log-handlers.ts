@@ -25,7 +25,7 @@ export function registerLogHandlers(): void {
     const logDir = collector.getLogDir();
 
     const timestamp = new Date().toISOString().replace(/[:.]/g, '-').slice(0, 19);
-    const defaultFilename = `accomplish-logs-${timestamp}.txt`;
+    const defaultFilename = `domework-logs-${timestamp}.txt`;
 
     const result = await dialog.showSaveDialog(window, {
       title: 'Export Application Logs',

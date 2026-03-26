@@ -29,7 +29,7 @@ function getLegacyPaths(): LegacyPath[] {
   ];
 }
 
-const NEW_DB_NAME = app.isPackaged ? 'accomplish.db' : 'accomplish-dev.db';
+const NEW_DB_NAME = app.isPackaged ? 'domework.db' : 'domework-dev.db';
 const SECURE_STORAGE_NAME = app.isPackaged ? 'secure-storage.json' : 'secure-storage-dev.json';
 
 function getFilesToMigrate(legacyDbName?: string): Array<{ src: string; dest: string }> {

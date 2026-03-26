@@ -29,7 +29,8 @@ export type ProviderType =
   | 'fireworks'
   | 'groq'
   | 'venice'
-  | 'nim';
+  | 'nim'
+  | 'qwen';
 
 export type ApiKeyProvider =
   | 'anthropic'
@@ -53,6 +54,7 @@ export type ApiKeyProvider =
   | 'groq'
   | 'venice'
   | 'nim'
+  | 'qwen'
   | 'elevenlabs'
   | 'aws-agentcore'
   | 'browserbase'
@@ -85,6 +87,7 @@ export const ALLOWED_API_KEY_PROVIDERS: ReadonlySet<string> = new Set<string>([
   'groq',
   'venice',
   'nim',
+  'qwen',
   'elevenlabs',
   'aws-agentcore',
   'browserbase',
@@ -111,6 +114,7 @@ export const STANDARD_VALIDATION_PROVIDERS: ReadonlySet<string> = new Set<string
   'fireworks',
   'groq',
   'venice',
+  'qwen',
 ]);
 
 export interface ModelsEndpointConfig {
@@ -461,6 +465,46 @@ export const DEFAULT_PROVIDERS: ProviderConfig[] = [
       modelIdPrefix: 'venice/',
     },
     models: [],
+  },
+  {
+    id: 'qwen',
+    name: 'Qwen Code Plan',
+    requiresApiKey: true,
+    apiKeyEnvVar: 'QWEN_API_KEY',
+    baseUrl: 'https://coding-intl.dashscope.aliyuncs.com/v1',
+    defaultModelId: 'qwen/qwen3.5-plus',
+    modelsEndpoint: {
+      url: 'https://coding-intl.dashscope.aliyuncs.com/v1/models',
+      authStyle: 'bearer',
+      responseFormat: 'openai',
+      modelIdPrefix: 'qwen/',
+    },
+    models: [
+      {
+        id: 'qwen3.5-plus',
+        displayName: 'Qwen3.5 Plus',
+        provider: 'qwen',
+        fullId: 'qwen/qwen3.5-plus',
+        contextWindow: 256000,
+        supportsVision: true,
+      },
+      {
+        id: 'qwen3-coder-plus',
+        displayName: 'Qwen3 Coder Plus',
+        provider: 'qwen',
+        fullId: 'qwen/qwen3-coder-plus',
+        contextWindow: 256000,
+        supportsVision: false,
+      },
+      {
+        id: 'kimi-k2.5',
+        displayName: 'Kimi K2.5',
+        provider: 'qwen',
+        fullId: 'qwen/kimi-k2.5',
+        contextWindow: 256000,
+        supportsVision: true,
+      },
+    ],
   },
 ];
 

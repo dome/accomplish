@@ -58,7 +58,11 @@
     "nebius": "Nebius AI",
     "together": "Together AI",
     "fireworks": "Fireworks AI",
-    "groq": "Groq"
+    "groq": "Groq",
+    "venice": "Venice AI",
+    "nim": "NVIDIA NIM",
+    "qwen": "Qwen Code Plan",
+    "custom": "Custom Endpoint"
   },
   "providerLabels": {
     "anthropic": "Claude models",
@@ -79,7 +83,11 @@
     "nebius": "Llama & DeepSeek models",
     "together": "Llama & Mixtral models",
     "fireworks": "Fast inference models",
-    "groq": "Ultra-fast Llama models"
+    "groq": "Ultra-fast Llama models",
+    "venice": "Privacy-focused models",
+    "nim": "NVIDIA-hosted models",
+    "qwen": "Qwen & Kimi models",
+    "custom": "Custom endpoint"
   },
   "status": {
     "connected": "Connected",
@@ -308,7 +316,7 @@
       "restartAuth": "Restart authentication",
       "disconnect": "Disconnect Slack",
       "disconnecting": "Disconnecting...",
-      "authHint": "Accomplish will open your browser so you can approve Slack access.",
+      "authHint": "DomeWork will open your browser so you can approve Slack access.",
       "pendingHint": "A Slack sign-in was started earlier but not finished. Restart it to try again.",
       "connectedHint": "Slack is authenticated and ready for the agent to use.",
       "authFailed": "Failed to authenticate Slack",
@@ -392,7 +400,7 @@
     "exported": "Exported",
     "exportFailed": "Export Failed",
     "exportDialogTitle": "Export Application Logs",
-    "exportHeader": "Accomplish Application Logs\nExported: {{timestamp}}\nLog Directory: {{logDir}}\n\nNo logs recorded yet.\n"
+    "exportHeader": "DomeWork Application Logs\nExported: {{timestamp}}\nLog Directory: {{logDir}}\n\nNo logs recorded yet.\n"
   },
   "language": {
     "title": "Language",
@@ -407,13 +415,13 @@
   "about": {
     "title": "About",
     "version": "Version {{version}}",
-    "description": "Accomplish is a local computer-use AI agent for your Mac that reads your files, creates documents, and automates repetitive knowledge work—all open-source with your AI models of choice.",
+    "description": "DomeWork is a local computer-use AI agent for your Mac that reads your files, creates documents, and automates repetitive knowledge work—all open-source with your AI models of choice.",
     "contact": "Any questions or feedback? Click here to contact us",
     "visitUs": "Visit us",
     "haveQuestion": "Have a question?",
     "versionLabel": "Version",
     "loading": "Loading...",
-    "allRightsReserved": "Accomplish™ All rights reserved."
+    "allRightsReserved": "DomeWork™ All rights reserved."
   },
   "warnings": {
     "noProviderReady": "No provider ready",

@@ -176,7 +176,7 @@ if (hostNodeTarget) {
   if (!isHostNodeRuntimeAvailable(hostNodeTarget)) {
     console.log(`Missing bundled Node.js runtime for ${hostNodeTarget}.`);
     runPnpm(
-      ['-F', '@accomplish/desktop', 'download:nodejs', `--platform=${hostNodeTarget}`],
+      ['-F', '@domework/desktop', 'download:nodejs', `--platform=${hostNodeTarget}`],
       `Downloading bundled Node.js runtime for ${hostNodeTarget}...`,
     );
 
@@ -243,7 +243,7 @@ if (missingMcpDistOutputs.length > 0) {
     console.log(`  - ${missingOutput}`);
   }
   runPnpm(
-    ['-F', '@accomplish/desktop', 'build:mcp-tools:dev'],
+    ['-F', '@domework/desktop', 'build:mcp-tools:dev'],
     'Building MCP dist artifacts for dev...',
   );
 

@@ -25,7 +25,7 @@ const env = {
 
 console.log('[dev:remote] Launching Electron → ' + url);
 
-const electronArgs = ['-F', '@accomplish/desktop', 'dev:remote'];
+const electronArgs = ['-F', '@domework/desktop', 'dev:remote'];
 if (isCheck) {
   electronArgs.push('--', '--check');
 }

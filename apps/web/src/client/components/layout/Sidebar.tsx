@@ -124,7 +124,7 @@ export default function Sidebar() {
           <div className="flex items-center">
             <img
               src={logoImage}
-              alt="Accomplish"
+              alt="DomeWork"
               className="dark:invert"
               style={{ height: '20px', paddingLeft: '6px' }}
             />

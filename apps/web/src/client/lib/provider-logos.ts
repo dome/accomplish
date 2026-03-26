@@ -21,6 +21,7 @@ import groqLogo from '/assets/ai-logos/groq.svg';
 import veniceLogo from '/assets/ai-logos/venice.svg';
 import customLogo from '/assets/ai-logos/custom.svg';
 import nimLogo from '/assets/ai-logos/nim.svg';
+import qwenLogo from '/assets/ai-logos/qwen-logo.png';
 
 export const PROVIDER_LOGOS: Record<ProviderId, string> = {
   anthropic: anthropicLogo,
@@ -45,6 +46,7 @@ export const PROVIDER_LOGOS: Record<ProviderId, string> = {
   venice: veniceLogo,
   nim: nimLogo,
   custom: customLogo,
+  qwen: qwenLogo,
 };
 
 export const DARK_INVERT_PROVIDERS = new Set<ProviderId>([

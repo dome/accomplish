@@ -58,7 +58,11 @@
     "nebius": "Nebius AI",
     "together": "Together AI",
     "fireworks": "Fireworks AI",
-    "groq": "Groq"
+    "groq": "Groq",
+    "venice": "Venice AI",
+    "nim": "NVIDIA NIM",
+    "qwen": "Qwen Code Plan",
+    "custom": "自定义端点"
   },
   "providerLabels": {
     "anthropic": "Claude 系列模型",
@@ -79,7 +83,11 @@
     "nebius": "Llama 和 DeepSeek 模型",
     "together": "Llama 和 Mixtral 模型",
     "fireworks": "快速推理模型",
-    "groq": "超快速 Llama 模型"
+    "groq": "超快速 Llama 模型",
+    "venice": "隐私保护模型",
+    "nim": "NVIDIA 托管模型",
+    "qwen": "Qwen 和 Kimi 模型",
+    "custom": "自定义端点"
   },
   "status": {
     "connected": "已连接",
@@ -280,7 +288,7 @@
       "restartAuth": "重新开始验证",
       "disconnect": "断开 Slack",
       "disconnecting": "断开中...",
-      "authHint": "Accomplish 会打开浏览器，供您完成 Slack 授权。",
+      "authHint": "DomeWork 会打开浏览器，供您完成 Slack 授权。",
       "pendingHint": "之前已开始 Slack 登录，但尚未完成。您可以重新开始一次。",
       "connectedHint": "Slack 已完成验证，智能体现在可以使用它。",
       "authFailed": "Slack 验证失败",
@@ -392,7 +400,7 @@
     "exported": "已导出",
     "exportFailed": "导出失败",
     "exportDialogTitle": "导出应用程序日志",
-    "exportHeader": "Accomplish 应用程序日志\n导出时间：{{timestamp}}\n日志目录：{{logDir}}\n\n暂无日志记录。\n"
+    "exportHeader": "DomeWork 应用程序日志\n导出时间：{{timestamp}}\n日志目录：{{logDir}}\n\n暂无日志记录。\n"
   },
   "language": {
     "title": "语言",
@@ -407,13 +415,13 @@
   "about": {
     "title": "关于",
     "version": "版本 {{version}}",
-    "description": "Accomplish 是一款本地计算机使用 AI 助手，适用于 Mac。它可以读取您的文件、创建文档并自动化重复性知识工作——完全开源，支持您选择的 AI 模型。",
+    "description": "DomeWork 是一款本地计算机使用 AI 助手，适用于 Mac。它可以读取您的文件、创建文档并自动化重复性知识工作——完全开源，支持您选择的 AI 模型。",
     "contact": "有问题或反馈？点击此处联系我们",
     "visitUs": "访问我们",
     "haveQuestion": "有问题？",
     "versionLabel": "版本",
     "loading": "加载中...",
-    "allRightsReserved": "Accomplish™ 保留所有权利。"
+    "allRightsReserved": "DomeWork™ 保留所有权利。"
   },
   "warnings": {
     "noProviderReady": "尚未配置服务商",
