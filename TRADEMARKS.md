@@ -48,4 +48,4 @@ All rights in and to the DomeWork Trademarks are reserved by DomeWork Ltd. Any g
 
 If you have questions about use of the DomeWork Trademarks, or wish to request permission for a use not covered by this policy, please contact:
 
-support@accomplish.ai
+support@domeclaw.com
