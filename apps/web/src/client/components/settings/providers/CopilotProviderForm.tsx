@@ -24,7 +24,7 @@ export function CopilotProviderForm({
 }: CopilotProviderFormProps) {
   const { t } = useTranslation('settings');
   const isConnected = connectedProvider?.connectionStatus === 'connected';
-  const logoSrc = PROVIDER_LOGOS['copilot'] ?? PROVIDER_LOGOS['github-copilot'];
+  const logoSrc = PROVIDER_LOGOS['copilot'];
 
   const models = connectedProvider?.availableModels?.length
     ? connectedProvider.availableModels.map((m) => ({ id: m.id, name: m.name }))
