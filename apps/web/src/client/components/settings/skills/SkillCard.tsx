@@ -9,7 +9,7 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
-import accomplishFavicon from '/assets/accomplish-favicon.png';
+import domeworkFavicon from '/assets/domework-favicon.png';
 
 interface SkillCardProps {
   skill: Skill;
@@ -88,7 +88,7 @@ export const SkillCard = memo(function SkillCard({
           <span className="inline-flex items-center gap-1 rounded-full bg-secondary px-2 py-0.5 text-[10px] font-medium text-secondary-foreground">
             {skill.source === 'official' && (
               <>
-                <img src={accomplishFavicon} alt="" className="h-2.5 w-2.5" />
+                <img src={domeworkFavicon} alt="" className="h-2.5 w-2.5" />
                 {t('skills.byAccomplish')}
               </>
             )}

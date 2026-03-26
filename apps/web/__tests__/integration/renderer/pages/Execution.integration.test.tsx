@@ -212,7 +212,7 @@ vi.mock('@/components/ui/streaming-text', () => ({
 }));
 
 // Mock DomeWork icon
-vi.mock('/assets/accomplish-icon.png', () => ({ default: 'accomplish-icon.png' }));
+vi.mock('/assets/domework-icon.png', () => ({ default: 'domework-icon.png' }));
 
 // Import after mocks
 import ExecutionPage from '@/pages/Execution';
