@@ -490,6 +490,101 @@ describe('TaskInputBar Integration', () => {
     });
   });
 
+  describe('slash command integration', () => {
+    beforeEach(() => {
+      (window as Window & { accomplish: Record<string, unknown> }).accomplish = {
+        getEnabledSkills: vi.fn().mockResolvedValue([
+          {
+            id: 'skill-code-review',
+            name: 'Code Review',
+            description: 'Review code for quality',
+            command: '/code-review',
+            source: 'official',
+            isHidden: false,
+            isEnabled: true,
+            isVerified: true,
+            filePath: '/skills/code-review',
+            updatedAt: '2024-01-01',
+          },
+          {
+            id: 'skill-git-helper',
+            name: 'Git Helper',
+            description: 'Helps with git tasks',
+            command: '/git-helper',
+            source: 'community',
+            isHidden: false,
+            isEnabled: true,
+            isVerified: false,
+            filePath: '/skills/git-helper',
+            updatedAt: '2024-01-01',
+          },
+        ]),
+        getConnectors: vi.fn().mockResolvedValue([]),
+        logEvent: vi.fn().mockResolvedValue(undefined),
+        speechIsConfigured: vi.fn().mockResolvedValue(true),
+        getSelectedModel: vi.fn().mockResolvedValue(null),
+      };
+    });
+
+    it('should show slash command popover when "/" is typed', async () => {
+      const onChange = vi.fn();
+      const onSubmit = vi.fn();
+
+      renderWithRouter(<TaskInputBar value="" onChange={onChange} onSubmit={onSubmit} />);
+
+      const textarea = screen.getByRole('textbox');
+      fireEvent.change(textarea, { target: { value: '/', selectionStart: 1 } });
+
+      const codeReview = await screen.findByText('/code-review');
+      expect(codeReview).toBeInTheDocument();
+
+      const gitHelper = await screen.findByText('/git-helper');
+      expect(gitHelper).toBeInTheDocument();
+    });
+
+    it('should not submit when Enter is pressed with slash popover open', async () => {
+      const onChange = vi.fn();
+      const onSubmit = vi.fn();
+
+      const { rerender } = renderWithRouter(
+        <TaskInputBar value="" onChange={onChange} onSubmit={onSubmit} />,
+      );
+
+      const textarea = screen.getByRole('textbox');
+      fireEvent.change(textarea, { target: { value: '/', selectionStart: 1 } });
+
+      rerender(
+        <MemoryRouter>
+          <TaskInputBar value="/" onChange={onChange} onSubmit={onSubmit} />
+        </MemoryRouter>,
+      );
+
+      await screen.findByText('/code-review');
+
+      fireEvent.keyDown(textarea, { key: 'Enter', shiftKey: false });
+
+      expect(onSubmit).not.toHaveBeenCalled();
+      expect(onChange).toHaveBeenCalledWith('/code-review');
+    });
+
+    it('should dismiss popover on Escape without affecting the textarea', async () => {
+      const onChange = vi.fn();
+      const onSubmit = vi.fn();
+
+      renderWithRouter(<TaskInputBar value="" onChange={onChange} onSubmit={onSubmit} />);
+
+      const textarea = screen.getByRole('textbox');
+      fireEvent.change(textarea, { target: { value: '/', selectionStart: 1 } });
+
+      await screen.findByText('/code-review');
+
+      fireEvent.keyDown(textarea, { key: 'Escape' });
+
+      expect(screen.queryByText('/code-review')).not.toBeInTheDocument();
+      expect(onSubmit).not.toHaveBeenCalled();
+    });
+  });
+
   describe('plus menu integration', () => {
     it('should keep skills search open when clicking search input in plus menu', async () => {
       const onChange = vi.fn();
