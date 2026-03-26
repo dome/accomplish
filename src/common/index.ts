@@ -41,6 +41,8 @@ export type {
   LiteLLMModel,
   LiteLLMConfig,
   LMStudioConfig,
+  HuggingFaceLocalModelInfo,
+  HuggingFaceLocalConfig,
   NimModel,
   NimConfig,
 } from './types/provider.js';
@@ -79,6 +81,7 @@ export type {
   ToolSupportStatus,
   ConnectedProvider,
   ProviderSettings,
+  HuggingFaceLocalCredentials,
 } from './types/providerSettings.js';
 export {
   PROVIDER_META,

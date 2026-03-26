@@ -335,6 +335,8 @@ export type {
   LiteLLMModel,
   LiteLLMConfig,
   LMStudioConfig,
+  HuggingFaceLocalModelInfo,
+  HuggingFaceLocalConfig,
   NimModel,
   NimConfig,
 } from './common/types/provider.js';

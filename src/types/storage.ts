@@ -6,6 +6,7 @@ import type {
   LiteLLMConfig,
   AzureFoundryConfig,
   LMStudioConfig,
+  HuggingFaceLocalConfig,
   NimConfig,
 } from '../common/types/provider.js';
 import type {
@@ -63,6 +64,7 @@ export interface AppSettings {
   litellmConfig: LiteLLMConfig | null;
   azureFoundryConfig: AzureFoundryConfig | null;
   lmstudioConfig: LMStudioConfig | null;
+  huggingfaceLocalConfig: HuggingFaceLocalConfig | null;
   openaiBaseUrl: string;
   theme: ThemePreference;
   runInBackground: boolean;
@@ -138,6 +140,10 @@ export interface AppSettingsAPI {
   getLMStudioConfig(): LMStudioConfig | null;
   /** Set the LM Studio configuration */
   setLMStudioConfig(config: LMStudioConfig | null): void;
+  /** Get the Hugging Face Local configuration */
+  getHuggingFaceLocalConfig(): HuggingFaceLocalConfig | null;
+  /** Set the Hugging Face Local configuration */
+  setHuggingFaceLocalConfig(config: HuggingFaceLocalConfig | null): void;
   /** Get the NVIDIA NIM configuration */
   getNimConfig(): NimConfig | null;
   /** Set the NVIDIA NIM configuration */

@@ -24,6 +24,7 @@ export type ProviderType =
   | 'minimax'
   | 'lmstudio'
   | 'vertex'
+  | 'huggingface-local'
   | 'nebius'
   | 'together'
   | 'fireworks'
@@ -208,6 +209,23 @@ export interface LMStudioConfig {
   enabled: boolean;
   lastValidated?: number;
   models?: LMStudioModel[];
+}
+
+export interface HuggingFaceLocalModelInfo {
+  id: string;
+  displayName: string;
+  sizeBytes?: number;
+  downloaded: boolean;
+}
+
+export interface HuggingFaceLocalConfig {
+  selectedModelId: string | null;
+  serverPort: number | null;
+  enabled: boolean;
+  /** ONNX quantization level. null falls back to automatic (q4 → fp32). */
+  quantization: 'q4' | 'fp32' | null;
+  /** Preferred execution device. null means automatic selection. */
+  devicePreference: 'auto' | 'cpu' | 'cuda' | 'webgpu' | null;
 }
 
 export const DEFAULT_PROVIDERS: ProviderConfig[] = [

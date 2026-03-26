@@ -14,6 +14,7 @@ export type ProviderId =
   | 'minimax'
   | 'lmstudio'
   | 'vertex'
+  | 'huggingface-local'
   | 'nebius'
   | 'together'
   | 'fireworks'
@@ -138,6 +139,13 @@ export const PROVIDER_META: Record<ProviderId, ProviderMeta> = {
     logoKey: 'lmstudio',
     helpUrl: 'https://lmstudio.ai/',
   },
+  'huggingface-local': {
+    id: 'huggingface-local',
+    name: 'HuggingFace Local',
+    category: 'local',
+    label: 'Local Models',
+    logoKey: 'huggingface',
+  },
   nebius: {
     id: 'nebius',
     name: 'Nebius AI',
@@ -249,6 +257,11 @@ export interface LMStudioCredentials {
   serverUrl: string;
 }
 
+export interface HuggingFaceLocalCredentials {
+  type: 'huggingface-local';
+  modelId: string;
+}
+
 export interface CustomCredentials {
   type: 'custom';
   baseUrl: string;
@@ -299,6 +312,7 @@ export type ProviderCredentials =
   | AzureFoundryCredentials
   | LMStudioCredentials
   | OAuthCredentials
+  | HuggingFaceLocalCredentials
   | CopilotOAuthCredentials
   | CustomCredentials
   | NimCredentials;
@@ -387,6 +401,8 @@ export const PROVIDER_ID_TO_OPENCODE: Record<ProviderId, string> = {
   minimax: 'minimax',
   lmstudio: 'lmstudio',
   vertex: 'vertex',
+  // HuggingFace Local exposes an OpenAI-compatible API; opencode connects via OPENAI_API_BASE env var
+  'huggingface-local': 'openai',
   nebius: 'nebius',
   together: 'together',
   fireworks: 'fireworks',

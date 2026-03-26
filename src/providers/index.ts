@@ -56,6 +56,15 @@ export {
   type FetchProviderModelsResult,
   type FetchProviderModelsOptions,
 } from './fetch-models.js';
+
+export {
+  HF_LOCAL_DEFAULT_URL,
+  HF_RECOMMENDED_MODELS,
+  searchHuggingFaceHubModels,
+  testHuggingFaceLocalConnection,
+  fetchHuggingFaceLocalModels,
+  type HuggingFaceHubModel,
+} from './huggingface-local.js';
 export { testCustomConnection, type CustomConnectionResult } from './custom.js';
 export {
   testNimConnection,
