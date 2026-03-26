@@ -10,7 +10,11 @@ const logger = createLogger('Execution');
 import { MAX_FILES } from '../lib/fileUtils';
 import { springs } from '../lib/animations';
 import { FAVORITABLE_STATUSES } from '../lib/task-utils';
-import { hasAnyReadyProvider, getOAuthProviderDisplayName } from '@accomplish_ai/agent-core/common';
+import {
+  hasAnyReadyProvider,
+  getOAuthProviderDisplayName,
+  PROMPT_DEFAULT_MAX_LENGTH,
+} from '@accomplish_ai/agent-core/common';
 import { Button } from '@/components/ui/button';
 import { StarButton } from '@/components/ui/StarButton';
 import { Alert, AlertDescription } from '@/components/ui/alert';
@@ -132,6 +136,7 @@ export function ExecutionPage() {
   const { t: tCommon } = useTranslation('common');
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const [followUp, setFollowUp] = useState('');
+  const isFollowUpOverLimit = followUp.length > PROMPT_DEFAULT_MAX_LENGTH;
   const followUpInputRef = useRef<HTMLTextAreaElement>(null);
   const [currentTool, setCurrentTool] = useState<string | null>(null);
   const [currentToolInput, setCurrentToolInput] = useState<unknown>(null);
@@ -1202,7 +1207,8 @@ export function ExecutionPage() {
                       disabled={
                         (!followUp.trim() && attachments.length === 0) ||
                         isLoading ||
-                        speechInput.isRecording
+                        speechInput.isRecording ||
+                        isFollowUpOverLimit
                       }
                       className="flex h-9 w-9 items-center justify-center rounded-lg bg-primary text-primary-foreground hover:bg-primary/90 transition-colors disabled:opacity-40 disabled:cursor-not-allowed"
                       title={tCommon('buttons.send')}
