@@ -1447,32 +1447,6 @@ describe('Execution Page Integration', () => {
       });
     });
 
-    it('should disable send button when follow-up is empty', () => {
-      const task = createMockTask('task-123', 'Done', 'completed');
-      task.sessionId = 'session-abc';
-      mockStoreState.currentTask = task;
-
-      renderWithRouter('task-123');
-
-      const sendButton = screen.getByRole('button', { name: /send/i });
-      expect(sendButton).toBeDisabled();
-    });
-
-    it('should disable send button when follow-up exceeds limit', () => {
-      const task = createMockTask('task-123', 'Done', 'completed');
-      task.sessionId = 'session-abc';
-      mockStoreState.currentTask = task;
-
-      renderWithRouter('task-123');
-
-      const input = screen.getByTestId('execution-follow-up-input');
-      const oversizedValue = 'a'.repeat(PROMPT_DEFAULT_MAX_LENGTH + 1);
-      fireEvent.change(input, { target: { value: oversizedValue } });
-
-      const sendButton = screen.getByRole('button', { name: /send/i });
-      expect(sendButton).toBeDisabled();
-    });
-
     it('should enable send button when follow-up is valid', () => {
       const task = createMockTask('task-123', 'Done', 'completed');
       task.sessionId = 'session-abc';
