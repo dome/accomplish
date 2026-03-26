@@ -350,6 +350,7 @@ export function ExecutionPage() {
 
   const handleFollowUp = useCallback(async () => {
     if (!followUp.trim() && attachments.length === 0) return;
+    if (followUp.length > PROMPT_DEFAULT_MAX_LENGTH) return;
     const isE2EMode = await accomplish.isE2EMode();
     if (!isE2EMode) {
       const settings = await accomplish.getProviderSettings();
