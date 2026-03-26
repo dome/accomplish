@@ -1,5 +1,5 @@
 /**
- * Accomplish Daemon Socket Server
+ * DomeWork Daemon Socket Server
  *
  * Listens on a local Unix socket (macOS/Linux) or named pipe (Windows) and
  * accepts JSON-RPC 2.0 commands from external clients (CLI, scheduled tasks,

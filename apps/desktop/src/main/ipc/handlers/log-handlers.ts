@@ -45,7 +45,7 @@ export function registerLogHandlers(): void {
       if (fs.existsSync(logPath)) {
         fs.copyFileSync(logPath, result.filePath);
       } else {
-        const header = `Accomplish Application Logs\nExported: ${new Date().toISOString()}\nLog Directory: ${logDir}\n\nNo logs recorded yet.\n`;
+        const header = `DomeWork Application Logs\nExported: ${new Date().toISOString()}\nLog Directory: ${logDir}\n\nNo logs recorded yet.\n`;
         fs.writeFileSync(result.filePath, header);
       }
 

@@ -92,7 +92,7 @@ function getServiceContent(): string {
 
   return [
     '[Unit]',
-    'Description=Accomplish AI Daemon',
+    'Description=DomeWork AI Daemon',
     'After=default.target',
     '',
     '[Service]',

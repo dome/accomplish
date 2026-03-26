@@ -1,10 +1,10 @@
 # @accomplish_ai/agent-core
 
-Core library for the Accomplish desktop automation assistant. Provides factory-based APIs for task management, persistent storage, permission handling, logging, and more.
+Core library for the DomeWork desktop automation assistant. Provides factory-based APIs for task management, persistent storage, permission handling, logging, and more.
 
 ## Usage
 
-This package is internal to the Accomplish monorepo and is consumed via workspace dependencies (for example, `"@accomplish_ai/agent-core": "workspace:*"`).
+This package is internal to the DomeWork monorepo and is consumed via workspace dependencies (for example, `"@accomplish_ai/agent-core": "workspace:*"`).
 
 ## Quick Start
 

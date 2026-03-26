@@ -1,6 +1,6 @@
 {
   "title": "Paramètres",
-  "setupTitle": "Configurer Accomplish",
+  "setupTitle": "Configurer DomeWork",
   "model": {
     "title": "Modèle",
     "cloudProviders": "Fournisseurs cloud",
@@ -347,7 +347,7 @@
     "filterAll": "Toutes",
     "filterActive": "Actives",
     "filterInactive": "Inactives",
-    "byAccomplish": "Par Accomplish",
+    "byAccomplish": "Par DomeWork",
     "github": "GitHub",
     "builtByYou": "Créées par vous",
     "loading": "Chargement des compétences...",
@@ -362,7 +362,7 @@
     "showInFolder": "Afficher dans le dossier",
     "delete": "Supprimer",
     "add": "Ajouter",
-    "buildWithAccomplish": "Créer avec Accomplish",
+    "buildWithAccomplish": "Créer avec DomeWork",
     "buildDescription": "Créez des compétences par conversation",
     "uploadSkill": "Importer une compétence",
     "uploadDescription": "Sélectionnez un dossier de compétences à importer",

@@ -239,7 +239,7 @@ describe('Shell escaping utilities', () => {
 
     it('handles task text containing double-quotes (the original failure case)', () => {
       const exe = 'C:\\Programs\\opencode.exe';
-      const taskText = 'Take a screenshot. Type "Desktop automation by Accomplish - PR #189"';
+      const taskText = 'Take a screenshot. Type "Desktop automation by DomeWork - PR #189"';
       const { args } = spawnArgs(exe, ['run', taskText]);
 
       expect(args[1]).toBe(taskText);

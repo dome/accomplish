@@ -3,7 +3,7 @@
 </p>
 
 <p align="center">
-  <img src="docs/banner.svg" alt="Accomplish - 자체 AI API 키로 파일 관리, 문서 작성, 브라우저 작업을 자동화하는 오픈소스 AI 데스크톱 에이전트" width="100%" />
+  <img src="docs/banner.svg" alt="DomeWork - 자체 AI API 키로 파일 관리, 문서 작성, 브라우저 작업을 자동화하는 오픈소스 AI 데스크톱 에이전트" width="100%" />
 </p>
 
 <p align="center">
@@ -11,16 +11,16 @@
   <a href="https://github.com/accomplish-ai/accomplish/stargazers"><img src="https://img.shields.io/github/stars/accomplish-ai/accomplish?style=flat-square&color=22c55e" alt="GitHub Stars" /></a>
   <a href="https://github.com/accomplish-ai/accomplish/issues"><img src="https://img.shields.io/github/issues/accomplish-ai/accomplish?style=flat-square&color=22c55e" alt="GitHub Issues" /></a>
   <a href="https://github.com/accomplish-ai/accomplish/commits"><img src="https://img.shields.io/github/last-commit/accomplish-ai/accomplish?style=flat-square&color=22c55e" alt="최근 커밋" /></a>
-  <a href="https://downloads.accomplish.ai/downloads/0.4.8/macos/Accomplish-0.4.8-mac-arm64.dmg"><img src="https://img.shields.io/badge/Download-macOS_(Apple_Silicon)-0ea5e9?style=flat-square" alt="macOS 다운로드 (Apple Silicon)" /></a>
-  <a href="https://downloads.accomplish.ai/downloads/0.4.8/macos/Accomplish-0.4.8-mac-x64.dmg"><img src="https://img.shields.io/badge/Download-macOS_(Intel)-0ea5e9?style=flat-square" alt="macOS 다운로드 (Intel)" /></a>
-  <a href="https://downloads.accomplish.ai/downloads/0.4.8/windows/Accomplish-0.4.8-win-x64.exe"><img src="https://img.shields.io/badge/Download-Windows_11-0ea5e9?style=flat-square" alt="Windows 11 다운로드" /></a>
-  <a href="https://downloads.accomplish.ai/downloads/0.4.8/linux/Accomplish-0.4.8-linux-arm64.AppImage"><img src="https://img.shields.io/badge/Download-Linux_(ARM64)-0ea5e9?style=flat-square" alt="Linux (ARM64) 다운로드" /></a>
-  <a href="https://downloads.accomplish.ai/downloads/0.4.8/linux/Accomplish-0.4.8-linux-x86_64.AppImage"><img src="https://img.shields.io/badge/Download-Linux_(x64)-0ea5e9?style=flat-square" alt="Linux (x64) 다운로드" /></a>
-  <a href="https://downloads.accomplish.ai/downloads/0.4.8/linux/Accomplish-0.4.8-linux-amd64.deb"><img src="https://img.shields.io/badge/Download-Linux_(.deb_x64)-0ea5e9?style=flat-square" alt="Linux (.deb x64) 다운로드" /></a>
+  <a href="https://downloads.accomplish.ai/downloads/0.4.8/macos/DomeWork-0.4.8-mac-arm64.dmg"><img src="https://img.shields.io/badge/Download-macOS_(Apple_Silicon)-0ea5e9?style=flat-square" alt="macOS 다운로드 (Apple Silicon)" /></a>
+  <a href="https://downloads.accomplish.ai/downloads/0.4.8/macos/DomeWork-0.4.8-mac-x64.dmg"><img src="https://img.shields.io/badge/Download-macOS_(Intel)-0ea5e9?style=flat-square" alt="macOS 다운로드 (Intel)" /></a>
+  <a href="https://downloads.accomplish.ai/downloads/0.4.8/windows/DomeWork-0.4.8-win-x64.exe"><img src="https://img.shields.io/badge/Download-Windows_11-0ea5e9?style=flat-square" alt="Windows 11 다운로드" /></a>
+  <a href="https://downloads.accomplish.ai/downloads/0.4.8/linux/DomeWork-0.4.8-linux-arm64.AppImage"><img src="https://img.shields.io/badge/Download-Linux_(ARM64)-0ea5e9?style=flat-square" alt="Linux (ARM64) 다운로드" /></a>
+  <a href="https://downloads.accomplish.ai/downloads/0.4.8/linux/DomeWork-0.4.8-linux-x86_64.AppImage"><img src="https://img.shields.io/badge/Download-Linux_(x64)-0ea5e9?style=flat-square" alt="Linux (x64) 다운로드" /></a>
+  <a href="https://downloads.accomplish.ai/downloads/0.4.8/linux/DomeWork-0.4.8-linux-amd64.deb"><img src="https://img.shields.io/badge/Download-Linux_(.deb_x64)-0ea5e9?style=flat-square" alt="Linux (.deb x64) 다운로드" /></a>
   <a href="https://discord.gg/YH86b2P8"><img src="https://img.shields.io/badge/Discord-Join-5865F2?style=flat-square&logo=discord&logoColor=white" alt="Discord" /></a>
 </p>
 
-# Accomplish™ - 오픈소스 AI 데스크톱 에이전트
+# DomeWork™ - 오픈소스 AI 데스크톱 에이전트
 
 Accomplish는 로컬 머신에서 파일 관리, 문서 작성, 브라우저 작업을 자동화하는 오픈소스 AI 데스크톱 에이전트입니다. 자체 API 키(OpenAI, Anthropic, Google, xAI)를 사용하거나 Ollama를 통해 로컬 모델을 실행하세요.
 
@@ -29,23 +29,23 @@ Accomplish는 로컬 머신에서 파일 관리, 문서 작성, 브라우저 작
 </p>
 
 <p align="center">
-  <a href="https://downloads.accomplish.ai/downloads/0.4.8/macos/Accomplish-0.4.8-mac-arm64.dmg"><strong>Mac용 다운로드 (Apple Silicon)</strong></a>
+  <a href="https://downloads.accomplish.ai/downloads/0.4.8/macos/DomeWork-0.4.8-mac-arm64.dmg"><strong>Mac용 다운로드 (Apple Silicon)</strong></a>
   ·
-  <a href="https://downloads.accomplish.ai/downloads/0.4.8/macos/Accomplish-0.4.8-mac-x64.dmg"><strong>Mac용 다운로드 (Intel)</strong></a>
+  <a href="https://downloads.accomplish.ai/downloads/0.4.8/macos/DomeWork-0.4.8-mac-x64.dmg"><strong>Mac용 다운로드 (Intel)</strong></a>
   ·
-  <a href="https://downloads.accomplish.ai/downloads/0.4.8/windows/Accomplish-0.4.8-win-x64.exe"><strong>Windows 11용 다운로드</strong></a>
+  <a href="https://downloads.accomplish.ai/downloads/0.4.8/windows/DomeWork-0.4.8-win-x64.exe"><strong>Windows 11용 다운로드</strong></a>
   ·
-  <a href="https://downloads.accomplish.ai/downloads/0.4.8/linux/Accomplish-0.4.8-linux-arm64.AppImage"><strong>Linux (ARM64) 다운로드</strong></a>
+  <a href="https://downloads.accomplish.ai/downloads/0.4.8/linux/DomeWork-0.4.8-linux-arm64.AppImage"><strong>Linux (ARM64) 다운로드</strong></a>
   ·
-  <a href="https://downloads.accomplish.ai/downloads/0.4.8/linux/Accomplish-0.4.8-linux-x86_64.AppImage"><strong>Linux (x64) 다운로드</strong></a>
+  <a href="https://downloads.accomplish.ai/downloads/0.4.8/linux/DomeWork-0.4.8-linux-x86_64.AppImage"><strong>Linux (x64) 다운로드</strong></a>
   ·
-  <a href="https://downloads.accomplish.ai/downloads/0.4.8/linux/Accomplish-0.4.8-linux-amd64.deb"><strong>Linux (.deb x64) 다운로드</strong></a>
+  <a href="https://downloads.accomplish.ai/downloads/0.4.8/linux/DomeWork-0.4.8-linux-amd64.deb"><strong>Linux (.deb x64) 다운로드</strong></a>
   ·
-  <a href="https://www.accomplish.ai/">Accomplish 웹사이트</a>
+  <a href="https://www.accomplish.ai/">DomeWork 웹사이트</a>
   ·
-  <a href="https://www.accomplish.ai/blog/">Accomplish 블로그</a>
+  <a href="https://www.accomplish.ai/blog/">DomeWork 블로그</a>
   ·
-  <a href="https://github.com/accomplish-ai/accomplish/releases">Accomplish 릴리스</a>
+  <a href="https://github.com/accomplish-ai/accomplish/releases">DomeWork 릴리스</a>
 </p>
 
 <br />
@@ -66,7 +66,7 @@ Accomplish는 로컬 머신에서 파일 관리, 문서 작성, 브라우저 작
 
 - 파일은 내 머신에 저장
 - 접근 가능한 폴더를 직접 결정
-- Accomplish(또는 누구에게도)에 데이터가 전송되지 않음
+- DomeWork(또는 누구에게도)에 데이터가 전송되지 않음
 
 </div>
 
@@ -201,7 +201,7 @@ Accomplish는 로컬 머신에서 실행됩니다. 파일은 기기에 저장되
 
 <div align="center">
 
-[**Mac용 다운로드 (Apple Silicon)**](https://downloads.accomplish.ai/downloads/0.4.8/macos/Accomplish-0.4.8-mac-arm64.dmg) · [**Mac용 다운로드 (Intel)**](https://downloads.accomplish.ai/downloads/0.4.8/macos/Accomplish-0.4.8-mac-x64.dmg) · [**Windows 11용 다운로드**](https://downloads.accomplish.ai/downloads/0.4.8/windows/Accomplish-0.4.8-win-x64.exe) · [**Linux (ARM64) 다운로드**](https://downloads.accomplish.ai/downloads/0.4.8/linux/Accomplish-0.4.8-linux-arm64.AppImage) · [**Linux (x64) 다운로드**](https://downloads.accomplish.ai/downloads/0.4.8/linux/Accomplish-0.4.8-linux-x86_64.AppImage) · [**Linux (.deb x64) 다운로드**](https://downloads.accomplish.ai/downloads/0.4.8/linux/Accomplish-0.4.8-linux-amd64.deb)
+[**Mac용 다운로드 (Apple Silicon)**](https://downloads.accomplish.ai/downloads/0.4.8/macos/DomeWork-0.4.8-mac-arm64.dmg) · [**Mac용 다운로드 (Intel)**](https://downloads.accomplish.ai/downloads/0.4.8/macos/DomeWork-0.4.8-mac-x64.dmg) · [**Windows 11용 다운로드**](https://downloads.accomplish.ai/downloads/0.4.8/windows/DomeWork-0.4.8-win-x64.exe) · [**Linux (ARM64) 다운로드**](https://downloads.accomplish.ai/downloads/0.4.8/linux/DomeWork-0.4.8-linux-arm64.AppImage) · [**Linux (x64) 다운로드**](https://downloads.accomplish.ai/downloads/0.4.8/linux/DomeWork-0.4.8-linux-x86_64.AppImage) · [**Linux (.deb x64) 다운로드**](https://downloads.accomplish.ai/downloads/0.4.8/linux/DomeWork-0.4.8-linux-amd64.deb)
 
 </div>
 
@@ -213,11 +213,11 @@ Accomplish는 로컬 머신에서 실행됩니다. 파일은 기기에 저장되
 
 ## 스크린샷 및 데모
 
-macOS에서의 Accomplish 빠른 둘러보기와 짧은 데모 영상.
+macOS에서의 DomeWork 빠른 둘러보기와 짧은 데모 영상.
 
 <p align="center">
   <a href="https://youtu.be/UJ0FIufMOlc?si=iFcu3VTG4B4q9VCB">
-    <img src="docs/video-thumbnail.png" alt="Accomplish 데모 - 파일 관리 및 브라우저 작업을 자동화하는 AI 에이전트" width="600" />
+    <img src="docs/video-thumbnail.png" alt="DomeWork 데모 - 파일 관리 및 브라우저 작업을 자동화하는 AI 에이전트" width="600" />
   </a>
 </p>
 
@@ -332,11 +332,11 @@ git push origin feature/amazing-feature
 
 <div align="center">
 
-**[Accomplish 웹사이트](https://www.accomplish.ai/)** · **[Accomplish 블로그](https://www.accomplish.ai/blog/)** · **[Accomplish 릴리스](https://github.com/accomplish-ai/accomplish/releases)** · **[Issues](https://github.com/accomplish-ai/accomplish/issues)** · **[Twitter](https://x.com/Accomplish_ai)**
+**[DomeWork 웹사이트](https://www.accomplish.ai/)** · **[DomeWork 블로그](https://www.accomplish.ai/blog/)** · **[DomeWork 릴리스](https://github.com/accomplish-ai/accomplish/releases)** · **[Issues](https://github.com/accomplish-ai/accomplish/issues)** · **[Twitter](https://x.com/Accomplish_ai)**
 
 <br />
 
-MIT 라이선스 · [Accomplish](https://www.accomplish.ai) 제작
+MIT 라이선스 · [DomeWork](https://www.accomplish.ai) 제작
 
 <br />
 

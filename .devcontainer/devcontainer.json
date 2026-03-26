@@ -1,5 +1,5 @@
 {
-  "name": "Accomplish Dev Environment",
+  "name": "DomeWork Dev Environment",
   "image": "mcr.microsoft.com/devcontainers/javascript-node:20",
   "features": {},
   "forwardPorts": [5173],

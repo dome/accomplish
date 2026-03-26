@@ -1,6 +1,6 @@
 {
   "title": "Settings",
-  "setupTitle": "Set up Accomplish",
+  "setupTitle": "Set up DomeWork",
   "model": {
     "title": "Model",
     "cloudProviders": "Cloud Providers",
@@ -272,19 +272,19 @@
   },
   "appearance": {
     "title": "Theme",
-    "description": "Choose how Accomplish looks. Select System to match your operating system setting.",
+    "description": "Choose how DomeWork looks. Select System to match your operating system setting.",
     "ariaLabel": "Theme preference",
     "system": "System",
     "light": "Light",
     "dark": "Dark",
     "themeTitle": "Theme",
-    "themeDescription": "Choose how Accomplish looks. Select System to match your operating system setting.",
+    "themeDescription": "Choose how DomeWork looks. Select System to match your operating system setting.",
     "themeSystem": "System",
     "themeLight": "Light",
     "themeDark": "Dark"
   },
   "connectors": {
-    "description": "Connect built-in and custom MCP servers so Accomplish can use external tools.",
+    "description": "Connect built-in and custom MCP servers so DomeWork can use external tools.",
     "loading": "Loading connectors...",
     "placeholder": "https://mcp-server.example.com",
     "add": "Add",
@@ -355,7 +355,7 @@
     "filterAll": "All",
     "filterActive": "Active",
     "filterInactive": "Inactive",
-    "byAccomplish": "By Accomplish",
+    "byAccomplish": "By DomeWork",
     "github": "GitHub",
     "builtByYou": "Built By You",
     "loading": "Loading skills...",
@@ -370,7 +370,7 @@
     "showInFolder": "Show in Folder",
     "delete": "Delete",
     "add": "Add",
-    "buildWithAccomplish": "Build with Accomplish",
+    "buildWithAccomplish": "Build with DomeWork",
     "buildDescription": "Create skills through conversation",
     "uploadSkill": "Upload a skill",
     "uploadDescription": "Select a skill folder to import",

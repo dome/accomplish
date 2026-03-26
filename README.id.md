@@ -3,7 +3,7 @@
 </p>
 
 <p align="center">
-  <img src="docs/banner.svg" alt="Accomplish - Agen desktop AI open source yang mengotomatisasi manajemen file, pembuatan dokumen, dan tugas browser dengan kunci API AI Anda sendiri" width="100%" />
+  <img src="docs/banner.svg" alt="DomeWork - Agen desktop AI open source yang mengotomatisasi manajemen file, pembuatan dokumen, dan tugas browser dengan kunci API AI Anda sendiri" width="100%" />
 </p>
 
 <p align="center">
@@ -11,41 +11,41 @@
   <a href="https://github.com/accomplish-ai/accomplish/stargazers"><img src="https://img.shields.io/github/stars/accomplish-ai/accomplish?style=flat-square&color=22c55e" alt="GitHub Stars" /></a>
   <a href="https://github.com/accomplish-ai/accomplish/issues"><img src="https://img.shields.io/github/issues/accomplish-ai/accomplish?style=flat-square&color=22c55e" alt="GitHub Issues" /></a>
   <a href="https://github.com/accomplish-ai/accomplish/commits"><img src="https://img.shields.io/github/last-commit/accomplish-ai/accomplish?style=flat-square&color=22c55e" alt="Commit Terakhir" /></a>
-  <a href="https://downloads.accomplish.ai/downloads/0.4.8/macos/Accomplish-0.4.8-mac-arm64.dmg"><img src="https://img.shields.io/badge/Download-macOS_(Apple_Silicon)-0ea5e9?style=flat-square" alt="Unduh untuk macOS (Apple Silicon)" /></a>
-  <a href="https://downloads.accomplish.ai/downloads/0.4.8/macos/Accomplish-0.4.8-mac-x64.dmg"><img src="https://img.shields.io/badge/Download-macOS_(Intel)-0ea5e9?style=flat-square" alt="Unduh untuk macOS (Intel)" /></a>
-  <a href="https://downloads.accomplish.ai/downloads/0.4.8/windows/Accomplish-0.4.8-win-x64.exe"><img src="https://img.shields.io/badge/Download-Windows_11-0ea5e9?style=flat-square" alt="Unduh untuk Windows 11" /></a>
-  <a href="https://downloads.accomplish.ai/downloads/0.4.8/linux/Accomplish-0.4.8-linux-arm64.AppImage"><img src="https://img.shields.io/badge/Download-Linux_(ARM64)-0ea5e9?style=flat-square" alt="Unduh untuk Linux (ARM64)" /></a>
-  <a href="https://downloads.accomplish.ai/downloads/0.4.8/linux/Accomplish-0.4.8-linux-x86_64.AppImage"><img src="https://img.shields.io/badge/Download-Linux_(x64)-0ea5e9?style=flat-square" alt="Unduh untuk Linux (x64)" /></a>
-  <a href="https://downloads.accomplish.ai/downloads/0.4.8/linux/Accomplish-0.4.8-linux-amd64.deb"><img src="https://img.shields.io/badge/Download-Linux_(.deb_x64)-0ea5e9?style=flat-square" alt="Unduh untuk Linux (.deb x64)" /></a>
+  <a href="https://downloads.accomplish.ai/downloads/0.4.8/macos/DomeWork-0.4.8-mac-arm64.dmg"><img src="https://img.shields.io/badge/Download-macOS_(Apple_Silicon)-0ea5e9?style=flat-square" alt="Unduh untuk macOS (Apple Silicon)" /></a>
+  <a href="https://downloads.accomplish.ai/downloads/0.4.8/macos/DomeWork-0.4.8-mac-x64.dmg"><img src="https://img.shields.io/badge/Download-macOS_(Intel)-0ea5e9?style=flat-square" alt="Unduh untuk macOS (Intel)" /></a>
+  <a href="https://downloads.accomplish.ai/downloads/0.4.8/windows/DomeWork-0.4.8-win-x64.exe"><img src="https://img.shields.io/badge/Download-Windows_11-0ea5e9?style=flat-square" alt="Unduh untuk Windows 11" /></a>
+  <a href="https://downloads.accomplish.ai/downloads/0.4.8/linux/DomeWork-0.4.8-linux-arm64.AppImage"><img src="https://img.shields.io/badge/Download-Linux_(ARM64)-0ea5e9?style=flat-square" alt="Unduh untuk Linux (ARM64)" /></a>
+  <a href="https://downloads.accomplish.ai/downloads/0.4.8/linux/DomeWork-0.4.8-linux-x86_64.AppImage"><img src="https://img.shields.io/badge/Download-Linux_(x64)-0ea5e9?style=flat-square" alt="Unduh untuk Linux (x64)" /></a>
+  <a href="https://downloads.accomplish.ai/downloads/0.4.8/linux/DomeWork-0.4.8-linux-amd64.deb"><img src="https://img.shields.io/badge/Download-Linux_(.deb_x64)-0ea5e9?style=flat-square" alt="Unduh untuk Linux (.deb x64)" /></a>
   <a href="https://discord.gg/YH86b2P8"><img src="https://img.shields.io/badge/Discord-Join-5865F2?style=flat-square&logo=discord&logoColor=white" alt="Discord" /></a>
 </p>
 
-# Accomplish™ - Agen Desktop AI Open Source
+# DomeWork™ - Agen Desktop AI Open Source
 
-Accomplish adalah agen desktop AI open source yang mengotomatisasi manajemen file, pembuatan dokumen, dan tugas browser secara lokal di mesin Anda. Gunakan kunci API Anda sendiri (OpenAI, Anthropic, Google, xAI) atau jalankan model lokal melalui Ollama.
+DomeWork adalah agen desktop AI open source yang mengotomatisasi manajemen file, pembuatan dokumen, dan tugas browser secara lokal di mesin Anda. Gunakan kunci API Anda sendiri (OpenAI, Anthropic, Google, xAI) atau jalankan model lokal melalui Ollama.
 
 <p align="center">
   <strong>Berjalan secara lokal di mesin Anda. Gunakan kunci API atau model lokal Anda sendiri. Berlisensi MIT.</strong>
 </p>
 
 <p align="center">
-  <a href="https://downloads.accomplish.ai/downloads/0.4.8/macos/Accomplish-0.4.8-mac-arm64.dmg"><strong>Unduh untuk Mac (Apple Silicon)</strong></a>
+  <a href="https://downloads.accomplish.ai/downloads/0.4.8/macos/DomeWork-0.4.8-mac-arm64.dmg"><strong>Unduh untuk Mac (Apple Silicon)</strong></a>
   ·
-  <a href="https://downloads.accomplish.ai/downloads/0.4.8/macos/Accomplish-0.4.8-mac-x64.dmg"><strong>Unduh untuk Mac (Intel)</strong></a>
+  <a href="https://downloads.accomplish.ai/downloads/0.4.8/macos/DomeWork-0.4.8-mac-x64.dmg"><strong>Unduh untuk Mac (Intel)</strong></a>
   ·
-  <a href="https://downloads.accomplish.ai/downloads/0.4.8/windows/Accomplish-0.4.8-win-x64.exe"><strong>Unduh untuk Windows 11</strong></a>
+  <a href="https://downloads.accomplish.ai/downloads/0.4.8/windows/DomeWork-0.4.8-win-x64.exe"><strong>Unduh untuk Windows 11</strong></a>
   ·
-  <a href="https://downloads.accomplish.ai/downloads/0.4.8/linux/Accomplish-0.4.8-linux-arm64.AppImage"><strong>Unduh untuk Linux (ARM64)</strong></a>
+  <a href="https://downloads.accomplish.ai/downloads/0.4.8/linux/DomeWork-0.4.8-linux-arm64.AppImage"><strong>Unduh untuk Linux (ARM64)</strong></a>
   ·
-  <a href="https://downloads.accomplish.ai/downloads/0.4.8/linux/Accomplish-0.4.8-linux-x86_64.AppImage"><strong>Unduh untuk Linux (x64)</strong></a>
+  <a href="https://downloads.accomplish.ai/downloads/0.4.8/linux/DomeWork-0.4.8-linux-x86_64.AppImage"><strong>Unduh untuk Linux (x64)</strong></a>
   ·
-  <a href="https://downloads.accomplish.ai/downloads/0.4.8/linux/Accomplish-0.4.8-linux-amd64.deb"><strong>Unduh untuk Linux (.deb x64)</strong></a>
+  <a href="https://downloads.accomplish.ai/downloads/0.4.8/linux/DomeWork-0.4.8-linux-amd64.deb"><strong>Unduh untuk Linux (.deb x64)</strong></a>
   ·
-  <a href="https://www.accomplish.ai/">Website Accomplish</a>
+  <a href="https://www.accomplish.ai/">Website DomeWork</a>
   ·
-  <a href="https://www.accomplish.ai/blog/">Blog Accomplish</a>
+  <a href="https://www.accomplish.ai/blog/">Blog DomeWork</a>
   ·
-  <a href="https://github.com/accomplish-ai/accomplish/releases">Rilis Accomplish</a>
+  <a href="https://github.com/accomplish-ai/accomplish/releases">Rilis DomeWork</a>
 </p>
 
 <br />
@@ -66,7 +66,7 @@ Accomplish adalah agen desktop AI open source yang mengotomatisasi manajemen fil
 
 - File Anda tetap di mesin Anda
 - Anda yang memutuskan folder mana yang bisa diakses
-- Tidak ada yang dikirim ke Accomplish (atau siapa pun)
+- Tidak ada yang dikirim ke DomeWork (atau siapa pun)
 
 </div>
 
@@ -167,7 +167,7 @@ Accomplish adalah agen desktop AI open source yang mengotomatisasi manajemen fil
 
 ## Privasi dan lokal-first
 
-Accomplish berjalan secara lokal di mesin Anda. File Anda tetap di perangkat Anda, dan Anda memilih folder mana yang dapat diakses.
+DomeWork berjalan secara lokal di mesin Anda. File Anda tetap di perangkat Anda, dan Anda memilih folder mana yang dapat diakses.
 
 <br />
 
@@ -201,7 +201,7 @@ Accomplish berjalan secara lokal di mesin Anda. File Anda tetap di perangkat And
 
 <div align="center">
 
-[**Unduh untuk Mac (Apple Silicon)**](https://downloads.accomplish.ai/downloads/0.4.8/macos/Accomplish-0.4.8-mac-arm64.dmg) · [**Unduh untuk Mac (Intel)**](https://downloads.accomplish.ai/downloads/0.4.8/macos/Accomplish-0.4.8-mac-x64.dmg) · [**Unduh untuk Windows 11**](https://downloads.accomplish.ai/downloads/0.4.8/windows/Accomplish-0.4.8-win-x64.exe) · [**Unduh untuk Linux (ARM64)**](https://downloads.accomplish.ai/downloads/0.4.8/linux/Accomplish-0.4.8-linux-arm64.AppImage) · [**Unduh untuk Linux (x64)**](https://downloads.accomplish.ai/downloads/0.4.8/linux/Accomplish-0.4.8-linux-x86_64.AppImage) · [**Unduh untuk Linux (.deb x64)**](https://downloads.accomplish.ai/downloads/0.4.8/linux/Accomplish-0.4.8-linux-amd64.deb)
+[**Unduh untuk Mac (Apple Silicon)**](https://downloads.accomplish.ai/downloads/0.4.8/macos/DomeWork-0.4.8-mac-arm64.dmg) · [**Unduh untuk Mac (Intel)**](https://downloads.accomplish.ai/downloads/0.4.8/macos/DomeWork-0.4.8-mac-x64.dmg) · [**Unduh untuk Windows 11**](https://downloads.accomplish.ai/downloads/0.4.8/windows/DomeWork-0.4.8-win-x64.exe) · [**Unduh untuk Linux (ARM64)**](https://downloads.accomplish.ai/downloads/0.4.8/linux/DomeWork-0.4.8-linux-arm64.AppImage) · [**Unduh untuk Linux (x64)**](https://downloads.accomplish.ai/downloads/0.4.8/linux/DomeWork-0.4.8-linux-x86_64.AppImage) · [**Unduh untuk Linux (.deb x64)**](https://downloads.accomplish.ai/downloads/0.4.8/linux/DomeWork-0.4.8-linux-amd64.deb)
 
 </div>
 
@@ -213,11 +213,11 @@ Accomplish berjalan secara lokal di mesin Anda. File Anda tetap di perangkat And
 
 ## Screenshot dan Demo
 
-Sekilas tentang Accomplish di macOS, plus video demo singkat.
+Sekilas tentang DomeWork di macOS, plus video demo singkat.
 
 <p align="center">
   <a href="https://youtu.be/UJ0FIufMOlc?si=iFcu3VTG4B4q9VCB">
-    <img src="docs/video-thumbnail.png" alt="Demo Accomplish - Agen AI mengotomatisasi manajemen file dan tugas browser" width="600" />
+    <img src="docs/video-thumbnail.png" alt="Demo DomeWork - Agen AI mengotomatisasi manajemen file dan tugas browser" width="600" />
   </a>
 </p>
 
@@ -229,14 +229,14 @@ Sekilas tentang Accomplish di macOS, plus video demo singkat.
 
 ## FAQ
 
-**Apakah Accomplish berjalan secara lokal?**
-Ya. Accomplish berjalan secara lokal di mesin Anda dan Anda mengontrol folder mana yang dapat diakses.
+**Apakah DomeWork berjalan secara lokal?**
+Ya. DomeWork berjalan secara lokal di mesin Anda dan Anda mengontrol folder mana yang dapat diakses.
 
 **Apakah saya butuh kunci API?**
 Anda bisa menggunakan kunci API Anda sendiri (OpenAI, Anthropic, Google, xAI, dll.) atau menjalankan model lokal melalui Ollama.
 
-**Apakah Accomplish gratis?**
-Ya. Accomplish adalah open source dan berlisensi MIT.
+**Apakah DomeWork gratis?**
+Ya. DomeWork adalah open source dan berlisensi MIT.
 
 **Platform apa yang didukung?**
 macOS (Apple Silicon) dan Windows 11 tersedia sekarang. Ubuntu (ARM64) dan Ubuntu (x64) juga didukung.
@@ -332,11 +332,11 @@ git push origin feature/amazing-feature
 
 <div align="center">
 
-**[Website Accomplish](https://www.accomplish.ai/)** · **[Blog Accomplish](https://www.accomplish.ai/blog/)** · **[Rilis Accomplish](https://github.com/accomplish-ai/accomplish/releases)** · **[Issues](https://github.com/accomplish-ai/accomplish/issues)** · **[Twitter](https://x.com/Accomplish_ai)**
+**[Website DomeWork](https://www.accomplish.ai/)** · **[Blog DomeWork](https://www.accomplish.ai/blog/)** · **[Rilis DomeWork](https://github.com/accomplish-ai/accomplish/releases)** · **[Issues](https://github.com/accomplish-ai/accomplish/issues)** · **[Twitter](https://x.com/Accomplish_ai)**
 
 <br />
 
-Lisensi MIT · Dibuat oleh [Accomplish](https://www.accomplish.ai)
+Lisensi MIT · Dibuat oleh [DomeWork](https://www.accomplish.ai)
 
 <br />
 

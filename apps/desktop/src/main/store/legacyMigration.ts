@@ -12,7 +12,7 @@ function getLegacyPaths(): LegacyPath[] {
   const isPackaged = app.isPackaged;
 
   return [
-    { path: path.join(appDataPath, 'Accomplish') },
+    { path: path.join(appDataPath, 'DomeWork') },
     { path: path.join(appDataPath, 'accomplish') },
     {
       path: path.join(appDataPath, 'Openwork'),

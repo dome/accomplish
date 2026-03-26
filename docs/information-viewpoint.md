@@ -1,6 +1,6 @@
 # Information Viewpoint — Rozanski & Woods
 
-This document captures all stateful data, information models, state machines, and data flows within the Accomplish system. It follows the Rozanski & Woods Information Viewpoint to document data ownership, lifecycle, and structure.
+This document captures all stateful data, information models, state machines, and data flows within the DomeWork system. It follows the Rozanski & Woods Information Viewpoint to document data ownership, lifecycle, and structure.
 
 ---
 
@@ -132,11 +132,11 @@ AES-256-GCM encrypted file-based storage, separate from SQLite.
 
 **File locations (macOS):**
 
-- SQLite DB: `~/Library/Application Support/Accomplish/accomplish.db` (prod) / `accomplish-dev.db` (dev)
-- Secure Storage: `~/Library/Application Support/Accomplish/secure-storage.json`
-- Logs: `~/Library/Application Support/Accomplish/logs/`
-- Skills: `~/Library/Application Support/Accomplish/skills/`
-- OpenCode configs: `~/Library/Application Support/Accomplish/opencode/`
+- SQLite DB: `~/Library/Application Support/DomeWork/accomplish.db` (prod) / `accomplish-dev.db` (dev)
+- Secure Storage: `~/Library/Application Support/DomeWork/secure-storage.json`
+- Logs: `~/Library/Application Support/DomeWork/logs/`
+- Skills: `~/Library/Application Support/DomeWork/skills/`
+- OpenCode configs: `~/Library/Application Support/DomeWork/opencode/`
 
 SQLite is opened with WAL mode (`journal_mode = WAL`), so it can be safely read by external tools while the app is running.
 
@@ -785,11 +785,11 @@ flowchart TB
 
 ## 18. userData Directory Reference
 
-Location: `~/Library/Application Support/Accomplish/` (macOS)
+Location: `~/Library/Application Support/DomeWork/` (macOS)
 
 All files and folders found in this directory at runtime:
 
-### Accomplish Application Data
+### DomeWork Application Data
 
 | Path                    | Owner               | Description                                                                                                                                                                         |
 | ----------------------- | ------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -806,21 +806,21 @@ All files and folders found in this directory at runtime:
 
 ### Chromium / Electron Auto-Created
 
-These are standard Chromium storage directories created automatically by Electron. Not managed by Accomplish code.
+These are standard Chromium storage directories created automatically by Electron. Not managed by DomeWork code.
 
 | Path                                                  | Owner           | Description                                                                                      |
 | ----------------------------------------------------- | --------------- | ------------------------------------------------------------------------------------------------ |
-| `Cache/`                                              | Chromium        | HTTP cache for the renderer process (the Accomplish UI webview).                                 |
+| `Cache/`                                              | Chromium        | HTTP cache for the renderer process (the DomeWork UI webview).                                   |
 | `Code Cache/`                                         | Chromium        | Compiled/cached JavaScript bytecode for faster UI startup.                                       |
-| `Cookies`                                             | Chromium        | Cookie database for the Electron renderer (Accomplish UI, not the automation browser).           |
+| `Cookies`                                             | Chromium        | Cookie database for the Electron renderer (DomeWork UI, not the automation browser).             |
 | `Cookies-journal`                                     | Chromium        | SQLite journal for Cookies DB.                                                                   |
 | `GPUCache/`                                           | Chromium        | Cached GPU shader compilations.                                                                  |
 | `DawnGraphiteCache/`                                  | Chromium (Dawn) | WebGPU shader cache (Dawn graphics backend).                                                     |
 | `DawnWebGPUCache/`                                    | Chromium (Dawn) | WebGPU pipeline cache.                                                                           |
 | `DIPS`, `DIPS-shm`, `DIPS-wal`                        | Chromium        | Bounce Tracking Mitigations database (Detection of Indirect Proxy for Stateful bounce tracking). |
-| `IndexedDB/`                                          | Chromium        | Browser IndexedDB storage for the Accomplish UI renderer.                                        |
-| `Local Storage/`                                      | Chromium        | `localStorage` for the Accomplish React app (theme preference synced here).                      |
-| `Session Storage/`                                    | Chromium        | `sessionStorage` for the Accomplish React app.                                                   |
+| `IndexedDB/`                                          | Chromium        | Browser IndexedDB storage for the DomeWork UI renderer.                                          |
+| `Local Storage/`                                      | Chromium        | `localStorage` for the DomeWork React app (theme preference synced here).                        |
+| `Session Storage/`                                    | Chromium        | `sessionStorage` for the DomeWork React app.                                                     |
 | `Network Persistent State`                            | Chromium        | Network stack state (HSTS, transport security policies).                                         |
 | `Preferences`                                         | Chromium        | Electron/Chromium browser preferences JSON.                                                      |
 | `Shared Dictionary/`                                  | Chromium        | Shared Brotli/Zstandard compression dictionaries.                                                |

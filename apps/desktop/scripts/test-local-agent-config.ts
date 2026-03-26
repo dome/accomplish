@@ -48,7 +48,7 @@ function getSystemPrompt(): string {
         : 'You are running on Linux.';
 
   return `<identity>
-You are Accomplish, a browser automation assistant.
+You are DomeWork, a browser automation assistant.
 </identity>
 
 <environment>

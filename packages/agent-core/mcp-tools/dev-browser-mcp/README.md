@@ -14,7 +14,7 @@ The server supports two connection modes, determined by the `CDP_ENDPOINT` envir
 
 ### Builtin mode (default)
 
-Connects to the dev-browser HTTP server, which manages browser lifecycle and page routing. This is how the Accomplish desktop app uses it.
+Connects to the dev-browser HTTP server, which manages browser lifecycle and page routing. This is how the DomeWork desktop app uses it.
 
 ```bash
 # Uses http://localhost:9224 by default

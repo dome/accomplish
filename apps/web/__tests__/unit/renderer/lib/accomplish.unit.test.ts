@@ -1,5 +1,5 @@
 /**
- * Unit tests for Accomplish API library
+ * Unit tests for DomeWork API library
  *
  * Tests the Electron detection and shell utilities:
  * - isRunningInElectron() detection
@@ -13,7 +13,7 @@ import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest';
 // Store original window
 const originalWindow = globalThis.window;
 
-describe('Accomplish API', () => {
+describe('DomeWork API', () => {
   beforeEach(() => {
     vi.clearAllMocks();
     vi.resetModules();
@@ -172,7 +172,7 @@ describe('Accomplish API', () => {
         (globalThis as unknown as { window: Record<string, unknown> }).window = scenario;
         const { getAccomplish } = await import('@/lib/accomplish');
         expect(() => getAccomplish()).toThrow(
-          'Accomplish API not available - not running in Electron',
+          'DomeWork API not available - not running in Electron',
         );
       }
     });
@@ -195,9 +195,7 @@ describe('Accomplish API', () => {
       };
 
       const { useAccomplish } = await import('@/lib/accomplish');
-      expect(() => useAccomplish()).toThrow(
-        'Accomplish API not available - not running in Electron',
-      );
+      expect(() => useAccomplish()).toThrow('DomeWork API not available - not running in Electron');
     });
   });
 

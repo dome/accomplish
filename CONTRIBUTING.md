@@ -1,6 +1,6 @@
-# Contributing to Accomplish
+# Contributing to DomeWork
 
-Thank you for your interest in contributing to Accomplish! This document provides guidelines and instructions for contributing.
+Thank you for your interest in contributing to DomeWork! This document provides guidelines and instructions for contributing.
 
 ## Getting Started
 

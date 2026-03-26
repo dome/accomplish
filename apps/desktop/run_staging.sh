@@ -11,4 +11,4 @@ pnpm -F @accomplish/desktop build:unpack
 echo "Launching app with staging configuration..."
 ACCOMPLISH_UI_URL=https://lite-staging.accomplish.ai \
 ACCOMPLISH_API_URL=https://lite-staging.accomplish.ai \
-open apps/desktop/release/mac-arm64/Accomplish.app
+open apps/desktop/release/mac-arm64/DomeWork.app

@@ -115,7 +115,7 @@ export async function handleCliCommand(args: string[]): Promise<void> {
 function printUsage(): void {
   console.log(
     `
-Accomplish CLI Bridge
+DomeWork CLI Bridge
 
 Usage:
   schedule "<cron>" "<prompt>"   Schedule a recurring task

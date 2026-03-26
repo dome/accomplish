@@ -16,7 +16,7 @@ import { cn } from '@/lib/utils';
 import { springs } from '../lib/animations';
 import loadingSymbol from '/assets/loading-symbol.svg';
 
-// Spinning Accomplish icon component
+// Spinning DomeWork icon component
 const SpinningIcon = ({ className }: { className?: string }) => (
   <img src={loadingSymbol} alt="" className={cn('animate-spin-ccw', className)} />
 );

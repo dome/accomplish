@@ -531,7 +531,7 @@ describe('ConfigGenerator', () => {
       const result = generateConfig(options);
 
       expect(result.systemPrompt).toContain('<identity>');
-      expect(result.systemPrompt).toContain('Accomplish');
+      expect(result.systemPrompt).toContain('DomeWork');
     });
 
     it('should include task planning behavior with needs_planning', () => {

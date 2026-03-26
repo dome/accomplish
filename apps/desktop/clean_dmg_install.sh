@@ -1,5 +1,5 @@
 #!/bin/bash
-# Clean all files related to DMG/production installations of Accomplish
+# Clean all files related to DMG/production installations of DomeWork
 # This removes app data, preferences, caches, and optionally the app itself
 # Useful for testing fresh installs or complete uninstallation
 
@@ -31,7 +31,7 @@ while [[ $# -gt 0 ]]; do
       echo "  --help, -h      Show this help message"
       echo ""
       echo "This script cleans up all user data, caches, and preferences"
-      echo "for Accomplish production (DMG) installations."
+      echo "for DomeWork production (DMG) installations."
       exit 0
       ;;
     *)
@@ -44,12 +44,12 @@ done
 
 # Confirm unless --force is used
 if [ "$FORCE" != true ]; then
-  echo "This will remove all Accomplish user data including:"
+  echo "This will remove all DomeWork user data including:"
   echo "  - App settings and task history"
   echo "  - Cached data and logs"
   echo "  - Keychain credentials"
   if [ "$REMOVE_APP" = true ]; then
-    echo "  - The Accomplish application itself"
+    echo "  - The DomeWork application itself"
   fi
   echo ""
   read -p "Are you sure you want to continue? (y/N) " -n 1 -r
@@ -63,16 +63,16 @@ fi
 echo ""
 
 # Kill any running instances
-echo "Stopping any running Accomplish processes..."
-pkill -f "Accomplish" 2>/dev/null || true
-pkill -f "Accomplish Lite" 2>/dev/null || true
+echo "Stopping any running DomeWork processes..."
+pkill -f "DomeWork" 2>/dev/null || true
+pkill -f "DomeWork Lite" 2>/dev/null || true
 sleep 1
 
 # Application Support directories (electron-store data)
 echo "Clearing Application Support data..."
 APP_SUPPORT_DIRS=(
-  "$HOME/Library/Application Support/Accomplish"
-  "$HOME/Library/Application Support/Accomplish Lite"
+  "$HOME/Library/Application Support/DomeWork"
+  "$HOME/Library/Application Support/DomeWork Lite"
   "$HOME/Library/Application Support/com.accomplish.desktop"
   "$HOME/Library/Application Support/com.accomplish.lite"
   "$HOME/Library/Application Support/ai.accomplish.desktop"
@@ -107,8 +107,8 @@ done
 # Caches
 echo "Clearing caches..."
 CACHE_DIRS=(
-  "$HOME/Library/Caches/Accomplish"
-  "$HOME/Library/Caches/Accomplish Lite"
+  "$HOME/Library/Caches/DomeWork"
+  "$HOME/Library/Caches/DomeWork Lite"
   "$HOME/Library/Caches/com.accomplish.desktop"
   "$HOME/Library/Caches/com.accomplish.lite"
   "$HOME/Library/Caches/ai.accomplish.desktop"
@@ -126,8 +126,8 @@ done
 # Logs
 echo "Clearing logs..."
 LOG_DIRS=(
-  "$HOME/Library/Logs/Accomplish"
-  "$HOME/Library/Logs/Accomplish Lite"
+  "$HOME/Library/Logs/DomeWork"
+  "$HOME/Library/Logs/DomeWork Lite"
   "$HOME/Library/Logs/ai.accomplish.desktop"
   "$HOME/Library/Logs/ai.accomplish.lite"
   "$HOME/Library/Logs/@accomplish/desktop"
@@ -159,8 +159,8 @@ done
 # Keychain entries
 echo "Clearing keychain entries..."
 KEYCHAIN_SERVICES=(
-  "Accomplish"
-  "Accomplish Lite"
+  "DomeWork"
+  "DomeWork Lite"
   "com.accomplish.desktop"
   "com.accomplish.lite"
   "ai.accomplish.desktop"
@@ -192,10 +192,10 @@ done
 if [ "$REMOVE_APP" = true ]; then
   echo "Removing application..."
   APP_PATHS=(
-    "/Applications/Accomplish.app"
-    "/Applications/Accomplish Lite.app"
-    "$HOME/Applications/Accomplish.app"
-    "$HOME/Applications/Accomplish Lite.app"
+    "/Applications/DomeWork.app"
+    "/Applications/DomeWork Lite.app"
+    "$HOME/Applications/DomeWork.app"
+    "$HOME/Applications/DomeWork Lite.app"
   )
 
   for app in "${APP_PATHS[@]}"; do
@@ -209,7 +209,7 @@ fi
 # Clear quarantine attributes if we're keeping the app
 if [ "$REMOVE_APP" != true ]; then
   echo "Clearing quarantine attributes (if app exists)..."
-  for app in "/Applications/Accomplish.app" "/Applications/Accomplish Lite.app"; do
+  for app in "/Applications/DomeWork.app" "/Applications/DomeWork Lite.app"; do
     if [ -d "$app" ]; then
       xattr -rd com.apple.quarantine "$app" 2>/dev/null && echo "  - Cleared quarantine: $app" || true
     fi
@@ -221,9 +221,9 @@ echo "=== CLEANUP COMPLETE ==="
 echo ""
 
 if [ "$REMOVE_APP" = true ]; then
-  echo "All Accomplish data and applications have been removed."
+  echo "All DomeWork data and applications have been removed."
   echo "You can reinstall from the DMG file."
 else
-  echo "All Accomplish user data has been cleared."
+  echo "All DomeWork user data has been cleared."
   echo "The app will behave like a fresh installation on next launch."
 fi

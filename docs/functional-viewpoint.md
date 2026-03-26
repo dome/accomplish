@@ -1,4 +1,4 @@
-# Functional Viewpoint — Accomplish Architecture
+# Functional Viewpoint — DomeWork Architecture
 
 > Rozanski & Woods Functional Viewpoint: identifies the system's functional elements, their responsibilities, interfaces, and primary interactions.
 
@@ -14,7 +14,7 @@ Start here. This diagram shows the four major building blocks, their single-sent
 graph TB
   USER(["👤 User"])
 
-  subgraph ELECTRON["Accomplish Desktop App"]
+  subgraph ELECTRON["DomeWork Desktop App"]
     direction TB
 
     subgraph UI["React UI"]
@@ -80,7 +80,7 @@ graph TB
   class DB,KEYS storageClass
 ```
 
-**Key takeaway:** Accomplish never calls LLMs directly. It orchestrates OpenCode (a PTY subprocess) which does all AI interaction and file operations. Accomplish's role is configuration, gating, completion enforcement, and UI.
+**Key takeaway:** DomeWork never calls LLMs directly. It orchestrates OpenCode (a PTY subprocess) which does all AI interaction and file operations. DomeWork's role is configuration, gating, completion enforcement, and UI.
 
 ---
 
@@ -508,7 +508,7 @@ How skills and MCP connectors are managed, stored, and injected into the agent's
 graph TB
   subgraph SOURCES["Skill Sources"]
     BUNDLED["Bundled Skills<br/><i>resources/skills/</i>"]
-    USER_DIR["User Skills<br/><i>~/.../Accomplish/skills/</i>"]
+    USER_DIR["User Skills<br/><i>~/.../DomeWork/skills/</i>"]
     GITHUB["GitHub URL<br/><i>raw.githubusercontent.com</i>"]
     LOCAL_FILE["Local .md File"]
   end

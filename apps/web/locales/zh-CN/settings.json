@@ -1,6 +1,6 @@
 {
   "title": "设置",
-  "setupTitle": "设置 Accomplish",
+  "setupTitle": "设置 DomeWork",
   "model": {
     "title": "模型",
     "cloudProviders": "云服务商",
@@ -244,19 +244,19 @@
   },
   "appearance": {
     "title": "主题",
-    "description": "选择 Accomplish 的外观。选择「系统」以匹配操作系统设置。",
+    "description": "选择 DomeWork 的外观。选择「系统」以匹配操作系统设置。",
     "ariaLabel": "主题偏好",
     "system": "系统",
     "light": "浅色",
     "dark": "深色",
     "themeTitle": "主题",
-    "themeDescription": "选择 Accomplish 的外观。选择「系统」以匹配操作系统设置。",
+    "themeDescription": "选择 DomeWork 的外观。选择「系统」以匹配操作系统设置。",
     "themeSystem": "跟随系统",
     "themeLight": "浅色",
     "themeDark": "深色"
   },
   "connectors": {
-    "description": "连接内置或自定义 MCP 服务器，让 Accomplish 可以使用外部工具。",
+    "description": "连接内置或自定义 MCP 服务器，让 DomeWork 可以使用外部工具。",
     "loading": "加载连接器...",
     "placeholder": "https://mcp-server.example.com",
     "add": "添加",
@@ -355,7 +355,7 @@
     "filterAll": "全部",
     "filterActive": "已启用",
     "filterInactive": "已停用",
-    "byAccomplish": "由 Accomplish 提供",
+    "byAccomplish": "由 DomeWork 提供",
     "github": "GitHub",
     "builtByYou": "自建",
     "loading": "加载技能中...",
@@ -370,7 +370,7 @@
     "showInFolder": "在文件夹中显示",
     "delete": "删除",
     "add": "添加",
-    "buildWithAccomplish": "使用 Accomplish 构建",
+    "buildWithAccomplish": "使用 DomeWork 构建",
     "buildDescription": "通过对话创建技能",
     "uploadSkill": "上传技能",
     "uploadDescription": "选择技能文件夹以导入",

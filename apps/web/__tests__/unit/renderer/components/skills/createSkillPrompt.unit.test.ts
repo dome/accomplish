@@ -7,13 +7,13 @@ describe('createSkillPrompt', () => {
       const prompt = buildCreateSkillPrompt({
         name: 'My Skill',
         description: 'Does useful work',
-        skillsBasePath: '/Users/test/Library/Application Support/Accomplish/skills/',
+        skillsBasePath: '/Users/test/Library/Application Support/DomeWork/skills/',
         platform: 'darwin',
       });
 
       expect(prompt).toContain('/skill-creator');
       expect(prompt).toContain(
-        'Use this exact base directory: `/Users/test/Library/Application Support/Accomplish/skills`',
+        'Use this exact base directory: `/Users/test/Library/Application Support/DomeWork/skills`',
       );
       expect(prompt).toContain(
         'Create exactly one new subdirectory under that base directory for this skill.',
@@ -29,12 +29,12 @@ describe('createSkillPrompt', () => {
       const prompt = buildCreateSkillPrompt({
         name: 'Windows Skill',
         description: 'Works on Windows',
-        skillsBasePath: 'C:/Users/Test/AppData/Roaming/Accomplish/skills/',
+        skillsBasePath: 'C:/Users/Test/AppData/Roaming/DomeWork/skills/',
         platform: 'win32',
       });
 
       expect(prompt).toContain(
-        'Use this exact base directory: `C:\\Users\\Test\\AppData\\Roaming\\Accomplish\\skills`',
+        'Use this exact base directory: `C:\\Users\\Test\\AppData\\Roaming\\DomeWork\\skills`',
       );
       expect(prompt).not.toContain('C:\\\\Users');
     });
@@ -43,12 +43,12 @@ describe('createSkillPrompt', () => {
       const prompt = buildCreateSkillPrompt({
         name: 'Linux Skill',
         description: 'Works on Linux',
-        skillsBasePath: '/home/Jane Doe/.local/share/Accomplish/skills/',
+        skillsBasePath: '/home/Jane Doe/.local/share/DomeWork/skills/',
         platform: 'linux',
       });
 
       expect(prompt).toContain(
-        'Use this exact base directory: `/home/Jane Doe/.local/share/Accomplish/skills`',
+        'Use this exact base directory: `/home/Jane Doe/.local/share/DomeWork/skills`',
       );
     });
 
@@ -56,12 +56,12 @@ describe('createSkillPrompt', () => {
       const prompt = buildCreateSkillPrompt({
         name: 'Windows Skill',
         description: 'Works on Windows',
-        skillsBasePath: 'C:/Users/Jane Doe/AppData/Roaming/Accomplish/skills/',
+        skillsBasePath: 'C:/Users/Jane Doe/AppData/Roaming/DomeWork/skills/',
         platform: 'win32',
       });
 
       expect(prompt).toContain(
-        'Use this exact base directory: `C:\\Users\\Jane Doe\\AppData\\Roaming\\Accomplish\\skills`',
+        'Use this exact base directory: `C:\\Users\\Jane Doe\\AppData\\Roaming\\DomeWork\\skills`',
       );
     });
 
@@ -69,22 +69,22 @@ describe('createSkillPrompt', () => {
       const prompt = buildCreateSkillPrompt({
         name: 'Home Skill',
         description: 'Works with home shorthand',
-        skillsBasePath: '~/.config/Accomplish/skills/',
+        skillsBasePath: '~/.config/DomeWork/skills/',
         platform: 'linux',
       });
 
-      expect(prompt).toContain('Use this exact base directory: `~/.config/Accomplish/skills`');
+      expect(prompt).toContain('Use this exact base directory: `~/.config/DomeWork/skills`');
     });
 
     it('normalizes windows UNC network paths', () => {
       const prompt = buildCreateSkillPrompt({
         name: 'Network Skill',
         description: 'Works on network share',
-        skillsBasePath: '//Server01/Accomplish/skills/',
+        skillsBasePath: '//Server01/DomeWork/skills/',
         platform: 'win32',
       });
 
-      expect(prompt).toContain('Use this exact base directory: `\\\\Server01\\Accomplish\\skills`');
+      expect(prompt).toContain('Use this exact base directory: `\\\\Server01\\DomeWork\\skills`');
     });
 
     it('preserves unix root base path', () => {
@@ -124,7 +124,7 @@ describe('createSkillPrompt', () => {
       const prompt = buildCreateSkillPrompt({
         name: 'שלום',
         description: 'Does useful work',
-        skillsBasePath: '/Users/test/Library/Application Support/Accomplish/skills/',
+        skillsBasePath: '/Users/test/Library/Application Support/DomeWork/skills/',
         platform: 'darwin',
       });
 

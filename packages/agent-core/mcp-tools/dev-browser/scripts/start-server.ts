@@ -9,9 +9,9 @@ const __dirname = dirname(fileURLToPath(import.meta.url));
 function getDataDir(): string {
   const homeDir = process.env.HOME || process.env.USERPROFILE || '';
   if (process.platform === 'darwin') {
-    return join(homeDir, 'Library', 'Application Support', 'Accomplish', 'dev-browser');
+    return join(homeDir, 'Library', 'Application Support', 'DomeWork', 'dev-browser');
   } else if (process.platform === 'win32') {
-    return join(process.env.APPDATA || homeDir, 'Accomplish', 'dev-browser');
+    return join(process.env.APPDATA || homeDir, 'DomeWork', 'dev-browser');
   } else {
     return join(homeDir, '.accomplish', 'dev-browser');
   }
