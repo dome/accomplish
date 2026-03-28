@@ -149,7 +149,6 @@ export async function buildProviderConfigs(
     'amazon-bedrock',
     'vertex',
     'minimax',
-    'bailian',
     ...OPENAI_COMPATIBLE_PROVIDER_IDS,
   ];
   let enabledProviders = baseProviders;
@@ -665,47 +664,6 @@ export async function buildProviderConfigs(
     log.info(`[OpenCode Config Builder] MiniMax configured: ${modelId} ${'baseURL:'} ${baseUrl}`);
   }
 
-  // Bailian (Alibaba Cloud DashScope) provider
-  const bailianProvider = providerSettings.connectedProviders.bailian;
-  if (bailianProvider?.connectionStatus === 'connected' && bailianProvider.selectedModelId) {
-    const modelId = bailianProvider.selectedModelId.replace(/^bailian\//, '');
-    const bailianApiKey = getApiKey('bailian');
-    const bailianBaseUrl = 'https://coding-intl.dashscope.aliyuncs.com/v1';
-
-    // Build models map from available models
-    const bailianModels: Record<string, ProviderModelConfig> = {};
-    if (bailianProvider.availableModels && bailianProvider.availableModels.length > 0) {
-      for (const model of bailianProvider.availableModels) {
-        const mId = model.id.replace(/^bailian\//, '');
-        bailianModels[mId] = {
-          name: model.name || mId,
-          tools: true,
-          limit: {
-            context: (model as { contextWindow?: number }).contextWindow,
-            output: (model as { maxTokens?: number }).maxTokens,
-          },
-        };
-      }
-    }
-
-    // Always ensure the selected model is registered
-    if (!bailianModels[modelId]) {
-      bailianModels[modelId] = { name: modelId, tools: true };
-    }
-
-    providerConfigs.push({
-      id: 'bailian',
-      npm: '@ai-sdk/openai-compatible',
-      name: 'Qwen Coding Plan',
-      options: {
-        baseURL: bailianBaseUrl,
-        ...(bailianApiKey ? { apiKey: bailianApiKey } : {}),
-      },
-      models: bailianModels,
-    });
-    log.info(`[OpenCode Config Builder] Bailian configured: ${modelId}`);
-  }
-
   // Z.AI provider
   const zaiKey = getApiKey('zai');
   if (zaiKey) {
@@ -802,7 +760,6 @@ const AUTH_KEY_MAPPING: Record<string, string> = {
   deepseek: 'deepseek',
   zai: 'zai-coding-plan',
   minimax: 'minimax',
-  bailian: 'bailian',
   ...Object.fromEntries(OPENAI_COMPATIBLE_PROVIDER_IDS.map((id) => [id, id])),
 };
 
