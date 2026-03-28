@@ -30,7 +30,7 @@ export type ProviderType =
   | 'groq'
   | 'venice'
   | 'nim'
-  | 'qwen';
+  | 'bailian';
 
 export type ApiKeyProvider =
   | 'anthropic'
@@ -54,7 +54,7 @@ export type ApiKeyProvider =
   | 'groq'
   | 'venice'
   | 'nim'
-  | 'qwen'
+  | 'bailian'
   | 'elevenlabs'
   | 'aws-agentcore'
   | 'browserbase'
@@ -87,7 +87,7 @@ export const ALLOWED_API_KEY_PROVIDERS: ReadonlySet<string> = new Set<string>([
   'groq',
   'venice',
   'nim',
-  'qwen',
+  'bailian',
   'elevenlabs',
   'aws-agentcore',
   'browserbase',
@@ -114,7 +114,7 @@ export const STANDARD_VALIDATION_PROVIDERS: ReadonlySet<string> = new Set<string
   'fireworks',
   'groq',
   'venice',
-  'qwen',
+  'bailian',
 ]);
 
 export interface ModelsEndpointConfig {
@@ -467,41 +467,75 @@ export const DEFAULT_PROVIDERS: ProviderConfig[] = [
     models: [],
   },
   {
-    id: 'qwen',
-    name: 'Qwen Code Plan',
+    id: 'bailian',
+    name: 'Qwen Coding Plan',
     requiresApiKey: true,
-    apiKeyEnvVar: 'QWEN_API_KEY',
+    apiKeyEnvVar: 'BAILIAN_API_KEY',
     baseUrl: 'https://coding-intl.dashscope.aliyuncs.com/v1',
-    defaultModelId: 'qwen/qwen3.5-plus',
-    modelsEndpoint: {
-      url: 'https://coding-intl.dashscope.aliyuncs.com/v1/models',
-      authStyle: 'bearer',
-      responseFormat: 'openai',
-      modelIdPrefix: 'qwen/',
-    },
+    defaultModelId: 'bailian/qwen3.5-plus',
     models: [
       {
         id: 'qwen3.5-plus',
         displayName: 'Qwen3.5 Plus',
-        provider: 'qwen',
-        fullId: 'qwen/qwen3.5-plus',
-        contextWindow: 256000,
+        provider: 'bailian',
+        fullId: 'bailian/qwen3.5-plus',
+        contextWindow: 1000000,
         supportsVision: true,
+      },
+      {
+        id: 'qwen3-max-2026-01-23',
+        displayName: 'Qwen3 Max 2026-01-23',
+        provider: 'bailian',
+        fullId: 'bailian/qwen3-max-2026-01-23',
+        contextWindow: 262144,
+        supportsVision: false,
+      },
+      {
+        id: 'qwen3-coder-next',
+        displayName: 'Qwen3 Coder Next',
+        provider: 'bailian',
+        fullId: 'bailian/qwen3-coder-next',
+        contextWindow: 262144,
+        supportsVision: false,
       },
       {
         id: 'qwen3-coder-plus',
         displayName: 'Qwen3 Coder Plus',
-        provider: 'qwen',
-        fullId: 'qwen/qwen3-coder-plus',
-        contextWindow: 256000,
+        provider: 'bailian',
+        fullId: 'bailian/qwen3-coder-plus',
+        contextWindow: 1000000,
+        supportsVision: false,
+      },
+      {
+        id: 'MiniMax-M2.5',
+        displayName: 'MiniMax M2.5',
+        provider: 'bailian',
+        fullId: 'bailian/MiniMax-M2.5',
+        contextWindow: 196608,
+        supportsVision: false,
+      },
+      {
+        id: 'glm-5',
+        displayName: 'GLM-5',
+        provider: 'bailian',
+        fullId: 'bailian/glm-5',
+        contextWindow: 202752,
+        supportsVision: false,
+      },
+      {
+        id: 'glm-4.7',
+        displayName: 'GLM-4.7',
+        provider: 'bailian',
+        fullId: 'bailian/glm-4.7',
+        contextWindow: 202752,
         supportsVision: false,
       },
       {
         id: 'kimi-k2.5',
         displayName: 'Kimi K2.5',
-        provider: 'qwen',
-        fullId: 'qwen/kimi-k2.5',
-        contextWindow: 256000,
+        provider: 'bailian',
+        fullId: 'bailian/kimi-k2.5',
+        contextWindow: 262144,
         supportsVision: true,
       },
     ],

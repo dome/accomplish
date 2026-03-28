@@ -61,7 +61,7 @@
     "groq": "Groq",
     "venice": "Venice AI",
     "nim": "NVIDIA NIM",
-    "qwen": "Qwen Code Plan",
+    "bailian": "Qwen Coding Plan",
     "custom": "Custom Endpoint"
   },
   "providerLabels": {
@@ -86,7 +86,7 @@
     "groq": "Ultra-fast Llama models",
     "venice": "Privacy-focused models",
     "nim": "NVIDIA-hosted models",
-    "qwen": "Qwen & Kimi models",
+    "bailian": "Qwen & Kimi models",
     "custom": "Custom endpoint"
   },
   "status": {
