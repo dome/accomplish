@@ -24,13 +24,15 @@ export type ProviderType =
   | 'minimax'
   | 'lmstudio'
   | 'vertex'
+  | 'huggingface-local'
   | 'nebius'
   | 'together'
   | 'fireworks'
   | 'groq'
   | 'venice'
   | 'nim'
-  | 'qwen';
+  | 'bailian'
+  | 'copilot';
 
 export type ApiKeyProvider =
   | 'anthropic'
@@ -54,7 +56,7 @@ export type ApiKeyProvider =
   | 'groq'
   | 'venice'
   | 'nim'
-  | 'qwen'
+  | 'bailian'
   | 'elevenlabs'
   | 'aws-agentcore'
   | 'browserbase'
@@ -87,7 +89,7 @@ export const ALLOWED_API_KEY_PROVIDERS: ReadonlySet<string> = new Set<string>([
   'groq',
   'venice',
   'nim',
-  'qwen',
+  'bailian',
   'elevenlabs',
   'aws-agentcore',
   'browserbase',
@@ -114,7 +116,7 @@ export const STANDARD_VALIDATION_PROVIDERS: ReadonlySet<string> = new Set<string
   'fireworks',
   'groq',
   'venice',
-  'qwen',
+  'bailian',
 ]);
 
 export interface ModelsEndpointConfig {
@@ -211,6 +213,23 @@ export interface LMStudioConfig {
   enabled: boolean;
   lastValidated?: number;
   models?: LMStudioModel[];
+}
+
+export interface HuggingFaceLocalModelInfo {
+  id: string;
+  displayName: string;
+  sizeBytes?: number;
+  downloaded: boolean;
+}
+
+export interface HuggingFaceLocalConfig {
+  selectedModelId: string | null;
+  serverPort: number | null;
+  enabled: boolean;
+  /** ONNX quantization level. null falls back to automatic (q4 → fp32). */
+  quantization: 'q4' | 'fp32' | null;
+  /** Preferred execution device. null means automatic selection. */
+  devicePreference: 'auto' | 'cpu' | 'cuda' | 'webgpu' | null;
 }
 
 export const DEFAULT_PROVIDERS: ProviderConfig[] = [
@@ -467,48 +486,101 @@ export const DEFAULT_PROVIDERS: ProviderConfig[] = [
     models: [],
   },
   {
-    id: 'qwen',
-    name: 'Qwen Code Plan',
+    id: 'bailian',
+    name: 'Qwen Coding Plan',
     requiresApiKey: true,
-    apiKeyEnvVar: 'QWEN_API_KEY',
+    apiKeyEnvVar: 'BAILIAN_API_KEY',
     baseUrl: 'https://coding-intl.dashscope.aliyuncs.com/v1',
-    defaultModelId: 'qwen/qwen3.5-plus',
-    modelsEndpoint: {
-      url: 'https://coding-intl.dashscope.aliyuncs.com/v1/models',
-      authStyle: 'bearer',
-      responseFormat: 'openai',
-      modelIdPrefix: 'qwen/',
-    },
+    defaultModelId: 'bailian/qwen3.5-plus',
     models: [
       {
         id: 'qwen3.5-plus',
         displayName: 'Qwen3.5 Plus',
-        provider: 'qwen',
-        fullId: 'qwen/qwen3.5-plus',
-        contextWindow: 256000,
+        provider: 'bailian',
+        fullId: 'bailian/qwen3.5-plus',
+        contextWindow: 1000000,
         supportsVision: true,
+      },
+      {
+        id: 'qwen3-max-2026-01-23',
+        displayName: 'Qwen3 Max 2026-01-23',
+        provider: 'bailian',
+        fullId: 'bailian/qwen3-max-2026-01-23',
+        contextWindow: 262144,
+        supportsVision: false,
+      },
+      {
+        id: 'qwen3-coder-next',
+        displayName: 'Qwen3 Coder Next',
+        provider: 'bailian',
+        fullId: 'bailian/qwen3-coder-next',
+        contextWindow: 262144,
+        supportsVision: false,
       },
       {
         id: 'qwen3-coder-plus',
         displayName: 'Qwen3 Coder Plus',
-        provider: 'qwen',
-        fullId: 'qwen/qwen3-coder-plus',
-        contextWindow: 256000,
+        provider: 'bailian',
+        fullId: 'bailian/qwen3-coder-plus',
+        contextWindow: 1000000,
+        supportsVision: false,
+      },
+      {
+        id: 'MiniMax-M2.5',
+        displayName: 'MiniMax M2.5',
+        provider: 'bailian',
+        fullId: 'bailian/MiniMax-M2.5',
+        contextWindow: 196608,
+        supportsVision: false,
+      },
+      {
+        id: 'glm-5',
+        displayName: 'GLM-5',
+        provider: 'bailian',
+        fullId: 'bailian/glm-5',
+        contextWindow: 202752,
+        supportsVision: false,
+      },
+      {
+        id: 'glm-4.7',
+        displayName: 'GLM-4.7',
+        provider: 'bailian',
+        fullId: 'bailian/glm-4.7',
+        contextWindow: 202752,
         supportsVision: false,
       },
       {
         id: 'kimi-k2.5',
         displayName: 'Kimi K2.5',
-        provider: 'qwen',
-        fullId: 'qwen/kimi-k2.5',
-        contextWindow: 256000,
+        provider: 'bailian',
+        fullId: 'bailian/kimi-k2.5',
+        contextWindow: 262144,
         supportsVision: true,
       },
     ],
   },
+  {
+    id: 'copilot',
+    name: 'GitHub Copilot',
+    requiresApiKey: false,
+    defaultModelId: 'copilot/gpt-4o',
+    models: [],
+  },
 ];
 
 export const NIM_DEFAULT_BASE_URL = 'https://integrate.api.nvidia.com/v1';
+
+// GitHub Copilot provider configuration
+export const COPILOT_MODELS: Array<{ id: string; displayName: string }> = [
+  { id: 'copilot/gpt-4o', displayName: 'GPT-4o' },
+  { id: 'copilot/gpt-4o-mini', displayName: 'GPT-4o mini' },
+  { id: 'copilot/o1', displayName: 'o1' },
+  { id: 'copilot/o1-mini', displayName: 'o1 mini' },
+  { id: 'copilot/o3-mini', displayName: 'o3 mini' },
+  { id: 'copilot/claude-3.5-sonnet', displayName: 'Claude 3.5 Sonnet' },
+  { id: 'copilot/claude-3.7-sonnet', displayName: 'Claude 3.7 Sonnet' },
+  { id: 'copilot/gemini-2.0-flash-001', displayName: 'Gemini 2.0 Flash' },
+];
 
 export interface NimModel {
   id: string;

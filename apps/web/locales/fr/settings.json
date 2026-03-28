@@ -1,6 +1,6 @@
 {
   "title": "Paramètres",
-  "setupTitle": "Configurer DomeWork",
+  "setupTitle": "Configurer Accomplish",
   "model": {
     "title": "Modèle",
     "cloudProviders": "Fournisseurs cloud",
@@ -58,7 +58,13 @@
     "nebius": "Nebius AI",
     "together": "Together AI",
     "fireworks": "Fireworks AI",
-    "groq": "Groq"
+    "groq": "Groq",
+    "huggingface-local": "HuggingFace Local",
+    "venice": "Venice AI",
+    "nim": "NVIDIA NIM",
+    "bailian": "Qwen Coding Plan",
+    "custom": "Custom Endpoint",
+    "copilot": "GitHub Copilot"
   },
   "providerLabels": {
     "anthropic": "Modèles Claude",
@@ -79,7 +85,13 @@
     "nebius": "Modèles Llama et DeepSeek",
     "together": "Modèles Llama et Mixtral",
     "fireworks": "Modèles d'inférence rapide",
-    "groq": "Modèles Llama ultra-rapides"
+    "groq": "Modèles Llama ultra-rapides",
+    "huggingface-local": "Inférence locale",
+    "venice": "Privacy-focused models",
+    "nim": "NVIDIA-hosted models",
+    "bailian": "Qwen & Kimi models",
+    "custom": "Custom endpoint",
+    "copilot": "GitHub Copilot models"
   },
   "status": {
     "connected": "Connecté",
@@ -254,7 +266,8 @@
     "about": "À propos",
     "browsers": "Navigateurs cloud",
     "general": "Général",
-    "daemon": "Démon"
+    "daemon": "Démon",
+    "integrations": "Intégrations"
   },
   "notifications": {
     "toggle": {
@@ -262,15 +275,39 @@
       "description": "Afficher les notifications du système lorsque les tâches se terminent en arrière-plan."
     }
   },
+  "integrations": {
+    "title": "Intégrations de messagerie",
+    "description": "Connectez des plateformes de messagerie pour déclencher des tâches Accomplish à distance. Une fois activé, vous pouvez démarrer et surveiller des tâches depuis votre téléphone ou n'importe quel appareil.",
+    "enabled": "Activé",
+    "comingSoon": "Bientôt disponible",
+    "enable": "Activer {{name}}",
+    "enableDescription": "Autoriser la réception et l'envoi de messages",
+    "disconnect": "Déconnecter {{name}}",
+    "connectedAs": "Connecté en tant que {{name}}",
+    "remoteAccess": "Activer l'accès à distance",
+    "remoteAccessDescription": "Ouvrir un tunnel sécurisé pour que les messages puissent atteindre cette machine de n'importe où",
+    "platforms": {
+      "whatsapp": "Déclencher des tâches et recevoir des mises à jour via WhatsApp",
+      "slack": "Connecter un espace de travail Slack pour la gestion des tâches",
+      "telegram": "Utiliser le bot Telegram pour interagir avec Accomplish",
+      "teams": "Intégrer avec les canaux et chats Teams"
+    },
+    "whatsapp": {
+      "connect": "Connecter WhatsApp",
+      "scanQr": "Scannez le QR code ci-dessous avec votre application WhatsApp pour connecter cet appareil. Allez dans WhatsApp > Paramètres > Appareils liés > Lier un appareil.",
+      "qrPlaceholder": "Le QR code apparaîtra ici lorsque le service WhatsApp démarrera",
+      "securityNotice": "En connectant WhatsApp, vous accordez à Accomplish l'accès à vos messages WhatsApp. Toutes les données restent sur votre appareil et ne sont pas partagées à l'extérieur."
+    }
+  },
   "appearance": {
     "title": "Thème",
-    "description": "Choisissez l'apparence de DomeWork. Sélectionnez Système pour correspondre aux paramètres de votre système d'exploitation.",
+    "description": "Choisissez l'apparence d'Accomplish. Sélectionnez Système pour correspondre aux paramètres de votre système d'exploitation.",
     "ariaLabel": "Préférence de thème",
     "system": "Système",
     "light": "Clair",
     "dark": "Sombre",
     "themeTitle": "Thème",
-    "themeDescription": "Choisissez l'apparence de DomeWork. Sélectionnez Système pour correspondre aux paramètres de votre système d'exploitation.",
+    "themeDescription": "Choisissez l'apparence d'Accomplish. Sélectionnez Système pour correspondre aux paramètres de votre système d'exploitation.",
     "themeSystem": "Système",
     "themeLight": "Clair",
     "themeDark": "Sombre"
@@ -308,7 +345,7 @@
       "restartAuth": "Relancer l'authentification",
       "disconnect": "Déconnecter Slack",
       "disconnecting": "Déconnexion...",
-      "authHint": "DomeWork ouvrira votre navigateur pour que vous puissiez approuver l'accès Slack.",
+      "authHint": "Accomplish ouvrira votre navigateur pour que vous puissiez approuver l'accès Slack.",
       "pendingHint": "Une connexion Slack a été initiée mais non terminée. Relancez-la pour réessayer.",
       "connectedHint": "Slack est authentifié et prêt à être utilisé par l'agent.",
       "authFailed": "Échec de l'authentification Slack",
@@ -347,7 +384,7 @@
     "filterAll": "Toutes",
     "filterActive": "Actives",
     "filterInactive": "Inactives",
-    "byAccomplish": "Par DomeWork",
+    "byAccomplish": "Par Accomplish",
     "github": "GitHub",
     "builtByYou": "Créées par vous",
     "loading": "Chargement des compétences...",
@@ -362,7 +399,7 @@
     "showInFolder": "Afficher dans le dossier",
     "delete": "Supprimer",
     "add": "Ajouter",
-    "buildWithAccomplish": "Créer avec DomeWork",
+    "buildWithAccomplish": "Créer avec Accomplish",
     "buildDescription": "Créez des compétences par conversation",
     "uploadSkill": "Importer une compétence",
     "uploadDescription": "Sélectionnez un dossier de compétences à importer",
@@ -392,7 +429,7 @@
     "exported": "Exporté",
     "exportFailed": "Échec de l'exportation",
     "exportDialogTitle": "Exporter les journaux de l'application",
-    "exportHeader": "Journaux de l'application DomeWork\nExporté : {{timestamp}}\nRépertoire des journaux : {{logDir}}\n\nAucun journal enregistré.\n"
+    "exportHeader": "Journaux de l'application Accomplish\nExporté : {{timestamp}}\nRépertoire des journaux : {{logDir}}\n\nAucun journal enregistré.\n"
   },
   "language": {
     "title": "Langue",
@@ -407,13 +444,13 @@
   "about": {
     "title": "À propos",
     "version": "Version {{version}}",
-    "description": "DomeWork est un agent IA local pour votre Mac qui lit vos fichiers, crée des documents et automatise les tâches répétitives - le tout en open source avec les modèles d'IA de votre choix.",
+    "description": "Accomplish est un agent IA local pour votre Mac qui lit vos fichiers, crée des documents et automatise les tâches répétitives - le tout en open source avec les modèles d'IA de votre choix.",
     "contact": "Des questions ou des commentaires ? Cliquez ici pour nous contacter",
     "visitUs": "Visitez-nous",
     "haveQuestion": "Une question ?",
     "versionLabel": "Version",
     "loading": "Chargement...",
-    "allRightsReserved": "DomeWork™ Tous droits réservés."
+    "allRightsReserved": "Accomplish™ Tous droits réservés."
   },
   "warnings": {
     "noProviderReady": "Aucun fournisseur prêt",
@@ -446,6 +483,14 @@
   "baseUrl": {
     "title": "URL de base",
     "description": "Laissez vide pour utiliser l'URL par défaut."
+  },
+  "huggingfaceLocal": {
+    "serverUrl": "URL du serveur HuggingFace Local",
+    "serverHint": "Exécutez un serveur d'inférence local HuggingFace Transformers.js avec ONNX Runtime",
+    "selectModel": "Veuillez sélectionner un modèle",
+    "selectModelPlaceholder": "Sélectionner un modèle...",
+    "infoBannerTitle": "Inférence locale avec Transformers.js",
+    "infoBannerDescription": "Les modèles s'exécutent localement avec ONNX Runtime. Les modèles quantifiés plus petits (Q4) sont recommandés pour une inférence plus rapide."
   },
   "knowledgeNotes": {
     "title": "Notes de contexte",

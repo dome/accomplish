@@ -1,6 +1,6 @@
 {
   "title": "Settings",
-  "setupTitle": "Set up DomeWork",
+  "setupTitle": "Set up Accomplish",
   "model": {
     "title": "Model",
     "cloudProviders": "Cloud Providers",
@@ -55,14 +55,16 @@
     "litellm": "LiteLLM",
     "vertex": "Vertex AI",
     "azure-foundry": "Azure AI Foundry",
+    "huggingface-local": "HuggingFace Local",
     "nebius": "Nebius AI",
     "together": "Together AI",
     "fireworks": "Fireworks AI",
     "groq": "Groq",
     "venice": "Venice AI",
     "nim": "NVIDIA NIM",
-    "qwen": "Qwen Code Plan",
-    "custom": "Custom Endpoint"
+    "bailian": "Qwen Coding Plan",
+    "custom": "Custom Endpoint",
+    "copilot": "GitHub Copilot"
   },
   "providerLabels": {
     "anthropic": "Claude models",
@@ -80,14 +82,16 @@
     "litellm": "Unified proxy",
     "vertex": "Google Cloud",
     "azure-foundry": "Azure Service",
+    "huggingface-local": "Local inference",
     "nebius": "Llama & DeepSeek models",
     "together": "Llama & Mixtral models",
     "fireworks": "Fast inference models",
     "groq": "Ultra-fast Llama models",
     "venice": "Privacy-focused models",
     "nim": "NVIDIA-hosted models",
-    "qwen": "Qwen & Kimi models",
-    "custom": "Custom endpoint"
+    "bailian": "Qwen & Kimi models",
+    "custom": "Custom endpoint",
+    "copilot": "GitHub Copilot models"
   },
   "status": {
     "connected": "Connected",
@@ -262,7 +266,8 @@
     "workspaces": "Workspaces",
     "appearance": "Appearance",
     "general": "General",
-    "about": "About"
+    "about": "About",
+    "integrations": "Integrations"
   },
   "notifications": {
     "toggle": {
@@ -272,19 +277,19 @@
   },
   "appearance": {
     "title": "Theme",
-    "description": "Choose how DomeWork looks. Select System to match your operating system setting.",
+    "description": "Choose how Accomplish looks. Select System to match your operating system setting.",
     "ariaLabel": "Theme preference",
     "system": "System",
     "light": "Light",
     "dark": "Dark",
     "themeTitle": "Theme",
-    "themeDescription": "Choose how DomeWork looks. Select System to match your operating system setting.",
+    "themeDescription": "Choose how Accomplish looks. Select System to match your operating system setting.",
     "themeSystem": "System",
     "themeLight": "Light",
     "themeDark": "Dark"
   },
   "connectors": {
-    "description": "Connect built-in and custom MCP servers so DomeWork can use external tools.",
+    "description": "Connect built-in and custom MCP servers so Accomplish can use external tools.",
     "loading": "Loading connectors...",
     "placeholder": "https://mcp-server.example.com",
     "add": "Add",
@@ -316,7 +321,7 @@
       "restartAuth": "Restart authentication",
       "disconnect": "Disconnect Slack",
       "disconnecting": "Disconnecting...",
-      "authHint": "DomeWork will open your browser so you can approve Slack access.",
+      "authHint": "Accomplish will open your browser so you can approve Slack access.",
       "pendingHint": "A Slack sign-in was started earlier but not finished. Restart it to try again.",
       "connectedHint": "Slack is authenticated and ready for the agent to use.",
       "authFailed": "Failed to authenticate Slack",
@@ -338,6 +343,14 @@
     "description": "Access 200+ AI models through OpenRouter's unified API.",
     "fetchModelsFailed": "Failed to fetch models"
   },
+  "huggingfaceLocal": {
+    "serverUrl": "HuggingFace Local Server URL",
+    "serverHint": "Run a local HuggingFace Transformers.js inference server with ONNX Runtime",
+    "selectModel": "Please select a model",
+    "selectModelPlaceholder": "Select a model...",
+    "infoBannerTitle": "Local inference with Transformers.js",
+    "infoBannerDescription": "Models run locally using ONNX Runtime. Smaller quantized models (Q4) are recommended for faster inference."
+  },
   "litellm": {
     "description": "Connect to your LiteLLM proxy server for unified model access.",
     "serverUrl": "Server URL",
@@ -355,7 +368,7 @@
     "filterAll": "All",
     "filterActive": "Active",
     "filterInactive": "Inactive",
-    "byAccomplish": "By DomeWork",
+    "byAccomplish": "By Accomplish",
     "github": "GitHub",
     "builtByYou": "Built By You",
     "loading": "Loading skills...",
@@ -370,7 +383,7 @@
     "showInFolder": "Show in Folder",
     "delete": "Delete",
     "add": "Add",
-    "buildWithAccomplish": "Build with DomeWork",
+    "buildWithAccomplish": "Build with Accomplish",
     "buildDescription": "Create skills through conversation",
     "uploadSkill": "Upload a skill",
     "uploadDescription": "Select a skill folder to import",
@@ -400,7 +413,7 @@
     "exported": "Exported",
     "exportFailed": "Export Failed",
     "exportDialogTitle": "Export Application Logs",
-    "exportHeader": "DomeWork Application Logs\nExported: {{timestamp}}\nLog Directory: {{logDir}}\n\nNo logs recorded yet.\n"
+    "exportHeader": "Accomplish Application Logs\nExported: {{timestamp}}\nLog Directory: {{logDir}}\n\nNo logs recorded yet.\n"
   },
   "language": {
     "title": "Language",
@@ -415,13 +428,13 @@
   "about": {
     "title": "About",
     "version": "Version {{version}}",
-    "description": "DomeWork is a local computer-use AI agent for your Mac that reads your files, creates documents, and automates repetitive knowledge work—all open-source with your AI models of choice.",
+    "description": "Accomplish is a local computer-use AI agent for your Mac that reads your files, creates documents, and automates repetitive knowledge work—all open-source with your AI models of choice.",
     "contact": "Any questions or feedback? Click here to contact us",
     "visitUs": "Visit us",
     "haveQuestion": "Have a question?",
     "versionLabel": "Version",
     "loading": "Loading...",
-    "allRightsReserved": "DomeWork™ All rights reserved."
+    "allRightsReserved": "Accomplish™ All rights reserved."
   },
   "warnings": {
     "noProviderReady": "No provider ready",
@@ -450,6 +463,30 @@
     "tooltipError": "Error during transcription - Click to retry",
     "tooltipDefault": "Click to record or hold Alt to record voice input",
     "processing": "Processing..."
+  },
+  "integrations": {
+    "title": "Messaging Integrations",
+    "description": "Connect messaging platforms to trigger Accomplish tasks remotely. When enabled, you can start and monitor tasks from your phone or any device.",
+    "enabled": "Enabled",
+    "comingSoon": "Coming Soon",
+    "enable": "Enable {{name}}",
+    "enableDescription": "Allow receiving and responding to messages",
+    "disconnect": "Disconnect {{name}}",
+    "connectedAs": "Connected as {{name}}",
+    "remoteAccess": "Enable Remote Access",
+    "remoteAccessDescription": "Open a secure tunnel so messages can reach this machine from anywhere",
+    "platforms": {
+      "whatsapp": "Trigger tasks and receive updates via WhatsApp messages",
+      "slack": "Connect Slack workspace for task management",
+      "telegram": "Use Telegram bot to interact with Accomplish",
+      "teams": "Integrate with Teams channels and chats"
+    },
+    "whatsapp": {
+      "connect": "Connect WhatsApp",
+      "scanQr": "Scan the QR code below with your WhatsApp app to connect this device. Go to WhatsApp > Settings > Linked Devices > Link a Device.",
+      "qrPlaceholder": "QR code will appear here when the WhatsApp service starts",
+      "securityNotice": "By connecting WhatsApp, you grant Accomplish access to your WhatsApp messages. All data remains on your device and is not shared externally."
+    }
   },
   "baseUrl": {
     "title": "Base URL",

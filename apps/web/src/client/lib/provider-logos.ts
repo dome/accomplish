@@ -14,6 +14,7 @@ import openrouterLogo from '/assets/ai-logos/openrouter.svg';
 import litellmLogo from '/assets/ai-logos/litellm.svg';
 import minimaxLogo from '/assets/ai-logos/minimax.svg';
 import lmstudioLogo from '/assets/ai-logos/lmstudio.png';
+import huggingfaceLogo from '/assets/ai-logos/huggingface.svg';
 import nebiusLogo from '/assets/ai-logos/nebius.svg';
 import togetherLogo from '/assets/ai-logos/together.svg';
 import fireworksLogo from '/assets/ai-logos/fireworks.svg';
@@ -21,7 +22,8 @@ import groqLogo from '/assets/ai-logos/groq.svg';
 import veniceLogo from '/assets/ai-logos/venice.svg';
 import customLogo from '/assets/ai-logos/custom.svg';
 import nimLogo from '/assets/ai-logos/nim.svg';
-import qwenLogo from '/assets/ai-logos/qwen-logo.png';
+import copilotLogo from '/assets/ai-logos/copilot.svg';
+import qwenLogo from '/assets/ai-logos/qwen-logo.svg';
 
 export const PROVIDER_LOGOS: Record<ProviderId, string> = {
   anthropic: anthropicLogo,
@@ -39,6 +41,7 @@ export const PROVIDER_LOGOS: Record<ProviderId, string> = {
   litellm: litellmLogo,
   minimax: minimaxLogo,
   lmstudio: lmstudioLogo,
+  'huggingface-local': huggingfaceLogo,
   nebius: nebiusLogo,
   together: togetherLogo,
   fireworks: fireworksLogo,
@@ -46,6 +49,7 @@ export const PROVIDER_LOGOS: Record<ProviderId, string> = {
   venice: veniceLogo,
   nim: nimLogo,
   custom: customLogo,
+  copilot: copilotLogo,
   bailian: qwenLogo,
 };
 

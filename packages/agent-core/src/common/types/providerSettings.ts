@@ -14,14 +14,16 @@ export type ProviderId =
   | 'minimax'
   | 'lmstudio'
   | 'vertex'
+  | 'huggingface-local'
   | 'nebius'
   | 'together'
   | 'fireworks'
   | 'groq'
   | 'venice'
   | 'nim'
-  | 'qwen'
-  | 'custom';
+  | 'bailian'
+  | 'custom'
+  | 'copilot';
 
 export type ProviderCategory = 'classic' | 'aws' | 'gcp' | 'azure' | 'local' | 'proxy' | 'hybrid';
 
@@ -138,6 +140,13 @@ export const PROVIDER_META: Record<ProviderId, ProviderMeta> = {
     logoKey: 'lmstudio',
     helpUrl: 'https://lmstudio.ai/',
   },
+  'huggingface-local': {
+    id: 'huggingface-local',
+    name: 'HuggingFace Local',
+    category: 'local',
+    label: 'Local Models',
+    logoKey: 'huggingface',
+  },
   nebius: {
     id: 'nebius',
     name: 'Nebius AI',
@@ -186,13 +195,13 @@ export const PROVIDER_META: Record<ProviderId, ProviderMeta> = {
     logoKey: 'nim',
     helpUrl: 'https://org.ngc.nvidia.com/setup/api-key',
   },
-  qwen: {
-    id: 'qwen',
-    name: 'Qwen Code Plan',
+  bailian: {
+    id: 'bailian',
+    name: 'Qwen Coding Plan',
     category: 'classic',
     label: 'Service',
     logoKey: 'qwen',
-    helpUrl: 'https://coding-intl.dashscope.aliyuncs.com',
+    helpUrl: 'https://bailian.console.aliyun.com/',
   },
   custom: {
     id: 'custom',
@@ -200,6 +209,14 @@ export const PROVIDER_META: Record<ProviderId, ProviderMeta> = {
     category: 'hybrid',
     label: 'Custom',
     logoKey: 'custom',
+  },
+  copilot: {
+    id: 'copilot',
+    name: 'GitHub Copilot',
+    category: 'classic',
+    label: 'Service',
+    logoKey: 'github-copilot',
+    helpUrl: 'https://github.com/settings/copilot',
   },
 };
 
@@ -249,6 +266,11 @@ export interface LMStudioCredentials {
   serverUrl: string;
 }
 
+export interface HuggingFaceLocalCredentials {
+  type: 'huggingface-local';
+  modelId: string;
+}
+
 export interface CustomCredentials {
   type: 'custom';
   baseUrl: string;
@@ -284,6 +306,10 @@ export interface OAuthCredentials {
   oauthProvider: 'chatgpt';
 }
 
+export interface CopilotOAuthCredentials {
+  type: 'copilot-oauth';
+}
+
 export type ProviderCredentials =
   | ApiKeyCredentials
   | BedrockProviderCredentials
@@ -295,6 +321,8 @@ export type ProviderCredentials =
   | AzureFoundryCredentials
   | LMStudioCredentials
   | OAuthCredentials
+  | HuggingFaceLocalCredentials
+  | CopilotOAuthCredentials
   | CustomCredentials
   | NimCredentials;
 
@@ -355,7 +383,8 @@ export const DEFAULT_MODELS: Partial<Record<ProviderId, string>> = {
   groq: 'groq/llama3-70b-8192',
   venice: 'venice/llama-3.3-70b',
   nim: 'nim/meta/llama-3.1-70b-instruct',
-  qwen: 'qwen/qwen3.5-plus',
+  bailian: 'bailian/qwen3.5-plus',
+  copilot: 'copilot/gpt-4o',
 };
 
 export function getDefaultModelForProvider(providerId: ProviderId): string | null {
@@ -382,12 +411,15 @@ export const PROVIDER_ID_TO_OPENCODE: Record<ProviderId, string> = {
   minimax: 'minimax',
   lmstudio: 'lmstudio',
   vertex: 'vertex',
+  // HuggingFace Local exposes an OpenAI-compatible API; opencode connects via OPENAI_API_BASE env var
+  'huggingface-local': 'openai',
   nebius: 'nebius',
   together: 'together',
   fireworks: 'fireworks',
   groq: 'groq',
   venice: 'venice',
   nim: 'nim',
-  qwen: 'qwen',
+  bailian: 'bailian',
   custom: 'custom',
+  copilot: 'github-copilot',
 };
