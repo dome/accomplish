@@ -59,7 +59,12 @@
     "together": "Together AI",
     "fireworks": "Fireworks AI",
     "groq": "Groq",
-    "huggingface-local": "HuggingFace Local"
+    "huggingface-local": "HuggingFace Local",
+    "venice": "Venice AI",
+    "nim": "NVIDIA NIM",
+    "bailian": "Qwen Coding Plan",
+    "custom": "Custom Endpoint",
+    "copilot": "GitHub Copilot"
   },
   "providerLabels": {
     "anthropic": "Модели Claude",
@@ -81,7 +86,12 @@
     "together": "Модели Llama и Mixtral",
     "fireworks": "Модели быстрого вывода",
     "groq": "Сверхбыстрые модели Llama",
-    "huggingface-local": "Локальный вывод"
+    "huggingface-local": "Локальный вывод",
+    "venice": "Privacy-focused models",
+    "nim": "NVIDIA-hosted models",
+    "bailian": "Qwen & Kimi models",
+    "custom": "Custom endpoint",
+    "copilot": "GitHub Copilot models"
   },
   "status": {
     "connected": "Подключено",

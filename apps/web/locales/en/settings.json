@@ -59,7 +59,12 @@
     "nebius": "Nebius AI",
     "together": "Together AI",
     "fireworks": "Fireworks AI",
-    "groq": "Groq"
+    "groq": "Groq",
+    "venice": "Venice AI",
+    "nim": "NVIDIA NIM",
+    "bailian": "Qwen Coding Plan",
+    "custom": "Custom Endpoint",
+    "copilot": "GitHub Copilot"
   },
   "providerLabels": {
     "anthropic": "Claude models",
@@ -81,7 +86,12 @@
     "nebius": "Llama & DeepSeek models",
     "together": "Llama & Mixtral models",
     "fireworks": "Fast inference models",
-    "groq": "Ultra-fast Llama models"
+    "groq": "Ultra-fast Llama models",
+    "venice": "Privacy-focused models",
+    "nim": "NVIDIA-hosted models",
+    "bailian": "Qwen & Kimi models",
+    "custom": "Custom endpoint",
+    "copilot": "GitHub Copilot models"
   },
   "status": {
     "connected": "Connected",

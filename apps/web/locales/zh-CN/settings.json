@@ -59,6 +59,11 @@
     "together": "Together AI",
     "fireworks": "Fireworks AI",
     "groq": "Groq",
+    "venice": "Venice AI",
+    "nim": "NVIDIA NIM",
+    "bailian": "Qwen Coding Plan",
+    "custom": "自定义端点",
+    "copilot": "GitHub Copilot",
     "huggingface-local": "HuggingFace Local"
   },
   "providerLabels": {
@@ -81,6 +86,11 @@
     "together": "Llama 和 Mixtral 模型",
     "fireworks": "快速推理模型",
     "groq": "超快速 Llama 模型",
+    "venice": "隐私保护模型",
+    "nim": "NVIDIA 托管模型",
+    "bailian": "Qwen 和 Kimi 模型",
+    "custom": "自定义端点",
+    "copilot": "GitHub Copilot 模型",
     "huggingface-local": "本地推理"
   },
   "status": {
