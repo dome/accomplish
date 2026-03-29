@@ -22,7 +22,7 @@ on:
         type: choice
         options:
           - all
-          - macos-only
+          - macos-arm64-only
           - linux-only
           - windows-only
         default: all
@@ -262,7 +262,7 @@ jobs:
   build-mac-arm64:
     name: Build macOS (Apple Silicon)
     needs: version-bump
-    if: github.event_name == 'push' || needs.version-bump.outputs.platforms == 'all' || needs.version-bump.outputs.platforms == 'macos-only'
+    if: github.event_name == 'push' || needs.version-bump.outputs.platforms == 'all' || needs.version-bump.outputs.platforms == 'macos-arm64-only'
     runs-on: macos-14
     steps:
       - name: Checkout code
@@ -307,56 +307,6 @@ jobs:
           path: |
             apps/desktop/release/*-arm64.dmg
             apps/desktop/release/*-arm64.zip
-          retention-days: 30
-
-  build-mac-x64:
-    name: Build macOS (Intel)
-    needs: version-bump
-    if: github.event_name == 'push' || needs.version-bump.outputs.platforms == 'all' || needs.version-bump.outputs.platforms == 'macos-only'
-    runs-on: macos-15-large
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v6
-        with:
-          ref: v${{ needs.version-bump.outputs.new_version }}
-
-      - name: Setup pnpm
-        uses: pnpm/action-setup@v5
-
-      - name: Setup Node.js
-        uses: actions/setup-node@v6
-        with:
-          node-version: '20'
-          cache: 'pnpm'
-
-      - name: Setup Python
-        uses: actions/setup-python@v6
-        with:
-          python-version: '3.11'
-
-      - name: Install dependencies
-        run: pnpm install --frozen-lockfile
-        env:
-          ELECTRON_MIRROR: https://npmmirror.com/mirrors/electron/
-          npm_config_electron_mirror: https://npmmirror.com/mirrors/electron/
-
-      - name: Download Node.js binaries
-        run: pnpm -F @accomplish/desktop download:nodejs
-
-      - name: Build desktop app
-        run: pnpm -F @accomplish/desktop package:mac
-        env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          PYTHON: python
-          CSC_IDENTITY_AUTO_DISCOVERY: false
-
-      - name: Upload artifacts
-        uses: actions/upload-artifact@v7
-        with:
-          name: DomeWork-macOS-x64
-          path: |
-            apps/desktop/release/*-x64.dmg
-            apps/desktop/release/*-x64.zip
           retention-days: 30
 
   build-linux-arm64:
@@ -495,15 +445,7 @@ jobs:
 
   create-release:
     name: Create GitHub Release
-    needs:
-      [
-        version-bump,
-        build-mac-arm64,
-        build-mac-x64,
-        build-linux-arm64,
-        build-linux-x64,
-        build-windows-x64,
-      ]
+    needs: [version-bump, build-mac-arm64, build-linux-arm64, build-linux-x64, build-windows-x64]
     if: always() && needs.version-bump.result == 'success'
     runs-on: ubuntu-latest
     steps:
@@ -517,24 +459,19 @@ jobs:
           fi
 
           MAC_ARM64="${{ needs.build-mac-arm64.result }}"
-          MAC_X64="${{ needs.build-mac-x64.result }}"
           LINUX_ARM64="${{ needs.build-linux-arm64.result }}"
           LINUX_X64="${{ needs.build-linux-x64.result }}"
           WINDOWS_X64="${{ needs.build-windows-x64.result }}"
 
           echo "Requested platforms: $PLATFORMS"
-          echo "Build results: macOS-arm64=$MAC_ARM64, macOS-x64=$MAC_X64, Linux-arm64=$LINUX_ARM64, Linux-x64=$LINUX_X64, Windows-x64=$WINDOWS_X64"
+          echo "Build results: macOS-arm64=$MAC_ARM64, Linux-arm64=$LINUX_ARM64, Linux-x64=$LINUX_X64, Windows-x64=$WINDOWS_X64"
 
           # Validate all requested platform builds succeeded
           FAILED=0
 
-          if [ "$PLATFORMS" == "all" ] || [ "$PLATFORMS" == "macos-only" ]; then
+          if [ "$PLATFORMS" == "all" ] || [ "$PLATFORMS" == "macos-arm64-only" ]; then
             if [ "$MAC_ARM64" != "success" ]; then
               echo "Error: macOS ARM64 build failed (result: $MAC_ARM64)"
-              FAILED=1
-            fi
-            if [ "$MAC_X64" != "success" ]; then
-              echo "Error: macOS x64 build failed (result: $MAC_X64)"
               FAILED=1
             fi
           fi
@@ -587,13 +524,6 @@ jobs:
           name: DomeWork-macOS-arm64
           path: ./release/arm64
 
-      - name: Download macOS x64 artifacts
-        if: needs.build-mac-x64.result == 'success'
-        uses: actions/download-artifact@v8
-        with:
-          name: DomeWork-macOS-x64
-          path: ./release/x64
-
       - name: Download Windows x64 artifacts
         if: needs.build-windows-x64.result == 'success'
         uses: actions/download-artifact@v8
@@ -630,7 +560,6 @@ jobs:
           generate_release_notes: true
           files: |
             ./release/arm64/*
-            ./release/x64/*
             ./release/win-x64/*
             ./release/linux-arm64/*
             ./release/linux-x64/*
