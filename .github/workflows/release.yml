@@ -64,7 +64,7 @@ jobs:
         run: pnpm --filter @domework/desktop download:nodejs
 
       - name: Build Linux x64
-        run: pnpm --filter @domework/desktop package:linux
+        run: pnpm --filter @domework/desktop package:linux-x64
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           ACCOMPLISH_BUNDLED_MCP: 1
@@ -99,7 +99,7 @@ jobs:
         run: pnpm --filter @domework/desktop download:nodejs
 
       - name: Build Linux ARM64
-        run: pnpm --filter @domework/desktop package:linux
+        run: pnpm --filter @domework/desktop package:linux-arm64
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           ACCOMPLISH_BUNDLED_MCP: 1

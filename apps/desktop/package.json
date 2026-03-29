@@ -23,6 +23,8 @@
     "package:mac": "pnpm download:nodejs && pnpm build:base && pnpm build:mcp-tools:package && node scripts/package.cjs --mac --publish never && npx electron-rebuild -f",
     "package:win": "pnpm download:nodejs && pnpm build:base && pnpm build:mcp-tools:package && node scripts/package.cjs --win --x64 --publish never",
     "package:linux": "pnpm download:nodejs && pnpm build:base && ACCOMPLISH_BUNDLED_MCP=1 pnpm build:mcp-tools:package && node scripts/package.cjs --linux --x64 --arm64 --publish never",
+    "package:linux-x64": "pnpm download:nodejs && pnpm build:base && ACCOMPLISH_BUNDLED_MCP=1 pnpm build:mcp-tools:package && node scripts/package.cjs --linux --x64 --publish never",
+    "package:linux-arm64": "pnpm download:nodejs && pnpm build:base && ACCOMPLISH_BUNDLED_MCP=1 pnpm build:mcp-tools:package && node scripts/package.cjs --linux --arm64 --publish never",
     "preview": "vite preview",
     "typecheck": "tsc --noEmit",
     "lint": "tsc --noEmit",
