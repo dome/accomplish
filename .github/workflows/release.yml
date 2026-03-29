@@ -143,9 +143,12 @@ jobs:
 
           CONFLICTS=""
 
-          # Check for existing tag
-          if git ls-remote --tags origin | grep -q "refs/tags/v${VERSION}$"; then
-            CONFLICTS="${CONFLICTS}\n  - Tag: v${VERSION} (delete with: git push origin --delete v${VERSION})"
+          # Skip tag check for push events (the tag is expected to exist)
+          if [ "${{ github.event_name }}" != "push" ]; then
+            # Check for existing tag
+            if git ls-remote --tags origin | grep -q "refs/tags/v${VERSION}$"; then
+              CONFLICTS="${CONFLICTS}\n  - Tag: v${VERSION} (delete with: git push origin --delete v${VERSION})"
+            fi
           fi
 
           # Check for existing branch
