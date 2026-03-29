@@ -300,8 +300,16 @@ jobs:
           PYTHON: python
           CSC_IDENTITY_AUTO_DISCOVERY: false
 
-      - name: List release artifacts
-        run: ls -la apps/desktop/release/
+      - name: Debug - Find release folder
+        run: |
+          echo "=== Current directory ==="
+          pwd
+          echo "=== Looking for release folder ==="
+          find . -type d -name "release" 2>/dev/null || echo "No release folder found"
+          echo "=== Contents of apps/desktop ==="
+          ls -la apps/desktop/ || true
+          echo "=== Contents of apps/desktop/release ==="
+          ls -la apps/desktop/release/ || echo "apps/desktop/release does not exist"
 
       - name: Upload artifacts
         uses: actions/upload-artifact@v7
