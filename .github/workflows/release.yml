@@ -291,11 +291,7 @@ jobs:
         run: pnpm -F @accomplish/desktop download:nodejs
 
       - name: Build desktop app
-        run: pnpm -F @accomplish/desktop build
-
-      - name: Package (unsigned)
-        run: node scripts/package.cjs --mac --arm64 --publish never
-        working-directory: apps/desktop
+        run: pnpm -F @accomplish/desktop package:mac
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           PYTHON: python
@@ -342,11 +338,7 @@ jobs:
         run: pnpm -F @accomplish/desktop download:nodejs
 
       - name: Build desktop app
-        run: pnpm -F @accomplish/desktop build
-
-      - name: Package (unsigned)
-        run: node scripts/package.cjs --mac --x64 --publish never
-        working-directory: apps/desktop
+        run: pnpm -F @accomplish/desktop package:mac
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           PYTHON: python
@@ -391,11 +383,7 @@ jobs:
         run: pnpm -F @accomplish/desktop download:nodejs
 
       - name: Build desktop app
-        run: pnpm -F @accomplish/desktop build
-
-      - name: Package (unsigned)
-        run: node scripts/package.cjs --linux --arm64 --publish never
-        working-directory: apps/desktop
+        run: pnpm -F @accomplish/desktop package:linux
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
@@ -438,11 +426,7 @@ jobs:
         run: pnpm -F @accomplish/desktop download:nodejs
 
       - name: Build desktop app
-        run: pnpm -F @accomplish/desktop build
-
-      - name: Package (unsigned)
-        run: node scripts/package.cjs --linux --x64 --publish never
-        working-directory: apps/desktop
+        run: pnpm -F @accomplish/desktop package:linux
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
@@ -482,11 +466,7 @@ jobs:
         run: pnpm -F @accomplish/desktop download:nodejs
 
       - name: Build desktop app
-        run: pnpm -F @accomplish/desktop build
-
-      - name: Package (unsigned)
-        run: node scripts/package.cjs --win --x64 --publish never
-        working-directory: apps/desktop
+        run: pnpm -F @accomplish/desktop package:win
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           CSC_IDENTITY_AUTO_DISCOVERY: false
