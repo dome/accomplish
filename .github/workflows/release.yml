@@ -302,13 +302,13 @@ jobs:
           CSC_IDENTITY_AUTO_DISCOVERY: false
 
       - name: List release artifacts
-        run: ls -la apps/desktop/release/ || true
+        run: ls -la release/ || true
 
       - name: Upload artifacts
         uses: actions/upload-artifact@v7
         with:
           name: DomeWork-macOS-arm64
-          path: apps/desktop/release/*-arm64.dmg
+          path: release/*-arm64.dmg
           retention-days: 30
 
   build-linux-arm64:
@@ -350,13 +350,13 @@ jobs:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: List release artifacts
-        run: ls -la apps/desktop/release/ || true
+        run: ls -la release/ || true
 
       - name: Upload artifacts
         uses: actions/upload-artifact@v7
         with:
           name: DomeWork-Linux-arm64
-          path: apps/desktop/release/*-arm64.AppImage
+          path: release/*-arm64.AppImage
           retention-days: 30
 
   build-linux-x64:
@@ -398,13 +398,13 @@ jobs:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: List release artifacts
-        run: ls -la apps/desktop/release/ || true
+        run: ls -la release/ || true
 
       - name: Upload artifacts
         uses: actions/upload-artifact@v7
         with:
           name: DomeWork-Linux-x64
-          path: apps/desktop/release/*-x64.AppImage
+          path: release/*-x64.AppImage
           retention-days: 30
 
   build-windows-x64:
@@ -444,13 +444,14 @@ jobs:
           CSC_IDENTITY_AUTO_DISCOVERY: false
 
       - name: List release artifacts
-        run: ls -la apps/desktop/release/ || true
+        shell: pwsh
+        run: Get-ChildItem release/ || Write-Host "Release folder not found or empty"
 
       - name: Upload artifacts
         uses: actions/upload-artifact@v7
         with:
           name: DomeWork-Windows-x64
-          path: apps/desktop/release/*.exe
+          path: release/*.exe
           retention-days: 30
 
   create-release:
