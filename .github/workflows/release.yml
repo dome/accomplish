@@ -70,10 +70,18 @@ jobs:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           ACCOMPLISH_BUNDLED_MCP: 1
 
+      - name: Find unpack folder
+        id: find-folder-x64
+        run: |
+          cd apps/desktop/release
+          FOLDER=$(ls -d *-unpacked 2>/dev/null | head -1)
+          echo "Found folder: $FOLDER"
+          echo "folder=$FOLDER" >> $GITHUB_OUTPUT
+
       - name: Create tar.gz
         run: |
           cd apps/desktop/release
-          tar -czf DomeWork-linux-x64.tar.gz linux-unpacked/
+          tar -czf DomeWork-linux-x64.tar.gz ${{ steps.find-folder-x64.outputs.folder }}
 
       - name: Upload artifacts
         uses: actions/upload-artifact@v4
@@ -111,10 +119,18 @@ jobs:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           ACCOMPLISH_BUNDLED_MCP: 1
 
+      - name: Find unpack folder
+        id: find-folder
+        run: |
+          cd apps/desktop/release
+          FOLDER=$(ls -d *-unpacked 2>/dev/null | head -1)
+          echo "Found folder: $FOLDER"
+          echo "folder=$FOLDER" >> $GITHUB_OUTPUT
+
       - name: Create tar.gz
         run: |
           cd apps/desktop/release
-          tar -czf DomeWork-linux-arm64.tar.gz linux-unpacked/
+          tar -czf DomeWork-linux-arm64.tar.gz ${{ steps.find-folder.outputs.folder }}
 
       - name: Upload artifacts
         uses: actions/upload-artifact@v4
