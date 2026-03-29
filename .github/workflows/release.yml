@@ -295,18 +295,20 @@ jobs:
 
       - name: Build desktop app
         run: pnpm -F @accomplish/desktop package:mac
+        working-directory: apps/desktop
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           PYTHON: python
           CSC_IDENTITY_AUTO_DISCOVERY: false
 
+      - name: List release artifacts
+        run: ls -la apps/desktop/release/ || true
+
       - name: Upload artifacts
         uses: actions/upload-artifact@v7
         with:
           name: DomeWork-macOS-arm64
-          path: |
-            release/*-arm64.dmg
-            release/*-arm64.zip
+          path: apps/desktop/release/*-arm64.dmg
           retention-days: 30
 
   build-linux-arm64:
@@ -343,16 +345,18 @@ jobs:
 
       - name: Build desktop app
         run: pnpm -F @accomplish/desktop package:linux
+        working-directory: apps/desktop
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: List release artifacts
+        run: ls -la apps/desktop/release/ || true
 
       - name: Upload artifacts
         uses: actions/upload-artifact@v7
         with:
           name: DomeWork-Linux-arm64
-          path: |
-            release/*-arm64.AppImage
-            release/*-arm64.deb
+          path: apps/desktop/release/*-arm64.AppImage
           retention-days: 30
 
   build-linux-x64:
@@ -389,16 +393,18 @@ jobs:
 
       - name: Build desktop app
         run: pnpm -F @accomplish/desktop package:linux
+        working-directory: apps/desktop
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: List release artifacts
+        run: ls -la apps/desktop/release/ || true
 
       - name: Upload artifacts
         uses: actions/upload-artifact@v7
         with:
           name: DomeWork-Linux-x64
-          path: |
-            release/*-x64.AppImage
-            release/*-x64.deb
+          path: apps/desktop/release/*-x64.AppImage
           retention-days: 30
 
   build-windows-x64:
@@ -432,15 +438,19 @@ jobs:
 
       - name: Build desktop app
         run: pnpm -F @accomplish/desktop package:win
+        working-directory: apps/desktop
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           CSC_IDENTITY_AUTO_DISCOVERY: false
+
+      - name: List release artifacts
+        run: ls -la apps/desktop/release/ || true
 
       - name: Upload artifacts
         uses: actions/upload-artifact@v7
         with:
           name: DomeWork-Windows-x64
-          path: release/*.exe
+          path: apps/desktop/release/*.exe
           retention-days: 30
 
   create-release:
@@ -524,13 +534,6 @@ jobs:
           name: DomeWork-macOS-arm64
           path: ./release/arm64
 
-      - name: Download Windows x64 artifacts
-        if: needs.build-windows-x64.result == 'success'
-        uses: actions/download-artifact@v8
-        with:
-          name: DomeWork-Windows-x64
-          path: ./release/win-x64
-
       - name: Download Linux ARM64 artifacts
         if: needs.build-linux-arm64.result == 'success'
         uses: actions/download-artifact@v8
@@ -544,6 +547,13 @@ jobs:
         with:
           name: DomeWork-Linux-x64
           path: ./release/linux-x64
+
+      - name: Download Windows x64 artifacts
+        if: needs.build-windows-x64.result == 'success'
+        uses: actions/download-artifact@v8
+        with:
+          name: DomeWork-Windows-x64
+          path: ./release/win-x64
 
       - name: List release artifacts
         run: |
