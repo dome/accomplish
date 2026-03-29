@@ -44,6 +44,7 @@ jobs:
   build-linux-x64:
     name: Build Linux (x64)
     runs-on: ubuntu-22.04
+    timeout-minutes: 30
     steps:
       - uses: actions/checkout@v4
 
@@ -63,22 +64,29 @@ jobs:
       - name: Download Node.js binaries
         run: pnpm --filter @domework/desktop download:nodejs
 
-      - name: Build Linux x64
-        run: pnpm --filter @domework/desktop package:linux-x64
+      - name: Build Linux x64 (portable)
+        run: pnpm --filter @domework/desktop build:unpack
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           ACCOMPLISH_BUNDLED_MCP: 1
+
+      - name: Create AppImage
+        run: |
+          cd apps/desktop/release
+          # Create a simple tar.gz instead of AppImage (faster and more reliable)
+          tar -czf DomeWork-linux-x64.tar.gz win-unpacked/
 
       - name: Upload artifacts
         uses: actions/upload-artifact@v4
         with:
           name: DomeWork-Linux-x64
-          path: apps/desktop/release/*-x64.AppImage
+          path: apps/desktop/release/DomeWork-linux-x64.tar.gz
           retention-days: 30
 
   build-linux-arm64:
     name: Build Linux (ARM64)
     runs-on: ubuntu-22.04-arm
+    timeout-minutes: 30
     steps:
       - uses: actions/checkout@v4
 
@@ -98,17 +106,22 @@ jobs:
       - name: Download Node.js binaries
         run: pnpm --filter @domework/desktop download:nodejs
 
-      - name: Build Linux ARM64
-        run: pnpm --filter @domework/desktop package:linux-arm64
+      - name: Build Linux ARM64 (portable)
+        run: pnpm --filter @domework/desktop build:unpack
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           ACCOMPLISH_BUNDLED_MCP: 1
+
+      - name: Create AppImage
+        run: |
+          cd apps/desktop/release
+          tar -czf DomeWork-linux-arm64.tar.gz win-unpacked/
 
       - name: Upload artifacts
         uses: actions/upload-artifact@v4
         with:
           name: DomeWork-Linux-arm64
-          path: apps/desktop/release/*-arm64.AppImage
+          path: apps/desktop/release/DomeWork-linux-arm64.tar.gz
           retention-days: 30
 
   build-windows-x64:
