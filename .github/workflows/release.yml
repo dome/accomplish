@@ -291,10 +291,10 @@ jobs:
           npm_config_electron_mirror: https://npmmirror.com/mirrors/electron/
 
       - name: Download Node.js binaries
-        run: pnpm --filter @domework/desktop download:nodejs
+        run: pnpm --filter @accomplish/desktop download:nodejs
 
       - name: Build desktop app
-        run: pnpm --filter @domework/desktop package:mac
+        run: pnpm --filter @accomplish/desktop package:mac
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           PYTHON: python
@@ -348,11 +348,14 @@ jobs:
           ELECTRON_MIRROR: https://npmmirror.com/mirrors/electron/
           npm_config_electron_mirror: https://npmmirror.com/mirrors/electron/
 
+      - name: Rebuild native modules
+        run: pnpm rebuild better-sqlite3 --recursive
+
       - name: Download Node.js binaries
-        run: pnpm --filter @domework/desktop download:nodejs
+        run: pnpm --filter @accomplish/desktop download:nodejs
 
       - name: Build desktop app (ARM64)
-        run: pnpm --filter @domework/desktop package:linux
+        run: pnpm --filter @accomplish/desktop package:linux
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           ACCOMPLISH_BUNDLED_MCP: 1
@@ -407,11 +410,14 @@ jobs:
           ELECTRON_MIRROR: https://npmmirror.com/mirrors/electron/
           npm_config_electron_mirror: https://npmmirror.com/mirrors/electron/
 
+      - name: Rebuild native modules
+        run: pnpm rebuild better-sqlite3 --recursive
+
       - name: Download Node.js binaries
-        run: pnpm --filter @domework/desktop download:nodejs
+        run: pnpm --filter @accomplish/desktop download:nodejs
 
       - name: Build desktop app (x64)
-        run: pnpm --filter @domework/desktop package:linux
+        run: pnpm --filter @accomplish/desktop package:linux
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           ACCOMPLISH_BUNDLED_MCP: 1
@@ -442,6 +448,7 @@ jobs:
     needs: version-bump
     if: github.event_name == 'push' || needs.version-bump.outputs.platforms == 'all' || needs.version-bump.outputs.platforms == 'windows-only'
     runs-on: windows-latest
+    timeout-minutes: 45
     steps:
       - name: Checkout code
         uses: actions/checkout@v6
@@ -464,10 +471,10 @@ jobs:
           npm_config_electron_mirror: https://npmmirror.com/mirrors/electron/
 
       - name: Download Node.js binaries
-        run: pnpm --filter @domework/desktop download:nodejs
+        run: pnpm --filter @accomplish/desktop download:nodejs
 
       - name: Build desktop app
-        run: pnpm --filter @domework/desktop package:win
+        run: pnpm --filter @accomplish/desktop package:win
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           CSC_IDENTITY_AUTO_DISCOVERY: false

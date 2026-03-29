@@ -92,7 +92,7 @@
   },
   "build": {
     "npmRebuild": false,
-    "compression": "normal",
+    "compression": "store",
     "appId": "ai.domework.desktop",
     "productName": "DomeWork",
     "artifactName": "DomeWork-${version}-${os}-${arch}.${ext}",
