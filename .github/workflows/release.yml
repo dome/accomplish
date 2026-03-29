@@ -363,13 +363,19 @@ jobs:
       - name: List release artifacts
         run: |
           echo "=== Contents of apps/desktop/release ==="
-          ls -la apps/desktop/release/ || echo "apps/desktop/release does not exist"
+          ls -la apps/desktop/release/ 2>/dev/null || echo "apps/desktop/release does not exist"
+          echo "=== Find all AppImage files ==="
+          find . -name "*.AppImage" -type f 2>/dev/null
+          echo "=== Find all deb files ==="
+          find . -name "*.deb" -type f 2>/dev/null
 
       - name: Upload artifacts (ARM64)
         uses: actions/upload-artifact@v7
         with:
           name: DomeWork-Linux-arm64
-          path: apps/desktop/release/*-arm64.AppImage
+          path: |
+            apps/desktop/release/*.AppImage
+            **/release/*.AppImage
           if-no-files-found: error
           retention-days: 30
 
@@ -377,7 +383,9 @@ jobs:
         uses: actions/upload-artifact@v7
         with:
           name: DomeWork-Linux-arm64-deb
-          path: apps/desktop/release/*-arm64.deb
+          path: |
+            apps/desktop/release/*.deb
+            **/release/*.deb
           if-no-files-found: ignore
           retention-days: 30
 
@@ -425,13 +433,19 @@ jobs:
       - name: List release artifacts
         run: |
           echo "=== Contents of apps/desktop/release ==="
-          ls -la apps/desktop/release/ || echo "apps/desktop/release does not exist"
+          ls -la apps/desktop/release/ 2>/dev/null || echo "apps/desktop/release does not exist"
+          echo "=== Find all AppImage files ==="
+          find . -name "*.AppImage" -type f 2>/dev/null
+          echo "=== Find all deb files ==="
+          find . -name "*.deb" -type f 2>/dev/null
 
       - name: Upload artifacts (x64)
         uses: actions/upload-artifact@v7
         with:
           name: DomeWork-Linux-x64
-          path: apps/desktop/release/*-x64.AppImage
+          path: |
+            apps/desktop/release/*.AppImage
+            **/release/*.AppImage
           if-no-files-found: error
           retention-days: 30
 
@@ -439,7 +453,9 @@ jobs:
         uses: actions/upload-artifact@v7
         with:
           name: DomeWork-Linux-x64-deb
-          path: apps/desktop/release/*-x64.deb
+          path: |
+            apps/desktop/release/*.deb
+            **/release/*.deb
           if-no-files-found: ignore
           retention-days: 30
 
