@@ -291,10 +291,10 @@ jobs:
           npm_config_electron_mirror: https://npmmirror.com/mirrors/electron/
 
       - name: Download Node.js binaries
-        run: pnpm -F @accomplish/desktop download:nodejs
+        run: pnpm --filter @domework/desktop download:nodejs
 
       - name: Build desktop app
-        run: pnpm -F @accomplish/desktop package:mac
+        run: pnpm --filter @domework/desktop package:mac
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           PYTHON: python
@@ -349,15 +349,17 @@ jobs:
           npm_config_electron_mirror: https://npmmirror.com/mirrors/electron/
 
       - name: Download Node.js binaries
-        run: pnpm -F @accomplish/desktop download:nodejs
+        run: pnpm --filter @domework/desktop download:nodejs
 
       - name: Build desktop app
-        run: pnpm -F @accomplish/desktop package:linux
+        run: pnpm --filter @domework/desktop package:linux
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: List release artifacts
-        run: ls -la apps/desktop/release/
+        run: |
+          echo "=== Contents of apps/desktop/release ==="
+          ls -la apps/desktop/release/ || echo "apps/desktop/release does not exist"
 
       - name: Upload artifacts
         uses: actions/upload-artifact@v7
@@ -397,15 +399,17 @@ jobs:
           npm_config_electron_mirror: https://npmmirror.com/mirrors/electron/
 
       - name: Download Node.js binaries
-        run: pnpm -F @accomplish/desktop download:nodejs
+        run: pnpm --filter @domework/desktop download:nodejs
 
       - name: Build desktop app
-        run: pnpm -F @accomplish/desktop package:linux
+        run: pnpm --filter @domework/desktop package:linux
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: List release artifacts
-        run: ls -la apps/desktop/release/
+        run: |
+          echo "=== Contents of apps/desktop/release ==="
+          ls -la apps/desktop/release/ || echo "apps/desktop/release does not exist"
 
       - name: Upload artifacts
         uses: actions/upload-artifact@v7
@@ -442,10 +446,10 @@ jobs:
           npm_config_electron_mirror: https://npmmirror.com/mirrors/electron/
 
       - name: Download Node.js binaries
-        run: pnpm -F @accomplish/desktop download:nodejs
+        run: pnpm --filter @domework/desktop download:nodejs
 
       - name: Build desktop app
-        run: pnpm -F @accomplish/desktop package:win
+        run: pnpm --filter @domework/desktop package:win
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           CSC_IDENTITY_AUTO_DISCOVERY: false
@@ -453,8 +457,11 @@ jobs:
       - name: Debug - Find release files
         shell: pwsh
         run: |
-          Write-Host "Current directory: $(Get-Location)"
-          Write-Host "Contents of apps/desktop/release folder:"
+          Write-Host "=== Current directory ==="
+          Get-Location
+          Write-Host "=== Looking for release folder ==="
+          Get-ChildItem -Recurse -Directory -Filter "release" -ErrorAction SilentlyContinue | ForEach-Object { Write-Host "Found: $($_.FullName)" }
+          Write-Host "=== Contents of apps/desktop/release ==="
           if (Test-Path "apps/desktop/release/") {
             Get-ChildItem apps/desktop/release/
           } else {
