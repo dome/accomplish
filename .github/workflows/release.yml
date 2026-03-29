@@ -305,8 +305,8 @@ jobs:
         with:
           name: DomeWork-macOS-arm64
           path: |
-            apps/desktop/release/*-arm64.dmg
-            apps/desktop/release/*-arm64.zip
+            release/*-arm64.dmg
+            release/*-arm64.zip
           retention-days: 30
 
   build-linux-arm64:
@@ -351,8 +351,8 @@ jobs:
         with:
           name: DomeWork-Linux-arm64
           path: |
-            apps/desktop/release/*-arm64.AppImage
-            apps/desktop/release/*-arm64.deb
+            release/*-arm64.AppImage
+            release/*-arm64.deb
           retention-days: 30
 
   build-linux-x64:
@@ -397,8 +397,8 @@ jobs:
         with:
           name: DomeWork-Linux-x64
           path: |
-            apps/desktop/release/*-x64.AppImage
-            apps/desktop/release/*-x64.deb
+            release/*-x64.AppImage
+            release/*-x64.deb
           retention-days: 30
 
   build-windows-x64:
@@ -440,7 +440,7 @@ jobs:
         uses: actions/upload-artifact@v7
         with:
           name: DomeWork-Windows-x64
-          path: apps/desktop/release/*.exe
+          path: release/*.exe
           retention-days: 30
 
   create-release:
