@@ -286,6 +286,9 @@ jobs:
 
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
+        env:
+          ELECTRON_MIRROR: https://npmmirror.com/mirrors/electron/
+          npm_config_electron_mirror: https://npmmirror.com/mirrors/electron/
 
       - name: Download Node.js binaries
         run: pnpm -F @accomplish/desktop download:nodejs
@@ -333,6 +336,9 @@ jobs:
 
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
+        env:
+          ELECTRON_MIRROR: https://npmmirror.com/mirrors/electron/
+          npm_config_electron_mirror: https://npmmirror.com/mirrors/electron/
 
       - name: Download Node.js binaries
         run: pnpm -F @accomplish/desktop download:nodejs
@@ -378,6 +384,9 @@ jobs:
 
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
+        env:
+          ELECTRON_MIRROR: https://npmmirror.com/mirrors/electron/
+          npm_config_electron_mirror: https://npmmirror.com/mirrors/electron/
 
       - name: Download Node.js binaries
         run: pnpm -F @accomplish/desktop download:nodejs
@@ -421,6 +430,9 @@ jobs:
 
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
+        env:
+          ELECTRON_MIRROR: https://npmmirror.com/mirrors/electron/
+          npm_config_electron_mirror: https://npmmirror.com/mirrors/electron/
 
       - name: Download Node.js binaries
         run: pnpm -F @accomplish/desktop download:nodejs
@@ -461,6 +473,9 @@ jobs:
 
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
+        env:
+          ELECTRON_MIRROR: https://npmmirror.com/mirrors/electron/
+          npm_config_electron_mirror: https://npmmirror.com/mirrors/electron/
 
       - name: Download Node.js binaries
         run: pnpm -F @accomplish/desktop download:nodejs
