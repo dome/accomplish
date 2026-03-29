@@ -46,7 +46,7 @@ jobs:
     name: Bump Version
     runs-on: ubuntu-latest
     outputs:
-      new_version: ${{ steps.bump.outputs.new_version }}
+      new_version: ${{ steps.get-version.outputs.new_version }}
       platforms: ${{ steps.inputs.outputs.platforms }}
     steps:
       - name: Checkout code
@@ -54,14 +54,26 @@ jobs:
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
 
+      - name: Get version from tag (push tag trigger)
+        id: get-version
+        if: github.event_name == 'push' && startsWith(github.ref, 'refs/tags/')
+        run: |
+          # Extract version from tag name (e.g., v0.1.1 -> 0.1.1)
+          TAG_NAME="${{ github.ref_name }}"
+          VERSION="${TAG_NAME#v}"
+          echo "Version from tag: $VERSION"
+          echo "new_version=$VERSION" >> $GITHUB_OUTPUT
+
       - name: Setup Node.js
         uses: actions/setup-node@v6
+        if: github.event_name != 'push'
         with:
           node-version: '20'
           package-manager-cache: false
 
       - name: Determine bump type
         id: inputs
+        if: github.event_name != 'push'
         run: |
           # Support both repository_dispatch and workflow_dispatch
           if [ "${{ github.event_name }}" == "repository_dispatch" ]; then
@@ -79,8 +91,9 @@ jobs:
           echo "platforms=$PLATFORMS" >> $GITHUB_OUTPUT
           echo "Bump type: $BUMP_TYPE, Dry run: $DRY_RUN, Platforms: $PLATFORMS"
 
-      - name: Calculate new version
+      - name: Calculate new version (workflow_dispatch/repository_dispatch)
         id: bump
+        if: github.event_name != 'push'
         run: |
           # Read current version from package.json
           CURRENT_VERSION=$(node -p "require('./apps/desktop/package.json').version")
@@ -110,6 +123,7 @@ jobs:
           echo "new_version=$NEW_VERSION" >> $GITHUB_OUTPUT
 
       - name: Update package.json version
+        if: github.event_name != 'push'
         run: |
           cd apps/desktop
           npm version ${{ steps.bump.outputs.new_version }} --no-git-tag-version
@@ -118,7 +132,13 @@ jobs:
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          VERSION="${{ steps.bump.outputs.new_version }}"
+          # Get version from either tag or bump step
+          if [ "${{ github.event_name }}" == "push" ]; then
+            VERSION="${{ steps.get-version.outputs.new_version }}"
+          else
+            VERSION="${{ steps.bump.outputs.new_version }}"
+          fi
+
           echo "=== Validating no stale artifacts exist for v${VERSION} ==="
 
           CONFLICTS=""
@@ -156,7 +176,7 @@ jobs:
           echo "No conflicts found, safe to proceed"
 
       - name: Create release PR and merge
-        if: steps.inputs.outputs.dry_run != 'true'
+        if: github.event_name != 'push' && steps.inputs.outputs.dry_run != 'true'
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
@@ -216,6 +236,7 @@ jobs:
           fi
 
       - name: Create and push release tag
+        if: github.event_name != 'push'
         run: |
           VERSION="${{ steps.bump.outputs.new_version }}"
           DRY_RUN="${{ steps.inputs.outputs.dry_run }}"
@@ -238,7 +259,7 @@ jobs:
   build-mac-arm64:
     name: Build macOS (Apple Silicon)
     needs: version-bump
-    if: needs.version-bump.outputs.platforms == 'all' || needs.version-bump.outputs.platforms == 'macos-only'
+    if: github.event_name == 'push' || needs.version-bump.outputs.platforms == 'all' || needs.version-bump.outputs.platforms == 'macos-only'
     runs-on: macos-14
     steps:
       - name: Checkout code
@@ -289,7 +310,7 @@ jobs:
   build-mac-x64:
     name: Build macOS (Intel)
     needs: version-bump
-    if: needs.version-bump.outputs.platforms == 'all' || needs.version-bump.outputs.platforms == 'macos-only'
+    if: github.event_name == 'push' || needs.version-bump.outputs.platforms == 'all' || needs.version-bump.outputs.platforms == 'macos-only'
     runs-on: macos-15-large
     steps:
       - name: Checkout code
@@ -340,7 +361,7 @@ jobs:
   build-linux-arm64:
     name: Build Linux (ARM64)
     needs: version-bump
-    if: needs.version-bump.outputs.platforms == 'all' || needs.version-bump.outputs.platforms == 'linux-only'
+    if: github.event_name == 'push' || needs.version-bump.outputs.platforms == 'all' || needs.version-bump.outputs.platforms == 'linux-only'
     runs-on: ubuntu-22.04-arm
     steps:
       - name: Checkout code
@@ -387,7 +408,7 @@ jobs:
   build-linux-x64:
     name: Build Linux (x64)
     needs: version-bump
-    if: needs.version-bump.outputs.platforms == 'all' || needs.version-bump.outputs.platforms == 'linux-only'
+    if: github.event_name == 'push' || needs.version-bump.outputs.platforms == 'all' || needs.version-bump.outputs.platforms == 'linux-only'
     runs-on: ubuntu-22.04
     steps:
       - name: Checkout code
@@ -434,7 +455,7 @@ jobs:
   build-windows-x64:
     name: Build Windows (x64)
     needs: version-bump
-    if: needs.version-bump.outputs.platforms == 'all' || needs.version-bump.outputs.platforms == 'windows-only'
+    if: github.event_name == 'push' || needs.version-bump.outputs.platforms == 'all' || needs.version-bump.outputs.platforms == 'windows-only'
     runs-on: windows-latest
     steps:
       - name: Checkout code
@@ -490,7 +511,13 @@ jobs:
     steps:
       - name: Check build results
         run: |
-          PLATFORMS="${{ needs.version-bump.outputs.platforms }}"
+          # For push tag trigger, always build all platforms
+          if [ "${{ github.event_name }}" == "push" ]; then
+            PLATFORMS="all"
+          else
+            PLATFORMS="${{ needs.version-bump.outputs.platforms }}"
+          fi
+
           MAC_ARM64="${{ needs.build-mac-arm64.result }}"
           MAC_X64="${{ needs.build-mac-x64.result }}"
           LINUX_ARM64="${{ needs.build-linux-arm64.result }}"
@@ -547,7 +574,9 @@ jobs:
       - name: Determine if dry run
         id: check
         run: |
-          if [ "${{ github.event_name }}" == "repository_dispatch" ]; then
+          if [ "${{ github.event_name }}" == "push" ]; then
+            echo "dry_run=false" >> $GITHUB_OUTPUT
+          elif [ "${{ github.event_name }}" == "repository_dispatch" ]; then
             echo "dry_run=false" >> $GITHUB_OUTPUT
           else
             echo "dry_run=${{ inputs.dry_run }}" >> $GITHUB_OUTPUT
