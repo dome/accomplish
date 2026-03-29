@@ -70,11 +70,10 @@ jobs:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           ACCOMPLISH_BUNDLED_MCP: 1
 
-      - name: Create AppImage
+      - name: Create tar.gz
         run: |
           cd apps/desktop/release
-          # Create a simple tar.gz instead of AppImage (faster and more reliable)
-          tar -czf DomeWork-linux-x64.tar.gz win-unpacked/
+          tar -czf DomeWork-linux-x64.tar.gz linux-unpacked/
 
       - name: Upload artifacts
         uses: actions/upload-artifact@v4
@@ -112,10 +111,10 @@ jobs:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           ACCOMPLISH_BUNDLED_MCP: 1
 
-      - name: Create AppImage
+      - name: Create tar.gz
         run: |
           cd apps/desktop/release
-          tar -czf DomeWork-linux-arm64.tar.gz win-unpacked/
+          tar -czf DomeWork-linux-arm64.tar.gz linux-unpacked/
 
       - name: Upload artifacts
         uses: actions/upload-artifact@v4
