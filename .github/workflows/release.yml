@@ -295,22 +295,19 @@ jobs:
 
       - name: Build desktop app
         run: pnpm -F @accomplish/desktop package:mac
-        working-directory: apps/desktop
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           PYTHON: python
           CSC_IDENTITY_AUTO_DISCOVERY: false
 
       - name: List release artifacts
-        run: ls -la release/ || true
+        run: ls -la apps/desktop/release/
 
       - name: Upload artifacts
         uses: actions/upload-artifact@v7
         with:
           name: DomeWork-macOS-arm64
-          path: |
-            release/*.dmg
-            release/*.zip
+          path: apps/desktop/release/*.dmg
           if-no-files-found: error
           retention-days: 30
 
@@ -348,20 +345,17 @@ jobs:
 
       - name: Build desktop app
         run: pnpm -F @accomplish/desktop package:linux
-        working-directory: apps/desktop
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: List release artifacts
-        run: ls -la release/
+        run: ls -la apps/desktop/release/
 
       - name: Upload artifacts
         uses: actions/upload-artifact@v7
         with:
           name: DomeWork-Linux-arm64
-          path: |
-            release/*.AppImage
-            release/*.deb
+          path: apps/desktop/release/*.AppImage
           if-no-files-found: error
           retention-days: 30
 
@@ -399,20 +393,17 @@ jobs:
 
       - name: Build desktop app
         run: pnpm -F @accomplish/desktop package:linux
-        working-directory: apps/desktop
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: List release artifacts
-        run: ls -la release/
+        run: ls -la apps/desktop/release/
 
       - name: Upload artifacts
         uses: actions/upload-artifact@v7
         with:
           name: DomeWork-Linux-x64
-          path: |
-            release/*.AppImage
-            release/*.deb
+          path: apps/desktop/release/*.AppImage
           if-no-files-found: error
           retention-days: 30
 
@@ -447,30 +438,26 @@ jobs:
 
       - name: Build desktop app
         run: pnpm -F @accomplish/desktop package:win
-        working-directory: apps/desktop
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           CSC_IDENTITY_AUTO_DISCOVERY: false
 
       - name: Debug - Find release files
         shell: pwsh
-        working-directory: apps/desktop
         run: |
           Write-Host "Current directory: $(Get-Location)"
-          Write-Host "Contents of release folder:"
-          if (Test-Path "release/") {
-            Get-ChildItem release/
+          Write-Host "Contents of apps/desktop/release folder:"
+          if (Test-Path "apps/desktop/release/") {
+            Get-ChildItem apps/desktop/release/
           } else {
-            Write-Host "Release folder NOT found!"
-            Write-Host "Current directory contents:"
-            Get-ChildItem
+            Write-Host "apps/desktop/release folder NOT found!"
           }
 
       - name: Upload artifacts
         uses: actions/upload-artifact@v7
         with:
           name: DomeWork-Windows-x64
-          path: release/*.exe
+          path: apps/desktop/release/*.exe
           if-no-files-found: error
           retention-days: 30
 
