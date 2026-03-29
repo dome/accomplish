@@ -1,0 +1,200 @@
+name: Build Release
+
+on:
+  push:
+    tags:
+      - 'v*'
+
+permissions:
+  contents: write
+
+jobs:
+  build-mac-arm64:
+    name: Build macOS (ARM64)
+    runs-on: macos-14
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: pnpm/action-setup@v5
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'pnpm'
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Download Node.js binaries
+        run: pnpm --filter @domework/desktop download:nodejs
+
+      - name: Build macOS ARM64
+        run: pnpm --filter @domework/desktop package:mac
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          CSC_IDENTITY_AUTO_DISCOVERY: false
+
+      - name: Upload artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: DomeWork-macOS-arm64
+          path: apps/desktop/release/*.dmg
+          retention-days: 30
+
+  build-linux-x64:
+    name: Build Linux (x64)
+    runs-on: ubuntu-22.04
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: pnpm/action-setup@v5
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'pnpm'
+
+      - name: Install system dependencies
+        run: sudo apt-get update && sudo apt-get install -y libgtk-3-dev libnotify-dev libnss3 libxss1 libxtst6 xvfb
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Download Node.js binaries
+        run: pnpm --filter @domework/desktop download:nodejs
+
+      - name: Build Linux x64
+        run: pnpm --filter @domework/desktop package:linux
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          ACCOMPLISH_BUNDLED_MCP: 1
+
+      - name: Upload artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: DomeWork-Linux-x64
+          path: apps/desktop/release/*-x64.AppImage
+          retention-days: 30
+
+  build-linux-arm64:
+    name: Build Linux (ARM64)
+    runs-on: ubuntu-22.04-arm
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: pnpm/action-setup@v5
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'pnpm'
+
+      - name: Install system dependencies
+        run: sudo apt-get update && sudo apt-get install -y libgtk-3-dev libnotify-dev libnss3 libxss1 libxtst6 xvfb
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Download Node.js binaries
+        run: pnpm --filter @domework/desktop download:nodejs
+
+      - name: Build Linux ARM64
+        run: pnpm --filter @domework/desktop package:linux
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          ACCOMPLISH_BUNDLED_MCP: 1
+
+      - name: Upload artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: DomeWork-Linux-arm64
+          path: apps/desktop/release/*-arm64.AppImage
+          retention-days: 30
+
+  build-windows-x64:
+    name: Build Windows (x64)
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: pnpm/action-setup@v5
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'pnpm'
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Download Node.js binaries
+        run: pnpm --filter @domework/desktop download:nodejs
+
+      - name: Build Windows x64
+        run: pnpm --filter @domework/desktop package:win
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Upload artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: DomeWork-Windows-x64
+          path: apps/desktop/release/*.exe
+          retention-days: 30
+
+  create-release:
+    name: Create GitHub Release
+    needs: [build-mac-arm64, build-linux-x64, build-linux-arm64, build-windows-x64]
+    if: always()
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check build results
+        run: |
+          MAC="${{ needs.build-mac-arm64.result }}"
+          LINUX_X64="${{ needs.build-linux-x64.result }}"
+          LINUX_ARM64="${{ needs.build-linux-arm64.result }}"
+          WINDOWS="${{ needs.build-windows-x64.result }}"
+
+          echo "Build results: macOS=$MAC, Linux-x64=$LINUX_X64, Linux-arm64=$LINUX_ARM64, Windows=$WINDOWS"
+
+          if [ "$MAC" != "success" ] || [ "$LINUX_X64" != "success" ] || [ "$LINUX_ARM64" != "success" ] || [ "$WINDOWS" != "success" ]; then
+            echo "One or more builds failed!"
+            exit 1
+          fi
+
+      - uses: actions/checkout@v4
+
+      - name: Download macOS artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: DomeWork-macOS-arm64
+          path: ./release
+
+      - name: Download Linux x64 artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: DomeWork-Linux-x64
+          path: ./release
+
+      - name: Download Linux ARM64 artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: DomeWork-Linux-arm64
+          path: ./release
+
+      - name: Download Windows artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: DomeWork-Windows-x64
+          path: ./release
+
+      - name: List artifacts
+        run: ls -la ./release/
+
+      - name: Create Release
+        uses: softprops/action-gh-release@v2
+        with:
+          files: ./release/*
+          generate_release_notes: true
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
