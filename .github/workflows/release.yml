@@ -351,22 +351,31 @@ jobs:
       - name: Download Node.js binaries
         run: pnpm --filter @domework/desktop download:nodejs
 
-      - name: Build desktop app
+      - name: Build desktop app (ARM64)
         run: pnpm --filter @domework/desktop package:linux
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          ACCOMPLISH_BUNDLED_MCP: 1
 
       - name: List release artifacts
         run: |
           echo "=== Contents of apps/desktop/release ==="
           ls -la apps/desktop/release/ || echo "apps/desktop/release does not exist"
 
-      - name: Upload artifacts
+      - name: Upload artifacts (ARM64)
         uses: actions/upload-artifact@v7
         with:
           name: DomeWork-Linux-arm64
-          path: apps/desktop/release/*.AppImage
+          path: apps/desktop/release/*-arm64.AppImage
           if-no-files-found: error
+          retention-days: 30
+
+      - name: Upload artifacts (deb ARM64)
+        uses: actions/upload-artifact@v7
+        with:
+          name: DomeWork-Linux-arm64-deb
+          path: apps/desktop/release/*-arm64.deb
+          if-no-files-found: ignore
           retention-days: 30
 
   build-linux-x64:
@@ -401,22 +410,31 @@ jobs:
       - name: Download Node.js binaries
         run: pnpm --filter @domework/desktop download:nodejs
 
-      - name: Build desktop app
+      - name: Build desktop app (x64)
         run: pnpm --filter @domework/desktop package:linux
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          ACCOMPLISH_BUNDLED_MCP: 1
 
       - name: List release artifacts
         run: |
           echo "=== Contents of apps/desktop/release ==="
           ls -la apps/desktop/release/ || echo "apps/desktop/release does not exist"
 
-      - name: Upload artifacts
+      - name: Upload artifacts (x64)
         uses: actions/upload-artifact@v7
         with:
           name: DomeWork-Linux-x64
-          path: apps/desktop/release/*.AppImage
+          path: apps/desktop/release/*-x64.AppImage
           if-no-files-found: error
+          retention-days: 30
+
+      - name: Upload artifacts (deb x64)
+        uses: actions/upload-artifact@v7
+        with:
+          name: DomeWork-Linux-x64-deb
+          path: apps/desktop/release/*-x64.deb
+          if-no-files-found: ignore
           retention-days: 30
 
   build-windows-x64:
@@ -564,12 +582,28 @@ jobs:
           name: DomeWork-Linux-arm64
           path: ./release/linux-arm64
 
+      - name: Download Linux ARM64 deb artifacts
+        if: needs.build-linux-arm64.result == 'success'
+        uses: actions/download-artifact@v8
+        with:
+          name: DomeWork-Linux-arm64-deb
+          path: ./release/linux-arm64
+        continue-on-error: true
+
       - name: Download Linux x64 artifacts
         if: needs.build-linux-x64.result == 'success'
         uses: actions/download-artifact@v8
         with:
           name: DomeWork-Linux-x64
           path: ./release/linux-x64
+
+      - name: Download Linux x64 deb artifacts
+        if: needs.build-linux-x64.result == 'success'
+        uses: actions/download-artifact@v8
+        with:
+          name: DomeWork-Linux-x64-deb
+          path: ./release/linux-x64
+        continue-on-error: true
 
       - name: Download Windows x64 artifacts
         if: needs.build-windows-x64.result == 'success'
@@ -593,9 +627,9 @@ jobs:
           generate_release_notes: true
           files: |
             ./release/arm64/*
-            ./release/win-x64/*
             ./release/linux-arm64/*
             ./release/linux-x64/*
+            ./release/win-x64/*
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
