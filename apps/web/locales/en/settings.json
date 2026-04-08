@@ -1,6 +1,6 @@
 {
   "title": "Settings",
-  "setupTitle": "Set up Accomplish",
+  "setupTitle": "Set up DomeWork",
   "model": {
     "title": "Model",
     "cloudProviders": "Cloud Providers",
@@ -277,19 +277,19 @@
   },
   "appearance": {
     "title": "Theme",
-    "description": "Choose how Accomplish looks. Select System to match your operating system setting.",
+    "description": "Choose how DomeWork looks. Select System to match your operating system setting.",
     "ariaLabel": "Theme preference",
     "system": "System",
     "light": "Light",
     "dark": "Dark",
     "themeTitle": "Theme",
-    "themeDescription": "Choose how Accomplish looks. Select System to match your operating system setting.",
+    "themeDescription": "Choose how DomeWork looks. Select System to match your operating system setting.",
     "themeSystem": "System",
     "themeLight": "Light",
     "themeDark": "Dark"
   },
   "connectors": {
-    "description": "Connect built-in and custom MCP servers so Accomplish can use external tools.",
+    "description": "Connect built-in and custom MCP servers so DomeWork can use external tools.",
     "loading": "Loading connectors...",
     "placeholder": "https://mcp-server.example.com",
     "add": "Add",
@@ -321,7 +321,7 @@
       "restartAuth": "Restart authentication",
       "disconnect": "Disconnect Slack",
       "disconnecting": "Disconnecting...",
-      "authHint": "Accomplish will open your browser so you can approve Slack access.",
+      "authHint": "DomeWork will open your browser so you can approve Slack access.",
       "pendingHint": "A Slack sign-in was started earlier but not finished. Restart it to try again.",
       "connectedHint": "Slack is authenticated and ready for the agent to use.",
       "authFailed": "Failed to authenticate Slack",
@@ -368,7 +368,7 @@
     "filterAll": "All",
     "filterActive": "Active",
     "filterInactive": "Inactive",
-    "byAccomplish": "By Accomplish",
+    "byAccomplish": "By DomeWork",
     "github": "GitHub",
     "builtByYou": "Built By You",
     "loading": "Loading skills...",
@@ -383,7 +383,7 @@
     "showInFolder": "Show in Folder",
     "delete": "Delete",
     "add": "Add",
-    "buildWithAccomplish": "Build with Accomplish",
+    "buildWithAccomplish": "Build with DomeWork",
     "buildDescription": "Create skills through conversation",
     "uploadSkill": "Upload a skill",
     "uploadDescription": "Select a skill folder to import",
@@ -413,7 +413,7 @@
     "exported": "Exported",
     "exportFailed": "Export Failed",
     "exportDialogTitle": "Export Application Logs",
-    "exportHeader": "Accomplish Application Logs\nExported: {{timestamp}}\nLog Directory: {{logDir}}\n\nNo logs recorded yet.\n"
+    "exportHeader": "DomeWork Application Logs\nExported: {{timestamp}}\nLog Directory: {{logDir}}\n\nNo logs recorded yet.\n"
   },
   "language": {
     "title": "Language",
@@ -428,13 +428,13 @@
   "about": {
     "title": "About",
     "version": "Version {{version}}",
-    "description": "Accomplish is a local computer-use AI agent for your Mac that reads your files, creates documents, and automates repetitive knowledge work—all open-source with your AI models of choice.",
+    "description": "DomeWork is a local computer-use AI agent for your Mac that reads your files, creates documents, and automates repetitive knowledge work—all open-source with your AI models of choice.",
     "contact": "Any questions or feedback? Click here to contact us",
     "visitUs": "Visit us",
     "haveQuestion": "Have a question?",
     "versionLabel": "Version",
     "loading": "Loading...",
-    "allRightsReserved": "Accomplish™ All rights reserved."
+    "allRightsReserved": "DomeWork™ All rights reserved."
   },
   "warnings": {
     "noProviderReady": "No provider ready",
@@ -466,7 +466,7 @@
   },
   "integrations": {
     "title": "Messaging Integrations",
-    "description": "Connect messaging platforms to trigger Accomplish tasks remotely. When enabled, you can start and monitor tasks from your phone or any device.",
+    "description": "Connect messaging platforms to trigger DomeWork tasks remotely. When enabled, you can start and monitor tasks from your phone or any device.",
     "enabled": "Enabled",
     "comingSoon": "Coming Soon",
     "enable": "Enable {{name}}",
@@ -478,14 +478,14 @@
     "platforms": {
       "whatsapp": "Trigger tasks and receive updates via WhatsApp messages",
       "slack": "Connect Slack workspace for task management",
-      "telegram": "Use Telegram bot to interact with Accomplish",
+      "telegram": "Use Telegram bot to interact with DomeWork",
       "teams": "Integrate with Teams channels and chats"
     },
     "whatsapp": {
       "connect": "Connect WhatsApp",
       "scanQr": "Scan the QR code below with your WhatsApp app to connect this device. Go to WhatsApp > Settings > Linked Devices > Link a Device.",
       "qrPlaceholder": "QR code will appear here when the WhatsApp service starts",
-      "securityNotice": "By connecting WhatsApp, you grant Accomplish access to your WhatsApp messages. All data remains on your device and is not shared externally."
+      "securityNotice": "By connecting WhatsApp, you grant DomeWork access to your WhatsApp messages. All data remains on your device and is not shared externally."
     }
   },
   "baseUrl": {
