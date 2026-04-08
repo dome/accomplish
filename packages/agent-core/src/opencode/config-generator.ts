@@ -503,6 +503,12 @@ ${options.knowledgeNotes}
       },
       timeout: 60000,
     },
+    'pocketbase-files': {
+      type: 'local',
+      command: resolveMcpCommand(mcpToolsPath, 'pocketbase-files', 'dist/index.mjs', nodeExe),
+      enabled: true,
+      timeout: 60000, // 60 seconds for file uploads
+    },
   };
 
   // Conditionally register dev-browser-mcp based on browser config

@@ -9,7 +9,7 @@ import { importLegacyElectronStoreData } from './electronStoreImport';
 let _storage: StorageAPI | null = null;
 
 export function getDatabasePath(): string {
-  const dbName = app.isPackaged ? 'accomplish.db' : 'accomplish-dev.db';
+  const dbName = app.isPackaged ? 'domework.db' : 'domework-dev.db';
   return path.join(app.getPath('userData'), dbName);
 }
 

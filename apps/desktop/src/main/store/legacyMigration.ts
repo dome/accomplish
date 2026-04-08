@@ -12,6 +12,8 @@ function getLegacyPaths(): LegacyPath[] {
   const isPackaged = app.isPackaged;
 
   return [
+    { path: path.join(appDataPath, 'DomeWork') },
+    { path: path.join(appDataPath, 'domework') },
     { path: path.join(appDataPath, 'Accomplish') },
     { path: path.join(appDataPath, 'accomplish') },
     {
@@ -23,13 +25,17 @@ function getLegacyPaths(): LegacyPath[] {
       dbName: isPackaged ? 'openwork.db' : 'openwork-dev.db',
     },
     {
+      path: path.join(appDataPath, '@domework', 'desktop-v2'),
+      dbName: isPackaged ? 'domework.db' : 'domework-dev.db',
+    },
+    {
       path: path.join(appDataPath, '@accomplish', 'desktop-v2'),
-      dbName: isPackaged ? 'openwork.db' : 'openwork-dev.db',
+      dbName: isPackaged ? 'accomplish.db' : 'accomplish-dev.db',
     },
   ];
 }
 
-const NEW_DB_NAME = app.isPackaged ? 'accomplish.db' : 'accomplish-dev.db';
+const NEW_DB_NAME = app.isPackaged ? 'domework.db' : 'domework-dev.db';
 const SECURE_STORAGE_NAME = app.isPackaged ? 'secure-storage.json' : 'secure-storage-dev.json';
 
 function getFilesToMigrate(legacyDbName?: string): Array<{ src: string; dest: string }> {

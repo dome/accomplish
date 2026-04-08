@@ -13,11 +13,11 @@ import path from 'path';
 import fs from 'fs';
 import { fileURLToPath } from 'url';
 
-const APP_DATA_NAME = 'Accomplish';
+const APP_DATA_NAME = 'DomeWork';
 app.setPath('userData', path.join(app.getPath('appData'), APP_DATA_NAME));
 
 if (process.platform === 'win32') {
-  app.setAppUserModelId('ai.accomplish.desktop');
+  app.setAppUserModelId('ai.domework.desktop');
 }
 
 import { registerIPCHandlers } from './ipc/handlers';
@@ -80,7 +80,7 @@ if (process.env.CLEAN_START === '1') {
   logMain('INFO', '[Clean Mode] All singletons reset');
 }
 
-app.setName('Accomplish');
+app.setName('DomeWork');
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
@@ -127,7 +127,7 @@ function createWindow() {
     height: 800,
     minWidth: 900,
     minHeight: 600,
-    title: 'Accomplish',
+    title: 'DomeWork',
     icon: icon.isEmpty() ? undefined : icon,
     backgroundColor: nativeTheme.shouldUseDarkColors ? '#171717' : '#f9f9f9',
     titleBarStyle: process.platform === 'darwin' ? 'hiddenInset' : 'default',
@@ -250,12 +250,12 @@ if (!gotTheLock) {
       logMain('INFO', '[Main] Focused existing instance after second-instance event');
 
       if (process.platform === 'win32') {
-        const protocolUrl = commandLine.find((arg) => arg.startsWith('accomplish://'));
+        const protocolUrl = commandLine.find((arg) => arg.startsWith('domework://'));
         if (protocolUrl) {
           logMain('INFO', `[Main] Received protocol URL from second-instance: ${protocolUrl}`);
-          if (protocolUrl.startsWith('accomplish://callback/mcp')) {
+          if (protocolUrl.startsWith('domework://callback/mcp')) {
             mainWindow.webContents.send('auth:mcp-callback', protocolUrl);
-          } else if (protocolUrl.startsWith('accomplish://callback')) {
+          } else if (protocolUrl.startsWith('domework://callback')) {
             mainWindow.webContents.send('auth:callback', protocolUrl);
           }
         }
@@ -284,8 +284,8 @@ if (!gotTheLock) {
         await dialog.showMessageBox({
           type: 'error',
           title: 'Update Required',
-          message: `This data was created by a newer version of Accomplish (schema v${err.storedVersion}).`,
-          detail: `Your app supports up to schema v${err.appVersion}. Please update Accomplish to continue.`,
+          message: `This data was created by a newer version of DomeWork (schema v${err.storedVersion}).`,
+          detail: `Your app supports up to schema v${err.appVersion}. Please update DomeWork to continue.`,
           buttons: ['Quit'],
         });
         app.quit();
@@ -520,21 +520,21 @@ app.on('before-quit', (event) => {
 });
 
 if (process.platform === 'win32' && !app.isPackaged) {
-  app.setAsDefaultProtocolClient('accomplish', process.execPath, [path.resolve(process.argv[1])]);
+  app.setAsDefaultProtocolClient('domework', process.execPath, [path.resolve(process.argv[1])]);
 } else {
-  app.setAsDefaultProtocolClient('accomplish');
+  app.setAsDefaultProtocolClient('domework');
 }
 
 function handleProtocolUrlFromArgs(): void {
   if (process.platform === 'win32') {
-    const protocolUrl = process.argv.find((arg) => arg.startsWith('accomplish://'));
+    const protocolUrl = process.argv.find((arg) => arg.startsWith('domework://'));
     if (protocolUrl) {
       app.whenReady().then(() => {
         setTimeout(() => {
           if (mainWindow && !mainWindow.isDestroyed()) {
-            if (protocolUrl.startsWith('accomplish://callback/mcp')) {
+            if (protocolUrl.startsWith('domework://callback/mcp')) {
               mainWindow.webContents.send('auth:mcp-callback', protocolUrl);
-            } else if (protocolUrl.startsWith('accomplish://callback')) {
+            } else if (protocolUrl.startsWith('domework://callback')) {
               mainWindow.webContents.send('auth:callback', protocolUrl);
             }
           }
@@ -548,9 +548,9 @@ handleProtocolUrlFromArgs();
 
 app.on('open-url', (event, url) => {
   event.preventDefault();
-  if (url.startsWith('accomplish://callback/mcp')) {
+  if (url.startsWith('domework://callback/mcp')) {
     mainWindow?.webContents?.send('auth:mcp-callback', url);
-  } else if (url.startsWith('accomplish://callback')) {
+  } else if (url.startsWith('domework://callback')) {
     mainWindow?.webContents?.send('auth:callback', url);
   }
 });

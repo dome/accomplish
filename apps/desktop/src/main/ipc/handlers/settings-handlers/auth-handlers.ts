@@ -8,6 +8,11 @@ import {
 } from '../../../opencode/cli-error-utils';
 import { loginSlackMcp, logoutSlackMcp } from '../../../opencode/slack-auth';
 import {
+  getPocketBaseAuthStatus,
+  authenticatePocketBaseWithEmailPassword,
+  logoutPocketBase,
+} from '../../../opencode/pocketbase-auth';
+import {
   loginGithubCopilot,
   logoutGithubCopilot,
   getCopilotOAuthStatus,
@@ -88,5 +93,22 @@ export function registerAuthHandlers(handle: IpcHandler): void {
 
   handle('opencode:auth:copilot:logout', async (_event: IpcMainInvokeEvent) => {
     logoutGithubCopilot();
+  });
+
+  // PocketBase Auth Handlers
+  handle('opencode:auth:pocketbase:status', async (_event: IpcMainInvokeEvent) => {
+    return getPocketBaseAuthStatus();
+  });
+
+  handle(
+    'opencode:auth:pocketbase:login',
+    async (_event: IpcMainInvokeEvent, email: string, password: string) => {
+      await authenticatePocketBaseWithEmailPassword(email, password);
+      return { ok: true };
+    },
+  );
+
+  handle('opencode:auth:pocketbase:logout', async (_event: IpcMainInvokeEvent) => {
+    logoutPocketBase();
   });
 }

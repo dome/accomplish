@@ -10,11 +10,20 @@ export interface SlackMcpAuthState {
   pendingAuthorization: boolean;
 }
 
+export interface PocketBaseAuthState {
+  connected: boolean;
+  email?: string;
+}
+
 export function useConnectors() {
   const [connectors, setConnectors] = useState<McpConnector[]>([]);
   const [slackAuth, setSlackAuth] = useState<SlackMcpAuthState>({
     connected: false,
     pendingAuthorization: false,
+  });
+  const [pocketBaseAuth, setPocketBaseAuth] = useState<PocketBaseAuthState>({
+    connected: false,
+    email: undefined,
   });
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -22,10 +31,12 @@ export function useConnectors() {
   const fetchConnectors = useCallback(async () => {
     const accomplish = getAccomplish();
     try {
-      const [connectorsResult, slackStatusResult] = await Promise.allSettled([
-        accomplish.getConnectors(),
-        accomplish.getSlackMcpOauthStatus(),
-      ]);
+      const [connectorsResult, slackStatusResult, pocketBaseStatusResult] =
+        await Promise.allSettled([
+          accomplish.getConnectors(),
+          accomplish.getSlackMcpOauthStatus(),
+          accomplish.getPocketBaseAuthStatus(),
+        ]);
 
       if (connectorsResult.status === 'fulfilled') {
         setConnectors(connectorsResult.value);
@@ -33,6 +44,10 @@ export function useConnectors() {
 
       if (slackStatusResult.status === 'fulfilled') {
         setSlackAuth(slackStatusResult.value);
+      }
+
+      if (pocketBaseStatusResult.status === 'fulfilled') {
+        setPocketBaseAuth(pocketBaseStatusResult.value);
       }
 
       if (connectorsResult.status === 'rejected' && slackStatusResult.status === 'rejected') {
@@ -146,9 +161,23 @@ export function useConnectors() {
     setSlackAuth({ connected: false, pendingAuthorization: false });
   }, []);
 
+  const authenticatePocketBase = useCallback(async (email: string, password: string) => {
+    const accomplish = getAccomplish();
+    await accomplish.loginPocketBase(email, password);
+    const status = await accomplish.getPocketBaseAuthStatus();
+    setPocketBaseAuth(status);
+  }, []);
+
+  const disconnectPocketBase = useCallback(async () => {
+    const accomplish = getAccomplish();
+    await accomplish.logoutPocketBase();
+    setPocketBaseAuth({ connected: false, email: undefined });
+  }, []);
+
   return {
     connectors,
     slackAuth,
+    pocketBaseAuth,
     loading,
     error,
     addConnector,
@@ -159,6 +188,8 @@ export function useConnectors() {
     disconnect,
     authenticateSlack,
     disconnectSlack,
+    authenticatePocketBase,
+    disconnectPocketBase,
     refetch: fetchConnectors,
   };
 }

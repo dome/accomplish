@@ -4,6 +4,7 @@ import { AnimatePresence, motion } from 'framer-motion';
 import { Input } from '@/components/ui/input';
 import { settingsVariants, settingsTransitions } from '@/lib/animations';
 import { ConnectorCard } from './ConnectorCard';
+import { PocketBaseConnectorSection } from './PocketBaseConnectorSection';
 import { useConnectors } from './useConnectors';
 import { createLogger } from '@/lib/logger';
 
@@ -26,6 +27,7 @@ export function ConnectorsPanel() {
   const {
     connectors,
     slackAuth,
+    pocketBaseAuth,
     loading,
     addConnector,
     deleteConnector,
@@ -35,11 +37,14 @@ export function ConnectorsPanel() {
     disconnect,
     authenticateSlack,
     disconnectSlack,
+    authenticatePocketBase,
+    disconnectPocketBase,
   } = useConnectors();
 
   const [url, setUrl] = useState('');
   const [adding, setAdding] = useState(false);
   const [slackActionLoading, setSlackActionLoading] = useState(false);
+  const [pocketBaseActionLoading, setPocketBaseActionLoading] = useState(false);
   const [addError, setAddError] = useState<string | null>(null);
   const [oauthError, setOauthError] = useState<string | null>(null);
 
@@ -158,6 +163,40 @@ export function ConnectorsPanel() {
     }
   }, [disconnectSlack, t]);
 
+  const handlePocketBaseLogin = useCallback(
+    async (email: string, password: string) => {
+      setPocketBaseActionLoading(true);
+      setAddError(null);
+      setOauthError(null);
+      try {
+        await authenticatePocketBase(email, password);
+      } catch (err) {
+        logger.error('Failed to authenticate PocketBase:', err);
+        const raw = err instanceof Error ? err.message : 'PocketBase authentication failed';
+        const cleaned = raw.replace(/^Error invoking remote method '[^']+': (\w+Error: )?/, '');
+        setOauthError(cleaned);
+        throw err;
+      } finally {
+        setPocketBaseActionLoading(false);
+      }
+    },
+    [authenticatePocketBase, t],
+  );
+
+  const handlePocketBaseDisconnect = useCallback(async () => {
+    setPocketBaseActionLoading(true);
+    setAddError(null);
+    setOauthError(null);
+    try {
+      await disconnectPocketBase();
+    } catch (err) {
+      logger.error('Failed to disconnect PocketBase:', err);
+      setOauthError(err instanceof Error ? err.message : 'PocketBase disconnect failed');
+    } finally {
+      setPocketBaseActionLoading(false);
+    }
+  }, [disconnectPocketBase, t]);
+
   const handleKeyDown = useCallback(
     (e: React.KeyboardEvent) => {
       if (e.key === 'Enter' && !adding) {
@@ -243,6 +282,14 @@ export function ConnectorsPanel() {
           </div>
         </div>
       </div>
+
+      {/* PocketBase Files Section */}
+      <PocketBaseConnectorSection
+        pocketBaseAuth={pocketBaseAuth}
+        pocketBaseActionLoading={pocketBaseActionLoading}
+        onLogin={handlePocketBaseLogin}
+        onDisconnect={handlePocketBaseDisconnect}
+      />
 
       <div className="space-y-3">
         <div className="space-y-1">

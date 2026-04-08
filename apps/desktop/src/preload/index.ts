@@ -93,6 +93,14 @@ const accomplishAPI = {
     ipcRenderer.invoke('opencode:auth:slack:status'),
   loginSlackMcp: (): Promise<{ ok: boolean }> => ipcRenderer.invoke('opencode:auth:slack:login'),
   logoutSlackMcp: (): Promise<void> => ipcRenderer.invoke('opencode:auth:slack:logout'),
+
+  // PocketBase Auth
+  getPocketBaseAuthStatus: (): Promise<{ connected: boolean; email?: string }> =>
+    ipcRenderer.invoke('opencode:auth:pocketbase:status'),
+  loginPocketBase: (email: string, password: string): Promise<{ ok: boolean }> =>
+    ipcRenderer.invoke('opencode:auth:pocketbase:login', email, password),
+  logoutPocketBase: (): Promise<void> => ipcRenderer.invoke('opencode:auth:pocketbase:logout'),
+
   getCopilotOAuthStatus: (): Promise<{
     connected: boolean;
     username?: string;

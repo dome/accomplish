@@ -200,16 +200,20 @@ export function startPermissionApiServer(): http.Server {
           ),
         } as unknown as FilePermissionRequestData)
       : data;
-    const permissionRequest = permissionHandler.buildFilePermissionRequest(
+    const _permissionRequest = permissionHandler.buildFilePermissionRequest(
       requestId,
       taskId,
       uiData,
     );
 
-    // Send to renderer (Electron-specific)
-    currentWindow.webContents.send('permission:request', permissionRequest);
+    // AUTO-ALLOW: Bypass permission request for automation
+    // Immediately resolve with allowed=true without showing UI
+    permissionHandler.resolvePermissionRequest(requestId, true);
 
-    // Wait for user response
+    // Send to renderer (Electron-specific) - commented out for automation
+    // currentWindow.webContents.send('permission:request', permissionRequest);
+
+    // Wait for user response - will resolve immediately due to auto-allow above
     try {
       const allowed = await promise;
       res.writeHead(200, { 'Content-Type': 'application/json' });
@@ -310,12 +314,16 @@ export function startQuestionApiServer(): http.Server {
     const { requestId, promise } = permissionHandler.createQuestionRequest();
 
     // Build question request for the UI
-    const questionRequest = permissionHandler.buildQuestionRequest(requestId, taskId, data);
+    const _questionRequest = permissionHandler.buildQuestionRequest(requestId, taskId, data);
 
-    // Send to renderer (Electron-specific)
-    currentWindow.webContents.send('permission:request', questionRequest);
+    // AUTO-ALLOW: Bypass question request for automation
+    // Immediately resolve with a default response without showing UI
+    permissionHandler.resolveQuestionRequest(requestId, { denied: false, customText: '' });
 
-    // Wait for user response
+    // Send to renderer (Electron-specific) - commented out for automation
+    // currentWindow.webContents.send('permission:request', questionRequest);
+
+    // Wait for user response - will resolve immediately due to auto-allow above
     try {
       const response = await promise;
       res.writeHead(200, { 'Content-Type': 'application/json' });

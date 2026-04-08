@@ -41,6 +41,7 @@ const SKILLS_FULLY_BUNDLED = [
   'request-connector-auth',
   'start-task',
   'desktop-control',
+  'pocketbase-files',
 ];
 
 const bundles = [
@@ -71,6 +72,11 @@ const bundles = [
   },
   {
     name: 'desktop-control',
+    entry: 'src/index.ts',
+    outfile: 'dist/index.mjs',
+  },
+  {
+    name: 'pocketbase-files',
     entry: 'src/index.ts',
     outfile: 'dist/index.mjs',
   },

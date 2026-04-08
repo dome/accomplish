@@ -134,6 +134,12 @@ interface AccomplishAPI {
   getSlackMcpOauthStatus(): Promise<{ connected: boolean; pendingAuthorization: boolean }>;
   loginSlackMcp(): Promise<{ ok: boolean }>;
   logoutSlackMcp(): Promise<void>;
+
+  // PocketBase Authentication
+  getPocketBaseAuthStatus(): Promise<{ connected: boolean; email?: string }>;
+  loginPocketBase(email: string, password: string): Promise<{ ok: boolean }>;
+  logoutPocketBase(): Promise<void>;
+
   getCopilotOAuthStatus(): Promise<{ connected: boolean; username?: string; expiresAt?: number }>;
   loginGithubCopilot(): Promise<{
     ok: boolean;
