@@ -1,5 +1,5 @@
 /**
- * TaskBridge — routes incoming WhatsApp messages to Accomplish task creation.
+ * TaskBridge — routes incoming WhatsApp messages to DomeWork task creation.
  *
  * Contributed by aryan877 (PR #595 feat/whatsapp-integration).
  * - Rate-limiting (per-sender and global)

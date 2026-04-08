@@ -107,7 +107,7 @@ describe('OpenCode CLI Path Module', () => {
 
     it('resolves bundled CLI from packaged resources', async () => {
       mockApp.isPackaged = true;
-      const resourcesPath = '/Applications/Accomplish.app/Contents/Resources';
+      const resourcesPath = '/Applications/DomeWork.app/Contents/Resources';
       (process as NodeJS.Process & { resourcesPath: string }).resourcesPath = resourcesPath;
       let packageName: string;
       if (process.platform === 'win32') {

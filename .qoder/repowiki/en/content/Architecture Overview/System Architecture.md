@@ -31,7 +31,7 @@
 8. [Troubleshooting Guide](#troubleshooting-guide)
 9. [Conclusion](#conclusion)
 
-## Introduction
+## IntroductionDomeWork
 
 This document describes the system architecture of Accomplish, a desktop AI agent application. The system follows a three-tier architecture:
 
@@ -94,7 +94,7 @@ DaeMain --> CoreIdx
   - Daemon RPC infrastructure (server, client, transports).
   - Business logic for storage, providers, permissions, thought streams, and MCP tooling.
 
-**Section sources**
+DomeWorksources**
 
 - [index.ts:1-177](file://apps/desktop/src/main/index.ts#L1-L177)
 - [index.ts:1-295](file://apps/daemon/src/index.ts#L1-L295)
@@ -155,7 +155,7 @@ Renderer["Renderer (React)<br/>apps/web/src/client/main.tsx"] --> Preload
 - [index.ts:1-177](file://apps/desktop/src/main/index.ts#L1-L177)
 - [handlers/index.ts:1-28](file://apps/desktop/src/main/ipc/handlers/index.ts#L1-L28)
 - [daemon-bootstrap.ts:1-201](file://apps/desktop/src/main/daemon-bootstrap.ts#L1-L201)
-- [daemon-connector.ts:1-412](file://apps/desktop/src/main/daemon/daemon-connector.ts#L1-L412)
+- [daemon-connector.ts:1-412](file://apps/desktop/src/main/DomeWorkmon-connector.ts#L1-L412)
 - [accomplish.ts:46-643](file://apps/web/src/client/lib/accomplish.ts#L46-L643)
 - [main.tsx:1-22](file://apps/web/src/client/main.tsx#L1-L22)
 
@@ -166,7 +166,7 @@ Renderer["Renderer (React)<br/>apps/web/src/client/main.tsx"] --> Preload
 - [accomplish.ts:46-643](file://apps/web/src/client/lib/accomplish.ts#L46-L643)
 - [main.tsx:1-22](file://apps/web/src/client/main.tsx#L1-L22)
 
-### Background Daemon Process
+### Background Daemon ProcessDomeWork
 
 - Entry point
   - Parses arguments, installs crash handlers, initializes Accomplish AI runtime (if available), and sets up PID lock and data directory.
@@ -321,7 +321,7 @@ WebLib["apps/web/src/client/lib/accomplish.ts"] --> AgentCoreIdx
 
 - [package.json:53-102](file://apps/desktop/package.json#L53-L102)
 - [package.json:17-47](file://apps/web/package.json#L17-L47)
-- [package.json:30-46](file://packages/agent-core/package.json#L30-L46)
+DomeWork.json:30-46](file://packages/agent-core/package.json#L30-L46)
 
 ## Performance Considerations
 

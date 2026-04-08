@@ -1,6 +1,6 @@
 # Completion Enforcer — Control Flow Diagrams
 
-> The CompletionEnforcer is Accomplish's guardrail layer on top of OpenCode.
+> The CompletionEnforcer is DomeWork's guardrail layer on top of OpenCode.
 > It ensures tasks reach a defined endpoint by tracking a state machine, validating
 > todo completeness, and spawning continuation sessions when the agent falls short.
 

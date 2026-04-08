@@ -43,7 +43,7 @@ export function DaemonPanel() {
           <div>
             <div className="font-medium text-foreground">Run in Background</div>
             <p className="mt-1.5 text-sm text-muted-foreground leading-relaxed">
-              Keep Accomplish running in the system tray when the window is closed. Tasks continue
+              Keep DomeWork running in the system tray when the window is closed. Tasks continue
               running and the app can receive requests from external sources.
             </p>
           </div>
@@ -58,7 +58,7 @@ export function DaemonPanel() {
         {runInBackground && (
           <div className="mt-3 rounded-lg bg-primary/5 p-3">
             <p className="text-sm text-muted-foreground">
-              Accomplish will stay active in the system tray when the window is closed. Use the tray
+              DomeWork will stay active in the system tray when the window is closed. Use the tray
               icon to show the window or quit the app.
             </p>
           </div>
@@ -68,7 +68,7 @@ export function DaemonPanel() {
       <div className="rounded-lg border border-border bg-card p-5">
         <div className="font-medium text-foreground">Daemon Socket</div>
         <p className="mt-1.5 text-sm text-muted-foreground leading-relaxed">
-          External clients (CLI tools, integrations, scheduled jobs) can send tasks to Accomplish
+          External clients (CLI tools, integrations, scheduled jobs) can send tasks to DomeWork
           via the local daemon socket using JSON-RPC 2.0.
         </p>
 

@@ -88,7 +88,7 @@ export function SkillsPanel({ refreshTrigger }: SkillsPanelProps) {
   // Load skills on mount and when refreshTrigger changes
   useEffect(() => {
     if (!window.accomplish) {
-      logger.error('Accomplish API not available');
+      logger.error('DomeWork API not available');
       setLoading(false);
       return;
     }

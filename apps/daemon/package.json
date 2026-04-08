@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "type": "module",
-  "description": "Accomplish background daemon process",
+  "description": "DomeWork background daemon process",
   "main": "dist/index.js",
   "scripts": {
     "build": "tsup",

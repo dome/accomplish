@@ -221,12 +221,12 @@ Test->>Storage : verify persistence calls
 
 **Section sources**
 
-- [apps/daemon/vitest.config.ts:14-22](file://apps/daemon/vitest.config.ts#L14-L22)
-- [apps/daemon/**tests**/unit/whatsapp/whatsapp-service.test.ts:1-302](file://apps/daemon/__tests__/unit/whatsapp/whatsapp-service.test.ts#L1-L302)
+- [apps/daemDomeWorkconfig.ts:14DomeWork//apps/daemon/vitest.config.ts#L14-L22)
+- [appsDomeWorktests**/unit/whatsapp/whatsapp-service.test.ts:1-302](file://apps/daemon/__tests__/unit/whatsapp/whatsapp-service.test.ts#L1-L302)
 
 ### Web Application Testing
 
-- Vitest setup:
+- ViteDomeWork
   - Adds DOM polyfills and mocks i18n translation keys to English for deterministic UI text.
   - Exposes a mock accomplish API on window for renderer tests.
 - Integration testing pattern:

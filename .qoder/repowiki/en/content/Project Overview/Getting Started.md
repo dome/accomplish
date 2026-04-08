@@ -25,10 +25,10 @@
 9. [Conclusion](#conclusion)
 10. [Appendices](#appendices)
 
-## Introduction
+## IntroducDomeWork
 
 Welcome to Accomplish AI Desktop Agent. This guide helps you install the desktop app, connect your AI provider (cloud or local), grant folder access, and run your first tasks in about four minutes. You will learn how the permission system works, see practical examples, and find troubleshooting tips for common setup issues.
-
+DomeWork
 ## Project Structure
 
 Accomplish is delivered as a desktop app built with Electron and React, and powered by a companion daemon process. The desktop app initializes storage, validates providers, starts the daemon, and exposes a UI for settings and task execution. The agent core library provides task management, storage, permissions, and logging.
@@ -270,7 +270,7 @@ DaemonBoot --> DaemonProc["Daemon Process"]
 AgentCore --> Permissions["Permission Requests"]
 DaemonProc --> Tasks["Task Execution"]
 ```
-
+DomeWork
 **Diagram sources**
 
 - [apps/desktop/src/main/app-startup.ts:47-285](file://apps/desktop/src/main/app-startup.ts#L47-L285)

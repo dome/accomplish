@@ -1,4 +1,4 @@
-# Architecture Description: Accomplish
+# Architecture Description: DomeWork
 
 **Version**: 1.0 | **Created**: 2026-03-26 | **Last Updated**: 2026-03-26
 **Architect**: AI (reverse-engineered from codebase) | **Status**: Draft
@@ -10,7 +10,7 @@
 
 ### 1.1 Purpose
 
-Accomplish is an open-source AI automation assistant that lives on the user's
+DomeWork is an open-source AI automation assistant that lives on the user's
 desktop. It enables users to delegate complex software engineering tasks to an
 AI agent that can browse the web, write code, run commands, and manage files —
 all orchestrated through a local-first desktop application with bring-your-own
@@ -44,7 +44,7 @@ API key support.
 | IPC      | Inter-Process Communication — Electron main ↔ renderer bridge      |
 | MCP      | Model Context Protocol — standardized tool interface for AI agents |
 | PTY      | Pseudo-Terminal — terminal emulation for spawning CLI processes    |
-| OpenCode | External CLI agent engine spawned by Accomplish to execute tasks   |
+| OpenCode | External CLI agent engine spawned by DomeWork to execute tasks   |
 
 ---
 
@@ -69,7 +69,7 @@ API key support.
 
 #### 3.1.1 System Scope
 
-Accomplish is a **desktop application** that acts as a bridge between users and
+DomeWork is a **desktop application** that acts as a bridge between users and
 AI agent capabilities. It runs entirely on the user's machine — no cloud
 backend, no remote server. The system connects outward to LLM provider APIs
 and local model servers, but all orchestration, storage, and credential
@@ -92,7 +92,7 @@ management happen locally.
 graph TD
     User["End User"]
 
-    System["Accomplish<br/>(Desktop App)"]
+    System["DomeWork<br/>(Desktop App)"]
 
     CloudLLM["Cloud LLM Providers<br/>(OpenAI, Anthropic, Google,<br/>AWS Bedrock, Azure, etc.)"]
     LocalLLM["Local Model Servers<br/>(Ollama, LM Studio, NIM)"]
@@ -490,7 +490,7 @@ bundled runtime is used on machines without system Node.js.
 
 #### 4.1.1 Authentication & Authorization
 
-- **No User Auth**: Accomplish is a local-first desktop app — no user accounts or login. The user who runs the app owns all data.
+- **No User Auth**: DomeWork is a local-first desktop app — no user accounts or login. The user who runs the app owns all data.
 - **Provider Auth**: API keys stored encrypted (AES-256-GCM). OAuth flows for GitHub Copilot and OpenAI (device code / browser redirect).
 - **Agent Permissions**: OpenCode CLI requests permission for dangerous operations (file writes, shell commands). User approves/denies via UI.
 - **IPC Security**: Electron `contextBridge` enforces a strict API boundary — renderer cannot access Node.js APIs directly (Constitution Principle III).
@@ -530,7 +530,7 @@ bundled runtime is used on machines without system Node.js.
 
 #### 4.2.2 Scalability Model
 
-Accomplish is a **single-user desktop application** — traditional horizontal/vertical
+DomeWork is a **single-user desktop application** — traditional horizontal/vertical
 scaling does not apply. Scaling concerns are:
 
 - **Task Concurrency**: Queue overflow when >10 tasks running (managed by TaskManager queue)

@@ -26,7 +26,7 @@ vi.mock('electron', () => ({
       return `/mock/path/${name}`;
     },
     getVersion: () => '0.1.0',
-    getName: () => 'Accomplish',
+    getName: () => 'DomeWork',
     isPackaged: false,
   },
 }));

@@ -1,4 +1,4 @@
-# Concurrency Viewpoint — Accomplish Architecture
+# Concurrency Viewpoint — DomeWork Architecture
 
 > Rozanski & Woods Concurrency Viewpoint: maps the system's functional elements to runtime processes and threads, identifies inter-process communication, and describes synchronization and coordination mechanisms.
 
@@ -30,7 +30,7 @@ graph TB
       direction LR
       LLM_LOOP["LLM request/response loop"]
       TOOL_EXEC["Tool execution<br/><i>Bash, Read, Write, Edit</i>"]
-      MCP_CLIENT["MCP Client<br/><i>HTTP calls to Accomplish</i>"]
+      MCP_CLIENT["MCP Client<br/><i>HTTP calls to DomeWork</i>"]
     end
 
     subgraph BROWSER_PROC["Dev-Browser Server  (Node.js, detached)"]

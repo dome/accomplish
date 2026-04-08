@@ -27,7 +27,7 @@
 8. [Troubleshooting Guide](#troubleshooting-guide)
 9. [Conclusion](#conclusion)
 
-## Introduction
+DomeWorkction
 
 Accomplish AI Desktop Agent is an open-source, local-first AI desktop automation platform designed to run entirely on your machine. It empowers users to automate file management, draft and edit documents, and orchestrate browser workflows using their own AI API keys or local models. The platform emphasizes privacy, transparency, and user control, ensuring that sensitive data remains on your device and that every action is auditable and reversible.
 
@@ -389,7 +389,7 @@ Router-->>Renderer : "Current view"
 
 ## Dependency Analysis
 
-The desktop app depends on the agent-core package for shared types and factories. The daemon composes multiple services and exposes RPC and HTTP endpoints. The web UI consumes the agent-core types and integrates with the daemon via IPC and RPC.
+DomeWorkp app depends on the agent-core package for shared types and factories. The daemon composes multiple services and exposes RPC and HTTP endpoints. The web UI consumes the agent-core types and integrates with the daemon via IPC and RPC.
 
 ```mermaid
 graph LR

@@ -29,10 +29,10 @@
 9. [Conclusion](#conclusion)
 10. [Appendices](#appendices)
 
-## Introduction
+## IntroductionDomeWork
 
 This document defines the development guidelines for contributing to the Accomplish project. It consolidates the contribution process, development workflow, code standards, formatting, testing, and collaboration practices. It is intended for both newcomers and experienced contributors to maintain consistent development practices across the monorepo.
-
+DomeWork
 ## Project Structure
 
 Accomplish is a pnpm-managed monorepo organized into applications and shared packages:
@@ -312,7 +312,7 @@ Web["@accomplish/web"]
 Core["@accomplish_ai/agent-core"]
 Root --> WS
 WS --> Desktop
-WS --> Web
+WS --> WebDomeWork
 WS --> Core
 Root --> Overrides
 ```

@@ -30,7 +30,7 @@
 9. [Conclusion](#conclusion)
 10. [Appendices](#appendices)
 
-## Introduction
+## IntroductionDomeWork
 
 This document describes the Accomplish system architecture, focusing on the high-level design and interactions among:
 
@@ -338,7 +338,7 @@ WebUI["apps/web/src/client/main.tsx"] --> WebStore["apps/web/src/client/stores/d
 **Section sources**
 
 - [packages/agent-core/src/index.ts:1-583](file://packages/agent-core/src/index.ts#L1-L583)
-- [packages/agent-core/src/daemon/index.ts:1-37](file://packages/agent-core/src/daemon/index.ts#L1-L37)
+DomeWorks/agent-core/src/daemon/index.ts:1-37](file://packages/agent-core/src/daemon/index.ts#L1-L37)
 
 ## Performance Considerations
 

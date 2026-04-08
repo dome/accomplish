@@ -3,7 +3,7 @@
 </p>
 
 <p align="center">
-  <img src="docs/banner.svg" alt="Accomplish - وكيل سطح مكتب ذكاء اصطناعي مفتوح المصدر يقوم بأتمتة إدارة الملفات وإنشاء المستندات ومهام المتصفح باستخدام مفاتيح API الخاصة بك" width="100%" />
+  <img src="docs/banner.svg" alt="DomeWork - وكيل سطح مكتب ذكاء اصطناعي مفتوح المصدر يقوم بأتمتة إدارة الملفات وإنشاء المستندات ومهام المتصفح باستخدام مفاتيح API الخاصة بك" width="100%" />
 </p>
 
 <p align="center">
@@ -11,41 +11,41 @@
   <a href="https://github.com/accomplish-ai/accomplish/stargazers"><img src="https://img.shields.io/github/stars/accomplish-ai/accomplish?style=flat-square&color=22c55e" alt="نجوم GitHub" /></a>
   <a href="https://github.com/accomplish-ai/accomplish/issues"><img src="https://img.shields.io/github/issues/accomplish-ai/accomplish?style=flat-square&color=22c55e" alt="مشكلات GitHub" /></a>
   <a href="https://github.com/accomplish-ai/accomplish/commits"><img src="https://img.shields.io/github/last-commit/accomplish-ai/accomplish?style=flat-square&color=22c55e" alt="آخر تحديث" /></a>
-  <a href="https://downloads.accomplish.ai/downloads/0.4.13/macos/Accomplish-0.4.13-mac-arm64.dmg"><img src="https://img.shields.io/badge/Download-macOS_(Apple_Silicon)-0ea5e9?style=flat-square" alt="تحميل لـ macOS (Apple Silicon)" /></a>
-  <a href="https://downloads.accomplish.ai/downloads/0.4.13/macos/Accomplish-0.4.13-mac-x64.dmg"><img src="https://img.shields.io/badge/Download-macOS_(Intel)-0ea5e9?style=flat-square" alt="تحميل لـ macOS (Intel)" /></a>
-  <a href="https://downloads.accomplish.ai/downloads/0.4.13/windows/Accomplish-0.4.13-win-x64.exe"><img src="https://img.shields.io/badge/Download-Windows_11-0ea5e9?style=flat-square" alt="تحميل لـ Windows 11" /></a>
-  <a href="https://downloads.accomplish.ai/downloads/0.4.13/linux/Accomplish-0.4.13-linux-arm64.AppImage"><img src="https://img.shields.io/badge/Download-Linux_(ARM64)-0ea5e9?style=flat-square" alt="تحميل لـ Linux (ARM64)" /></a>
-  <a href="https://downloads.accomplish.ai/downloads/0.4.13/linux/Accomplish-0.4.13-linux-x86_64.AppImage"><img src="https://img.shields.io/badge/Download-Linux_(x64)-0ea5e9?style=flat-square" alt="تحميل لـ Linux (x64)" /></a>
-  <a href="https://downloads.accomplish.ai/downloads/0.4.13/linux/Accomplish-0.4.13-linux-amd64.deb"><img src="https://img.shields.io/badge/Download-Linux_(.deb_x64)-0ea5e9?style=flat-square" alt="تحميل لـ Linux (.deb x64)" /></a>
+  <a href="https://downloads.accomplish.ai/downloads/0.4.13/macos/DomeWork-0.4.13-mac-arm64.dmg"><img src="https://img.shields.io/badge/Download-macOS_(Apple_Silicon)-0ea5e9?style=flat-square" alt="تحميل لـ macOS (Apple Silicon)" /></a>
+  <a href="https://downloads.accomplish.ai/downloads/0.4.13/macos/DomeWork-0.4.13-mac-x64.dmg"><img src="https://img.shields.io/badge/Download-macOS_(Intel)-0ea5e9?style=flat-square" alt="تحميل لـ macOS (Intel)" /></a>
+  <a href="https://downloads.accomplish.ai/downloads/0.4.13/windows/DomeWork-0.4.13-win-x64.exe"><img src="https://img.shields.io/badge/Download-Windows_11-0ea5e9?style=flat-square" alt="تحميل لـ Windows 11" /></a>
+  <a href="https://downloads.accomplish.ai/downloads/0.4.13/linux/DomeWork-0.4.13-linux-arm64.AppImage"><img src="https://img.shields.io/badge/Download-Linux_(ARM64)-0ea5e9?style=flat-square" alt="تحميل لـ Linux (ARM64)" /></a>
+  <a href="https://downloads.accomplish.ai/downloads/0.4.13/linux/DomeWork-0.4.13-linux-x86_64.AppImage"><img src="https://img.shields.io/badge/Download-Linux_(x64)-0ea5e9?style=flat-square" alt="تحميل لـ Linux (x64)" /></a>
+  <a href="https://downloads.accomplish.ai/downloads/0.4.13/linux/DomeWork-0.4.13-linux-amd64.deb"><img src="https://img.shields.io/badge/Download-Linux_(.deb_x64)-0ea5e9?style=flat-square" alt="تحميل لـ Linux (.deb x64)" /></a>
   <a href="https://discord.gg/kg5Nekpm"><img src="https://img.shields.io/badge/Discord-Join-5865F2?style=flat-square&logo=discord&logoColor=white" alt="Discord" /></a>
 </p>
 
-# Accomplish™ - وكيل سطح مكتب ذكاء اصطناعي مفتوح المصدر
+# DomeWork™ - وكيل سطح مكتب ذكاء اصطناعي مفتوح المصدر
 
-Accomplish هو وكيل سطح مكتب ذكاء اصطناعي مفتوح المصدر يقوم بأتمتة إدارة الملفات وإنشاء المستندات ومهام المتصفح محلياً على جهازك. استخدم مفاتيح API الخاصة بك (OpenAI، Anthropic، Google، xAI) أو شغّل نماذج محلية عبر Ollama.
+DomeWork هو وكيل سطح مكتب ذكاء اصطناعي مفتوح المصدر يقوم بأتمتة إدارة الملفات وإنشاء المستندات ومهام المتصفح محلياً على جهازك. استخدم مفاتيح API الخاصة بك (OpenAI، Anthropic، Google، xAI) أو شغّل نماذج محلية عبر Ollama.
 
 <p align="center">
   <strong>يعمل محلياً على جهازك. استخدم مفاتيح API الخاصة بك أو النماذج المحلية. مرخص بـ MIT.</strong>
 </p>
 
 <p align="center">
-  <a href="https://downloads.accomplish.ai/downloads/0.4.13/macos/Accomplish-0.4.13-mac-arm64.dmg"><strong>تحميل لـ Mac (Apple Silicon)</strong></a>
+  <a href="https://downloads.accomplish.ai/downloads/0.4.13/macos/DomeWork-0.4.13-mac-arm64.dmg"><strong>تحميل لـ Mac (Apple Silicon)</strong></a>
   ·
-  <a href="https://downloads.accomplish.ai/downloads/0.4.13/macos/Accomplish-0.4.13-mac-x64.dmg"><strong>تحميل لـ Mac (Intel)</strong></a>
+  <a href="https://downloads.accomplish.ai/downloads/0.4.13/macos/DomeWork-0.4.13-mac-x64.dmg"><strong>تحميل لـ Mac (Intel)</strong></a>
   ·
-  <a href="https://downloads.accomplish.ai/downloads/0.4.13/windows/Accomplish-0.4.13-win-x64.exe"><strong>تحميل لـ Windows 11</strong></a>
+  <a href="https://downloads.accomplish.ai/downloads/0.4.13/windows/DomeWork-0.4.13-win-x64.exe"><strong>تحميل لـ Windows 11</strong></a>
   ·
-  <a href="https://downloads.accomplish.ai/downloads/0.4.13/linux/Accomplish-0.4.13-linux-arm64.AppImage"><strong>تحميل لـ Linux (ARM64)</strong></a>
+  <a href="https://downloads.accomplish.ai/downloads/0.4.13/linux/DomeWork-0.4.13-linux-arm64.AppImage"><strong>تحميل لـ Linux (ARM64)</strong></a>
   ·
-  <a href="https://downloads.accomplish.ai/downloads/0.4.13/linux/Accomplish-0.4.13-linux-x86_64.AppImage"><strong>تحميل لـ Linux (x64)</strong></a>
+  <a href="https://downloads.accomplish.ai/downloads/0.4.13/linux/DomeWork-0.4.13-linux-x86_64.AppImage"><strong>تحميل لـ Linux (x64)</strong></a>
   ·
-  <a href="https://downloads.accomplish.ai/downloads/0.4.13/linux/Accomplish-0.4.13-linux-amd64.deb"><strong>تحميل لـ Linux (.deb x64)</strong></a>
+  <a href="https://downloads.accomplish.ai/downloads/0.4.13/linux/DomeWork-0.4.13-linux-amd64.deb"><strong>تحميل لـ Linux (.deb x64)</strong></a>
   ·
-  <a href="https://www.accomplish.ai/">موقع Accomplish</a>
+  <a href="https://www.accomplish.ai/">موقع DomeWork</a>
   ·
-  <a href="https://www.accomplish.ai/blog/">مدونة Accomplish</a>
+  <a href="https://www.accomplish.ai/blog/">مدونة DomeWork</a>
   ·
-  <a href="https://github.com/accomplish-ai/accomplish/releases">إصدارات Accomplish</a>
+  <a href="https://github.com/accomplish-ai/accomplish/releases">إصدارات DomeWork</a>
 </p>
 
 <br />
@@ -66,7 +66,7 @@ Accomplish هو وكيل سطح مكتب ذكاء اصطناعي مفتوح ال
 
 - ملفاتك تبقى على جهازك
 - أنت تقرر المجلدات التي يمكنه الوصول إليها
-- لا يتم إرسال أي شيء إلى Accomplish (أو أي شخص آخر)
+- لا يتم إرسال أي شيء إلى DomeWork (أو أي شخص آخر)
 
 </div>
 
@@ -167,7 +167,7 @@ Accomplish هو وكيل سطح مكتب ذكاء اصطناعي مفتوح ال
 
 ## الخصوصية والمحلية أولاً
 
-يعمل Accomplish محلياً على جهازك. ملفاتك تبقى على جهازك، وأنت تختار المجلدات التي يمكنه الوصول إليها.
+يعمل DomeWork محلياً على جهازك. ملفاتك تبقى على جهازك، وأنت تختار المجلدات التي يمكنه الوصول إليها.
 
 <br />
 
@@ -201,7 +201,7 @@ Accomplish هو وكيل سطح مكتب ذكاء اصطناعي مفتوح ال
 
 <div align="center">
 
-[**تحميل لـ Mac (Apple Silicon)**](https://downloads.accomplish.ai/downloads/0.4.13/macos/Accomplish-0.4.13-mac-arm64.dmg) · [**تحميل لـ Mac (Intel)**](https://downloads.accomplish.ai/downloads/0.4.13/macos/Accomplish-0.4.13-mac-x64.dmg) · [**تحميل لـ Windows 11**](https://downloads.accomplish.ai/downloads/0.4.13/windows/Accomplish-0.4.13-win-x64.exe) · [**تحميل لـ Linux (ARM64)**](https://downloads.accomplish.ai/downloads/0.4.13/linux/Accomplish-0.4.13-linux-arm64.AppImage) · [**تحميل لـ Linux (x64)**](https://downloads.accomplish.ai/downloads/0.4.13/linux/Accomplish-0.4.13-linux-x86_64.AppImage) · [**تحميل لـ Linux (.deb x64)**](https://downloads.accomplish.ai/downloads/0.4.13/linux/Accomplish-0.4.13-linux-amd64.deb)
+[**تحميل لـ Mac (Apple Silicon)**](https://downloads.accomplish.ai/downloads/0.4.13/macos/DomeWork-0.4.13-mac-arm64.dmg) · [**تحميل لـ Mac (Intel)**](https://downloads.accomplish.ai/downloads/0.4.13/macos/DomeWork-0.4.13-mac-x64.dmg) · [**تحميل لـ Windows 11**](https://downloads.accomplish.ai/downloads/0.4.13/windows/DomeWork-0.4.13-win-x64.exe) · [**تحميل لـ Linux (ARM64)**](https://downloads.accomplish.ai/downloads/0.4.13/linux/DomeWork-0.4.13-linux-arm64.AppImage) · [**تحميل لـ Linux (x64)**](https://downloads.accomplish.ai/downloads/0.4.13/linux/DomeWork-0.4.13-linux-x86_64.AppImage) · [**تحميل لـ Linux (.deb x64)**](https://downloads.accomplish.ai/downloads/0.4.13/linux/DomeWork-0.4.13-linux-amd64.deb)
 
 </div>
 
@@ -213,11 +213,11 @@ Accomplish هو وكيل سطح مكتب ذكاء اصطناعي مفتوح ال
 
 ## لقطات الشاشة والعرض التوضيحي
 
-نظرة سريعة على Accomplish على macOS، بالإضافة إلى فيديو عرض توضيحي قصير.
+نظرة سريعة على DomeWork على macOS، بالإضافة إلى فيديو عرض توضيحي قصير.
 
 <p align="center">
   <a href="https://youtu.be/UJ0FIufMOlc?si=iFcu3VTG4B4q9VCB">
-    <img src="docs/video-thumbnail.png" alt="عرض Accomplish - وكيل ذكاء اصطناعي يؤتمت إدارة الملفات ومهام المتصفح" width="600" />
+    <img src="docs/video-thumbnail.png" alt="عرض DomeWork - وكيل ذكاء اصطناعي يؤتمت إدارة الملفات ومهام المتصفح" width="600" />
   </a>
 </p>
 
@@ -229,14 +229,14 @@ Accomplish هو وكيل سطح مكتب ذكاء اصطناعي مفتوح ال
 
 ## الأسئلة الشائعة
 
-**هل يعمل Accomplish محلياً؟**
-نعم. يعمل Accomplish محلياً على جهازك وأنت تتحكم في المجلدات التي يمكنه الوصول إليها.
+**هل يعمل DomeWork محلياً؟**
+نعم. يعمل DomeWork محلياً على جهازك وأنت تتحكم في المجلدات التي يمكنه الوصول إليها.
 
 **هل أحتاج إلى مفتاح API؟**
 يمكنك استخدام مفاتيح API الخاصة بك (OpenAI، Anthropic، Google، xAI، إلخ) أو تشغيل نماذج محلية عبر Ollama.
 
-**هل Accomplish مجاني؟**
-نعم. Accomplish مفتوح المصدر ومرخص بـ MIT.
+**هل DomeWork مجاني؟**
+نعم. DomeWork مفتوح المصدر ومرخص بـ MIT.
 
 **ما هي المنصات المدعومة؟**
 macOS (Apple Silicon) و Windows 11 متاحان الآن. Ubuntu (ARM64) و Ubuntu (x64) مدعومان أيضاً.
@@ -332,11 +332,11 @@ git push origin feature/amazing-feature
 
 <div align="center">
 
-**[موقع Accomplish](https://www.accomplish.ai/)** · **[مدونة Accomplish](https://www.accomplish.ai/blog/)** · **[إصدارات Accomplish](https://github.com/accomplish-ai/accomplish/releases)** · **[المشكلات](https://github.com/accomplish-ai/accomplish/issues)** · **[Twitter](https://x.com/Accomplish_ai)**
+**[موقع DomeWork](https://www.accomplish.ai/)** · **[مدونة DomeWork](https://www.accomplish.ai/blog/)** · **[إصدارات DomeWork](https://github.com/accomplish-ai/accomplish/releases)** · **[المشكلات](https://github.com/accomplish-ai/accomplish/issues)** · **[Twitter](https://x.com/Accomplish_ai)**
 
 <br />
 
-رخصة MIT · صنع بواسطة [Accomplish](https://www.accomplish.ai)
+رخصة MIT · صنع بواسطة [DomeWork](https://www.accomplish.ai)
 
 <br />
 

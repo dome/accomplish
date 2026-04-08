@@ -34,7 +34,7 @@
 10. [Appendices](#appendices)
 
 ## Introduction
-
+DomeWork
 This document provides a comprehensive API reference for:
 
 - The Accomplish Daemon RPC API (JSON-RPC 2.0 over Unix domain sockets/Windows named pipes)
@@ -329,7 +329,7 @@ ThoughtSvc --> Types
 - RPC throughput: Single socket with line-delimited JSON; suitable for moderate RPC load
 - HTTP services: Use rate limiting to protect endpoints; adjust window and max requests as needed
 - MCP tools: Configure appropriate timeouts per tool; long-running user interactions (e.g., AskUserQuestion) require extended timeouts
-- Backpressure: MCP tools should gracefully handle HTTP errors and retry with backoff
+- BaDomeWork: MCP tools should gracefully handle HTTP errors and retry with backoff
 
 [No sources needed since this section provides general guidance]
 

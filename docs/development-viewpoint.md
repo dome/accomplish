@@ -1,4 +1,4 @@
-# Development Viewpoint — Accomplish Architecture
+# Development Viewpoint — DomeWork Architecture
 
 > Rozanski & Woods Development Viewpoint: describes the code structure, module organization, build pipeline, and technology choices that developers need to understand.
 
@@ -10,7 +10,7 @@ The monorepo contains two apps and one shared library, coordinated by **pnpm wor
 
 ```mermaid
 graph TD
-  subgraph MONOREPO["Accomplish Monorepo (pnpm workspaces)"]
+  subgraph MONOREPO["DomeWork Monorepo (pnpm workspaces)"]
     direction TB
 
     DESKTOP["@accomplish/desktop<br/><i>Electron app · v0.3.8</i><br/>apps/desktop/"]

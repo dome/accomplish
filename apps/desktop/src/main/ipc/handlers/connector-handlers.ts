@@ -104,7 +104,7 @@ export function registerConnectorHandlers(): void {
       clientReg = await registerOAuthClient(
         metadata,
         'accomplish://callback/mcp',
-        'Accomplish Desktop',
+        'DomeWork Desktop',
       );
     }
 

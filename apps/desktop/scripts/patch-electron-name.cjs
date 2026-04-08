@@ -1,12 +1,12 @@
 /**
  * Patches the Electron.app Info.plist for development:
- * - Shows "Accomplish" instead of "Electron" in macOS Cmd+Tab and Dock
+ * - Shows "DomeWork" instead of "Electron" in macOS Cmd+Tab and Dock
  * - Registers the "accomplish://" URL scheme so OAuth callbacks route to the running dev instance
  */
 const fs = require('fs');
 const path = require('path');
 
-const APP_NAME = 'Accomplish';
+const APP_NAME = 'DomeWork';
 const URL_SCHEME = 'accomplish';
 
 // Only run on macOS

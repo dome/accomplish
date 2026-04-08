@@ -14,7 +14,7 @@ function getLegacyPaths(): LegacyPath[] {
   return [
     { path: path.join(appDataPath, 'DomeWork') },
     { path: path.join(appDataPath, 'domework') },
-    { path: path.join(appDataPath, 'Accomplish') },
+    { path: path.join(appDataPath, 'DomeWork') },
     { path: path.join(appDataPath, 'accomplish') },
     {
       path: path.join(appDataPath, 'Openwork'),

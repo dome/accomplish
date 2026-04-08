@@ -56,7 +56,7 @@ describe('Header Integration', () => {
       );
 
       // Assert
-      expect(screen.getByText('Accomplish')).toBeInTheDocument();
+      expect(screen.getByText('DomeWork')).toBeInTheDocument();
     });
   });
 

@@ -3,7 +3,7 @@
 </p>
 
 <p align="center">
-  <img src="docs/banner.svg" alt="Accomplish - 自分のAI APIキーでファイル管理、ドキュメント作成、ブラウザタスクを自動化するオープンソースAIデスクトップエージェント" width="100%" />
+  <img src="docs/banner.svg" alt="DomeWork - 自分のAI APIキーでファイル管理、ドキュメント作成、ブラウザタスクを自動化するオープンソースAIデスクトップエージェント" width="100%" />
 </p>
 
 <p align="center">
@@ -11,16 +11,16 @@
   <a href="https://github.com/accomplish-ai/accomplish/stargazers"><img src="https://img.shields.io/github/stars/accomplish-ai/accomplish?style=flat-square&color=22c55e" alt="GitHub Stars" /></a>
   <a href="https://github.com/accomplish-ai/accomplish/issues"><img src="https://img.shields.io/github/issues/accomplish-ai/accomplish?style=flat-square&color=22c55e" alt="GitHub Issues" /></a>
   <a href="https://github.com/accomplish-ai/accomplish/commits"><img src="https://img.shields.io/github/last-commit/accomplish-ai/accomplish?style=flat-square&color=22c55e" alt="最終コミット" /></a>
-  <a href="https://downloads.accomplish.ai/downloads/0.4.13/macos/Accomplish-0.4.13-mac-arm64.dmg"><img src="https://img.shields.io/badge/Download-macOS_(Apple_Silicon)-0ea5e9?style=flat-square" alt="macOS用ダウンロード (Apple Silicon)" /></a>
-  <a href="https://downloads.accomplish.ai/downloads/0.4.13/macos/Accomplish-0.4.13-mac-x64.dmg"><img src="https://img.shields.io/badge/Download-macOS_(Intel)-0ea5e9?style=flat-square" alt="macOS用ダウンロード (Intel)" /></a>
-  <a href="https://downloads.accomplish.ai/downloads/0.4.13/windows/Accomplish-0.4.13-win-x64.exe"><img src="https://img.shields.io/badge/Download-Windows_11-0ea5e9?style=flat-square" alt="Windows 11用ダウンロード" /></a>
-  <a href="https://downloads.accomplish.ai/downloads/0.4.13/linux/Accomplish-0.4.13-linux-arm64.AppImage"><img src="https://img.shields.io/badge/Download-Linux_(ARM64)-0ea5e9?style=flat-square" alt="Linux用ダウンロード（ARM64）" /></a>
-  <a href="https://downloads.accomplish.ai/downloads/0.4.13/linux/Accomplish-0.4.13-linux-x86_64.AppImage"><img src="https://img.shields.io/badge/Download-Linux_(x64)-0ea5e9?style=flat-square" alt="Linux用ダウンロード（x64）" /></a>
-  <a href="https://downloads.accomplish.ai/downloads/0.4.13/linux/Accomplish-0.4.13-linux-amd64.deb"><img src="https://img.shields.io/badge/Download-Linux_(.deb_x64)-0ea5e9?style=flat-square" alt="Linux用ダウンロード (.deb x64)" /></a>
+  <a href="https://downloads.accomplish.ai/downloads/0.4.13/macos/DomeWork-0.4.13-mac-arm64.dmg"><img src="https://img.shields.io/badge/Download-macOS_(Apple_Silicon)-0ea5e9?style=flat-square" alt="macOS用ダウンロード (Apple Silicon)" /></a>
+  <a href="https://downloads.accomplish.ai/downloads/0.4.13/macos/DomeWork-0.4.13-mac-x64.dmg"><img src="https://img.shields.io/badge/Download-macOS_(Intel)-0ea5e9?style=flat-square" alt="macOS用ダウンロード (Intel)" /></a>
+  <a href="https://downloads.accomplish.ai/downloads/0.4.13/windows/DomeWork-0.4.13-win-x64.exe"><img src="https://img.shields.io/badge/Download-Windows_11-0ea5e9?style=flat-square" alt="Windows 11用ダウンロード" /></a>
+  <a href="https://downloads.accomplish.ai/downloads/0.4.13/linux/DomeWork-0.4.13-linux-arm64.AppImage"><img src="https://img.shields.io/badge/Download-Linux_(ARM64)-0ea5e9?style=flat-square" alt="Linux用ダウンロード（ARM64）" /></a>
+  <a href="https://downloads.accomplish.ai/downloads/0.4.13/linux/DomeWork-0.4.13-linux-x86_64.AppImage"><img src="https://img.shields.io/badge/Download-Linux_(x64)-0ea5e9?style=flat-square" alt="Linux用ダウンロード（x64）" /></a>
+  <a href="https://downloads.accomplish.ai/downloads/0.4.13/linux/DomeWork-0.4.13-linux-amd64.deb"><img src="https://img.shields.io/badge/Download-Linux_(.deb_x64)-0ea5e9?style=flat-square" alt="Linux用ダウンロード (.deb x64)" /></a>
   <a href="https://discord.gg/kg5Nekpm"><img src="https://img.shields.io/badge/Discord-Join-5865F2?style=flat-square&logo=discord&logoColor=white" alt="Discord" /></a>
 </p>
 
-# Accomplish™ - オープンソースAIデスクトップエージェント
+# DomeWork™ - オープンソースAIデスクトップエージェント
 
 Accomplishは、お使いのマシン上でローカルにファイル管理、ドキュメント作成、ブラウザタスクを自動化するオープンソースAIデスクトップエージェントです。独自のAPIキー（OpenAI、Anthropic、Google、xAI）を使用するか、Ollama経由でローカルモデルを実行できます。
 
@@ -29,17 +29,17 @@ Accomplishは、お使いのマシン上でローカルにファイル管理、�
 </p>
 
 <p align="center">
-  <a href="https://downloads.accomplish.ai/downloads/0.4.13/macos/Accomplish-0.4.13-mac-arm64.dmg"><strong>Mac用ダウンロード（Apple Silicon）</strong></a>
+  <a href="https://downloads.accomplish.ai/downloads/0.4.13/macos/DomeWork-0.4.13-mac-arm64.dmg"><strong>Mac用ダウンロード（Apple Silicon）</strong></a>
   ·
-  <a href="https://downloads.accomplish.ai/downloads/0.4.13/macos/Accomplish-0.4.13-mac-x64.dmg"><strong>Mac用ダウンロード（Intel）</strong></a>
+  <a href="https://downloads.accomplish.ai/downloads/0.4.13/macos/DomeWork-0.4.13-mac-x64.dmg"><strong>Mac用ダウンロード（Intel）</strong></a>
   ·
-  <a href="https://downloads.accomplish.ai/downloads/0.4.13/windows/Accomplish-0.4.13-win-x64.exe"><strong>Windows 11用ダウンロード</strong></a>
+  <a href="https://downloads.accomplish.ai/downloads/0.4.13/windows/DomeWork-0.4.13-win-x64.exe"><strong>Windows 11用ダウンロード</strong></a>
   ·
-  <a href="https://downloads.accomplish.ai/downloads/0.4.13/linux/Accomplish-0.4.13-linux-arm64.AppImage"><strong>Linux用ダウンロード（ARM64）</strong></a>
+  <a href="https://downloads.accomplish.ai/downloads/0.4.13/linux/DomeWork-0.4.13-linux-arm64.AppImage"><strong>Linux用ダウンロード（ARM64）</strong></a>
   ·
-  <a href="https://downloads.accomplish.ai/downloads/0.4.13/linux/Accomplish-0.4.13-linux-x86_64.AppImage"><strong>Linux用ダウンロード（x64）</strong></a>
+  <a href="https://downloads.accomplish.ai/downloads/0.4.13/linux/DomeWork-0.4.13-linux-x86_64.AppImage"><strong>Linux用ダウンロード（x64）</strong></a>
   ·
-  <a href="https://downloads.accomplish.ai/downloads/0.4.13/linux/Accomplish-0.4.13-linux-amd64.deb"><strong>Linux用ダウンロード（.deb x64）</strong></a>
+  <a href="https://downloads.accomplish.ai/downloads/0.4.13/linux/DomeWork-0.4.13-linux-amd64.deb"><strong>Linux用ダウンロード（.deb x64）</strong></a>
   ·
   <a href="https://www.accomplish.ai/">Accomplishウェブサイト</a>
   ·
@@ -66,7 +66,7 @@ Accomplishは、お使いのマシン上でローカルにファイル管理、�
 
 - ファイルはお使いのマシン上に保存
 - アクセスできるフォルダを自分で決定
-- Accomplish（または他の誰か）にデータは送信されません
+- DomeWork（または他の誰か）にデータは送信されません
 
 </div>
 
@@ -201,7 +201,7 @@ Accomplishはお使いのマシン上でローカルに実行されます。フ�
 
 <div align="center">
 
-[**Mac用ダウンロード（Apple Silicon）**](https://downloads.accomplish.ai/downloads/0.4.13/macos/Accomplish-0.4.13-mac-arm64.dmg) · [**Mac用ダウンロード（Intel）**](https://downloads.accomplish.ai/downloads/0.4.13/macos/Accomplish-0.4.13-mac-x64.dmg) · [**Windows 11用ダウンロード**](https://downloads.accomplish.ai/downloads/0.4.13/windows/Accomplish-0.4.13-win-x64.exe) · [**Linux用ダウンロード（ARM64）**](https://downloads.accomplish.ai/downloads/0.4.13/linux/Accomplish-0.4.13-linux-arm64.AppImage) · [**Linux用ダウンロード（x64）**](https://downloads.accomplish.ai/downloads/0.4.13/linux/Accomplish-0.4.13-linux-x86_64.AppImage) · [**Linux用ダウンロード（.deb x64）**](https://downloads.accomplish.ai/downloads/0.4.13/linux/Accomplish-0.4.13-linux-amd64.deb)
+[**Mac用ダウンロード（Apple Silicon）**](https://downloads.accomplish.ai/downloads/0.4.13/macos/DomeWork-0.4.13-mac-arm64.dmg) · [**Mac用ダウンロード（Intel）**](https://downloads.accomplish.ai/downloads/0.4.13/macos/DomeWork-0.4.13-mac-x64.dmg) · [**Windows 11用ダウンロード**](https://downloads.accomplish.ai/downloads/0.4.13/windows/DomeWork-0.4.13-win-x64.exe) · [**Linux用ダウンロード（ARM64）**](https://downloads.accomplish.ai/downloads/0.4.13/linux/DomeWork-0.4.13-linux-arm64.AppImage) · [**Linux用ダウンロード（x64）**](https://downloads.accomplish.ai/downloads/0.4.13/linux/DomeWork-0.4.13-linux-x86_64.AppImage) · [**Linux用ダウンロード（.deb x64）**](https://downloads.accomplish.ai/downloads/0.4.13/linux/DomeWork-0.4.13-linux-amd64.deb)
 
 </div>
 
@@ -336,7 +336,7 @@ git push origin feature/amazing-feature
 
 <br />
 
-MITライセンス · [Accomplish](https://www.accomplish.ai)製
+MITライセンス · [DomeWork](https://www.accomplish.ai)製
 
 <br />
 

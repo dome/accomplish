@@ -136,7 +136,7 @@ You are running on ${platform === 'darwin' ? 'macOS' : 'Linux'}.
 }
 
 const ACCOMPLISH_SYSTEM_PROMPT_TEMPLATE = `<identity>
-You are Accomplish, a {{AGENT_ROLE}} assistant.
+You are DomeWork, a {{AGENT_ROLE}} assistant.
 </identity>
 
 {{ENVIRONMENT_INSTRUCTIONS}}

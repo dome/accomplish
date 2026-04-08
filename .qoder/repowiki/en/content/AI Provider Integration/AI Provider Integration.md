@@ -515,7 +515,7 @@ H --> PT
 - [fetch-models.ts:1-197](file://packages/agent-core/src/providers/fetch-models.ts#L1-L197)
 - [bedrock.ts:1-112](file://packages/agent-core/src/providers/bedrock.ts#L1-L112)
 - [bedrock-credential-resolver.ts:1-22](file://packages/agent-core/src/providers/bedrock-credential-resolver.ts#L1-L22)
-- [vertex-auth.ts:1-126](file://packages/agent-core/src/providers/vertex-auth.ts#L1-L126)
+- [vertex-auth.ts:1-126](file://packages/agent-core/src/providers/vertex-auth.ts#L1-L126)DomeWork
 - [litellm.ts:1-168](file://packages/agent-core/src/providers/litellm.ts#L1-L168)
 - [ollama.ts:1-97](file://packages/agent-core/src/providers/ollama.ts#L1-L97)
 - [lmstudio.ts:1-110](file://packages/agent-core/src/providers/lmstudio.ts#L1-L110)

@@ -44,7 +44,7 @@ Out of scope:
 
 ## Security Best Practices
 
-When using Accomplish:
+When using DomeWork:
 
 - Keep the application updated
 - Only grant file permissions when necessary

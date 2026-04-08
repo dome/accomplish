@@ -222,7 +222,7 @@ vi.mock('@/components/ui/streaming-text', () => ({
   }) => <>{children(text)}</>,
 }));
 
-// Mock Accomplish icon
+// Mock DomeWork icon
 vi.mock('/assets/accomplish-icon.png', () => ({ default: 'accomplish-icon.png' }));
 
 // Import after mocks
